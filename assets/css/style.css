@@ -1141,7 +1141,7 @@ ul.work-nav li button.is-checked {
 }
 .footer .back-top {
     position: fixed;
-    right: 50px;
+    right: 33px;
     margin: auto;
     bottom: -30px;
     z-index: 99;
