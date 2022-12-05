@@ -1164,6 +1164,9 @@ ul.work-nav li button.is-checked {
 .mb-35{
     margin-bottom: 35px!important;
 }
+.m-auto{
+    margin: auto;
+}
 /* _____________________________________
 
     End Footer Section
