@@ -7,20 +7,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Remote Control App | theuicode.com </title>
     <link rel="stylesheet" href="assets/css/plugins/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.3/font/bootstrap-icons.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w==" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" href="janibot-assets/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css">
     <style>
+        .white{
+            color: #ffffff!important;
+        }
         .btn-control{
             width: 75px;
             height: 75px;
             border-radius: 50%;
+            background-color: #555555;
         }
         .btn-control-sm{
             width: 55px;
             height: 55px;
             border-radius: 50%;
+            background-color: #555555;
         }
         .mr-20{
             margin-right: 20px;
@@ -48,6 +52,7 @@
             width: 150px;
             border-radius: 50px;
             font-size: 25px;
+            background-color: #555555;
         }
         .p-10{
             padding-bottom: 10px;
@@ -61,6 +66,22 @@
         .mr-25{
             margin-right: 25px;
         }
+        .pt-30{
+            padding-top: 30px;
+        }
+        .container{
+            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/003/047/541/small_2x/abstract-digital-background-with-technology-circuit-board-free-vector.jpg');
+            
+        }
+        .power{
+            color: #ff6e6e!important;
+        }
+        .wifi{
+            color: #5db4ff!important;
+        }
+        .title{
+            color: #555555;
+        }
     </style>
 </head>
 
@@ -68,58 +89,118 @@
     <!--container-->
     <div class="container">
         <div class="row text-center">
-            <h2>Janibot Controller</h2>
+            <h1 class="title"><strong>JANIBOT</strong></h1>
         </div>
         <div class="row p-10">
             <div class="col-xs-5">
                 <div class="row pb-15">
                     <div class="col-xs-6">
-                        <button class="btn btn-control-sm pull-right"><i class="fas fa-chevron-left py-3 control-icon"></i></button>
+                        <button onclick="sendCommand('K')" class="btn btn-control-sm pull-right"><i class="white fas fa-chevron-left py-3 control-icon"></i></button>
                     </div>
                     <div class="col-xs-6">
-                        <button class="btn btn-control-sm"><i class="fas fa-chevron-right py-3 control-icon"></i></button>
+                        <button onclick="sendCommand('E')" class="btn btn-control-sm"><i class="white fas fa-chevron-right py-3 control-icon"></i></button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-5">
-                        <button class="btn btn-control pull-right"><i class="fas fa-chevron-left py-3 control-icon"></i></button>
+                        <button onclick="sendCommand('L')" class="btn btn-control pull-right"><i class="white fas fa-chevron-left py-3 control-icon"></i></button>
                     </div>
                     <div class="col-xs-2">
                         
                     </div>
                     <div class="col-xs-5">
-                        <button class="btn btn-control"><i class="fas fa-chevron-right py-3 control-icon"></i></button>
+                        <button onclick="sendCommand('R')" class="btn btn-control"><i class="white fas fa-chevron-right py-3 control-icon"></i></button>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4 text-center">
                     </div>
                     <div class="col-xs-4 text-center">
-                        <button class="btn btn-control"><i class="fas fa-arrows-rotate py-3 control-icon"></i></button>
+                        <button onclick="sendCommand('T')" class="btn btn-control"><i class="white fas fa-arrows-rotate py-3 control-icon"></i></button>
                     </div>
                     <div class="col-xs-4 text-center">
                     </div>
                 </div>
             </div>
             <div class="col-xs-6">
-                <div class="row">
+                <div class="row pt-30">
                     <div class="col-xs-12">
-                        <button class="btn btn-control pull-right mr-25"><i class="fas fa-chevron-up py-3 control-icon"></i></button>
+                        <button onclick="sendCommand('F')" class="btn btn-control pull-right mr-25"><i class="white fas fa-chevron-up py-3 control-icon"></i></button>
                     </div>
                     <div class="col-xs-12">
-                        <button class="btn btn-control mt-30 pull-right mr-25"><i class="fas fa-chevron-down py-3 control-icon"></i></button>
+                        <button onclick="sendCommand('B')" class="btn btn-control mt-30 pull-right mr-25"><i class="white fas fa-chevron-down py-3 control-icon"></i></button>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
             <div class="col-xs-12 text-center">
-                <button class="btn btn-control ml-25 mr-20"><i class="fas fa-wifi py-3 control-icon"></i></button>
-                <button class="btn btn-control mr-20"><i class="fas fa-power-off py-3 control-icon"></i></button>
-                <button class="btn btn-auto mr-20">AUTO</button>
+                <input type="hidden" class="ipAddress" value="">
+                <button class="btn btn-control ml-25 mr-20" id="connection"><i class="wifi fas fa-wifi py-3 control-icon"></i></button>
+                <button onclick="sendCommand('A')" class="btn btn-auto mr-20 white">AUTO</button>
+                <button onclick="sendCommand('O')" class="btn btn-control mr-20"><i class="power fas fa-power-off py-3 control-icon"></i></button>
             </div>
         </div>
     </div>
+    <script src="janibot-assets/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
+    <script>
+        let ipAddress = $(".ipAddress").val();
+        $("#connection").on("click", function(){
+            Swal.fire({
+                title: 'Enter Device IP Address',
+                input: 'text',
+                inputValue: ipAddress,
+                inputPlaceholder: '192.168.1.213',
+                showCancelButton: true,
+                confirmButtonText: 'Submit',
+                cancelButtonText: 'Cancel',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'You must enter an IP Address!';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const enteredValue = result.value;
+                    $(".ipAddress").val(enteredValue);
+                    console.log(enteredValue);
+                }
+            });
+        });
+
+        function sendCommand(command) {
+            let ipAddress = $(".ipAddress").val();
+
+            if(ipAddress == ''){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter the device IP Address first!'
+                })
+            }else{
+                const url = "http://"+ipAddress+"/"+command; // Replace with your desired URL
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', url, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            const response = JSON.parse(xhr.responseText);
+                            // Handle the response data
+                            console.log(response);
+                        } else {
+                            // Handle request error
+                            // console.error('Request failed:', xhr.status);
+                        }
+                    }
+                };
+                xhr.send();
+            }
+        }
+    </script>
 </body>
 
 </html>
