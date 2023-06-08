@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Janibot Controller</title>
+  <style>
+    body {
+      background-color: #F0F0F0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+    .title {
+      color: #6c757d;
+      font-size: 5vw;
+      font-weight: bold;
+      margin-bottom: 4vw;
+    }
+    .button-container {
+      display: flex;
+      flex-direction: row;
+      margin-bottom: 4vw;
+    }
+    .button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 18vw;
+      height: 18vw;
+      border-radius: 9vw;
+      background-color: #FFFFFF;
+      margin: 0 2vw;
+      font-size: 5vw;
+    }
+    .wifi-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 15vw;
+      height: 15vw;
+      border-radius: 7.5vw;
+      background-color: #FFFFFF;
+      margin-right: 4vw;
+      font-size: 5vw;
+    }
+    .on-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 15vw;
+      height: 15vw;
+      border-radius: 7.5vw;
+      background-color: #FFFFFF;
+      margin-right: 4vw;
+      font-size: 5vw;
+    }
+    .auto-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: #FFFFFF;
+      padding: 2vw 5vw;
+      border-radius: 10vw;
+    }
+    .auto-button-text {
+      color: #6c757d;
+      font-size: 4vw;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div id="modal" style="display: none;">
+    <div id="modal-content">
+      <h2>Enter IP Address</h2>
+      <input type="text" id="ip-address" placeholder="192.168.0.1" />
+      <button id="connect-button">Connect</button>
+    </div>
+  </div>
+  <div class="title">Janibot Controller</div>
+  <div class="button-container">
+    <button class="button" onclick="sendCommand('F')">&#8593;</button>
+  </div>
+  <div class="button-container">
+    <button class="button" onclick="sendCommand('L')">&#8592;</button>
+    <button class="button" onclick="sendCommand('S')">Pause</button>
+    <button class="button" onclick="sendCommand('R')">&#8594;</button>
+  </div>
+  <div class="button-container">
+    <button class="button" onclick="sendCommand('B')">&#8595;</button>
+  </div>
+  <div class="button-container">
+    <button class="wifi-button" onclick="toggleModal()">&#128246;</button>
+    <button class="on-button" onclick="sendCommand('O')">&#9881;</button>
+    <button class="auto-button" onclick="sendCommand('A')"><span class="auto-button-text">AUTO</span></button>
+  </div>
+  
+  <script>
+    const ipAddressInput = document.getElementById('ip-address');
+    const connectButton = document.getElementById('connect-button');
+    const modal = document.getElementById('modal');
+
+    let ipAddress = '';
+    let modalVisible = true;
+
+    function sendCommand(command) {
+      fetch(`http://${ipAddress}/${command}`)
+        .catch((error) => {
+          console.error(error);
+        });
+    }
+
+    function handleConnect() {
+      modal.style.display = 'none';
+      modalVisible = false;
+    }
+
+    function toggleModal() {
+      modal.style.display = modalVisible ? 'none' : 'block';
+      modalVisible = !modalVisible;
+    }
+
+    connectButton.addEventListener('click', handleConnect);
+  </script>
+</body>
+</html>
