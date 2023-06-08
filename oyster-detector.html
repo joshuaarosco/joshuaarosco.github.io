@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, shrink-to-fit=no">
+    <title>Oyster Detector</title>
+    <link rel="icon" type="image/x-icon" href="https://designreset.com/cork/html/src/assets/img/favicon.ico"/>
+    <link href="oyster-assets/layouts/vertical-dark-menu/css/light/loader.css" rel="stylesheet" type="text/css" />
+    <link href="oyster-assets/layouts/vertical-dark-menu/css/dark/loader.css" rel="stylesheet" type="text/css" />
+    <script src="oyster-assets/layouts/vertical-dark-menu/loader.js"></script>
+
+    <!-- BEGIN GLOBAL MANDATORY STYLES -->
+    <link href="https://fonts.googleapis.com/css?family=Nunito:400,600,700" rel="stylesheet">
+    <link href="oyster-assets/src/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
+    <link href="oyster-assets/layouts/vertical-dark-menu/css/light/plugins.css" rel="stylesheet" type="text/css" />
+    <link href="oyster-assets/layouts/vertical-dark-menu/css/dark/plugins.css" rel="stylesheet" type="text/css" />
+    <!-- END GLOBAL MANDATORY STYLES -->
+
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    <link href="oyster-assets/src/plugins/src/apex/apexcharts.css" rel="stylesheet" type="text/css">
+    <link href="oyster-assets/src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
+    <link href="oyster-assets/src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
+    <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
+    <style>
+        #distance-value {
+            color: #ff7900;
+        }
+        #tds-value {
+            color: #e7515a;
+        }
+        #watertemp-value {
+            color: #4361ee;
+        }
+        #humidity-value {
+            color: #00ab55;
+        }
+        #airtemp-value {
+            color: #0098db;
+        }
+    </style>
+</head>
+<body class="layout-boxed">
+    <!-- BEGIN LOADER -->
+    <div id="load_screen"> <div class="loader"> <div class="loader-content">
+        <div class="spinner-grow align-self-center"></div>
+    </div></div></div>
+
+    <div class="header-container container-xxl text-center">
+        <h2 style="margin-top: 10px;">Oyster Detector</h2>
+    </div>
+
+    <!--  BEGIN MAIN CONTAINER  -->
+    <div class="main-container" id="container">
+
+        <!--  BEGIN CONTENT AREA  -->
+        <div id="content" class="main-content">
+            <div class="layout-px-spacing">
+
+                <div class="middle-content container-xxl p-0">
+                    
+                    <div class="row layout-top-spacing">
+
+                        <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
+                            <div class="row widget-statistic">
+
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
+                                    <div class="widget widget-one_hybrid widget-engagement">
+                                        <div class="widget-heading">
+                                            <div class="w-title">
+                                                <div class="">
+                                                    <p class="w-value" id="distance-value">00</p>
+                                                    <h5 class="">Oyster Detector</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="widget-content">    
+                                            <div class="w-chart">
+                                                <div id="distance"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
+                                    <div class="widget widget-one_hybrid widget-followers">
+                                        <div class="widget-heading">
+                                            <div class="w-title">
+                                                <div class="">
+                                                    <p class="w-value" id="tds-value">00</p>
+                                                    <h5 class="">Total Dissolve Solids</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="widget-content">    
+                                            <div class="w-chart">
+                                                <div id="tds"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
+                                    <div class="widget widget-one_hybrid widget-referral">
+                                        <div class="widget-heading">
+                                            <div class="w-title">
+                                                <div class="">
+                                                    <p class="w-value" id="watertemp-value">00</p>
+                                                    <h5 class="">Water Temparature</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="widget-content">    
+                                            <div class="w-chart">
+                                                <div id="waterTemp"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
+                                    <div class="widget widget-one_hybrid widget-engagement">
+                                        <div class="widget-heading">
+                                            <div class="w-title">
+                                                <div class="">
+                                                    <p class="w-value" id="humidity-value">00</p>
+                                                    <h5 class="">Humidity</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="widget-content">    
+                                            <div class="w-chart">
+                                                <div id="humidity"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
+                                    <div class="widget widget-one_hybrid widget-engagement">
+                                        <div class="widget-heading">
+                                            <div class="w-title">
+                                                <div class="">
+                                                    <p class="w-value" id="airtemp-value">00</p>
+                                                    <h5 class="">Air Temperature</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="widget-content">    
+                                            <div class="w-chart">
+                                                <div id="airTemp"></div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+        <!--  END CONTENT AREA  -->
+
+    </div>
+    <!-- END MAIN CONTAINER -->
+
+    <!-- BEGIN GLOBAL MANDATORY SCRIPTS -->
+    <script src="oyster-assets/src/bootstrap/js/bootstrap.bundle.min.js"></script>
+    <script src="oyster-assets/src/plugins/src/perfect-scrollbar/perfect-scrollbar.min.js"></script>
+    <script src="oyster-assets/src/plugins/src/mousetrap/mousetrap.min.js"></script>
+    <script src="oyster-assets/src/plugins/src/waves/waves.min.js"></script>
+    <script src="oyster-assets/layouts/vertical-dark-menu/app.js"></script>
+    <!-- END GLOBAL MANDATORY SCRIPTS -->
+
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    <script src="oyster-assets/src/plugins/src/apex/apexcharts.min.js"></script>
+    <script src="oyster-assets/src/assets/js/dashboard/dash_1.js"></script>
+    <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
+    
+</body>
+
+</html>
