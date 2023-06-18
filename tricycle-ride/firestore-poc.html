@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Insert Data in Firestore Example</title>
+    
+</head>
+<body>
+    <h2>Insert Data in Firestore</h2>
+    <form action="#">
+        <input type="text" name="name" id="name" placeholder="Name" required>
+        <input type="text" name="age" id="age" placeholder="Age" required>
+        <button type="button" id="submitData" name="submitData">Update</button>
+    </form>
+</body>
+</html>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getFirestore, setDoc, addDoc, doc, collection, updateDoc, deleteDoc, onSnapshot, query } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
+      authDomain: "tricycle-ride.firebaseapp.com",
+      databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
+      projectId: "tricycle-ride",
+      storageBucket: "tricycle-ride.appspot.com",
+      messagingSenderId: "802022631435",
+      appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    // Initialize Cloud Firestore
+    const db = getFirestore(app);
+
+    submitData.addEventListener('click', (e) => {
+
+        let name = document.getElementById('name').value;
+        let age = document.getElementById('age').value;
+
+        // insert
+        // addDoc(collection(db, "users"), {
+        //     name: name,
+        //     age: age
+        // });
+            
+        // update
+        // updateDoc(doc(db, "users", 'xTb9mDPDTZUzmthg0uXk'), {
+        //     name: name,
+        //     age: age
+        // });
+
+        // delete
+        // deleteDoc(doc(db, "users", 'L1qpiZIM8ZhsqGowDf6V'));
+
+        // real time update
+        // const unsub = onSnapshot(doc(db, "users", "xTb9mDPDTZUzmthg0uXk"), (doc) => {
+        //     const source = doc.metadata.hasPendingWrites ? "Local" : "Server";
+        //     console.log(source, " data: ", doc.data());
+        // });
+
+        const q = query(collection(db, "users"));
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            const users = [];
+            querySnapshot.forEach((doc) => {
+                users.push(doc.data().name);
+            });
+            console.log("User List: ", users.join(", "));
+        });
+
+        // set auth
+        localStorage.setItem('token', 'sample data')
+        
+        console.log(localStorage.getItem('token'))
+
+        // remove auth
+        console.log(localStorage.removeItem('token'))
+
+        // get auth
+        console.log(localStorage.getItem('token'))
+
+        alert('User has been added');
+    });
+
+  </script>

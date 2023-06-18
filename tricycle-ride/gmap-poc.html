@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Google Maps API Example</title>
+  <script>
+    function initMap() {
+      const map = new google.maps.Map(document.getElementById("map"), {
+        zoom: 12
+      });
+
+      const directionsService = new google.maps.DirectionsService();
+      const directionsDisplay = new google.maps.DirectionsRenderer();
+      directionsDisplay.setMap(map);
+
+      const originInput = document.getElementById("origin-input");
+      const destinationInput = document.getElementById("destination-input");
+      const searchButton = document.getElementById("search-button");
+
+      // Initialize autocomplete for origin and destination inputs
+      const autocompleteOptions = {
+        componentRestrictions: { country: "ph" }
+      };
+      const originAutocomplete = new google.maps.places.Autocomplete(originInput, autocompleteOptions);
+      const destinationAutocomplete = new google.maps.places.Autocomplete(destinationInput, autocompleteOptions);
+
+      // Get user's current location
+      if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(
+          function(position) {
+            const userLatLng = {
+              lat: position.coords.latitude,
+              lng: position.coords.longitude
+            };
+            map.setCenter(userLatLng);
+          },
+          function() {
+            console.log("Error: The Geolocation service failed.");
+          }
+        );
+      } else {
+        console.log("Error: Your browser doesn't support geolocation.");
+      }
+
+      searchButton.addEventListener("click", function() {
+        calculateAndDisplayRoute(directionsService, directionsDisplay);
+      });
+
+      function calculateAndDisplayRoute(directionsService, directionsDisplay) {
+        const origin = originInput.value;
+        const destination = destinationInput.value;
+
+        // Log origin and destination coordinates
+        geocodePlace(origin, function(originCoords) {
+          console.log("Origin: Latitude = " + originCoords.lat + ", Longitude = " + originCoords.lng);
+        });
+        geocodePlace(destination, function(destinationCoords) {
+          console.log("Destination: Latitude = " + destinationCoords.lat + ", Longitude = " + destinationCoords.lng);
+        });
+
+        directionsService.route(
+          {
+            origin: origin,
+            destination: destination,
+            travelMode: "DRIVING"
+          },
+          function(response, status) {
+            if (status === "OK") {
+              directionsDisplay.setDirections(response);
+            } else {
+              window.alert("Directions request failed due to " + status);
+            }
+          }
+        );
+      }
+
+      function geocodePlace(place, callback) {
+        const geocoder = new google.maps.Geocoder();
+        geocoder.geocode({ address: place }, function(results, status) {
+          if (status === "OK" && results[0]) {
+            const location = results[0].geometry.location;
+            const coords = {
+              lat: location.lat(),
+              lng: location.lng()
+            };
+            callback(coords);
+          } else {
+            console.log("Geocode request failed for place: " + place);
+          }
+        });
+      }
+    }
+  </script>
+</head>
+<body>
+  <div>
+    <input id="origin-input" type="text" placeholder="Origin">
+    <input id="destination-input" type="text" placeholder="Destination">
+    <button id="search-button">Search</button>
+  </div>
+  <div id="map" style="height: 400px;"></div>
+
+  <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAqdwRPpTtDGc6lWZKlSO0EPgkAKRo-8o&libraries=places&callback=initMap"></script>
+</body>
+</html>

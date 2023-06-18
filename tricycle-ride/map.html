@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="generator" content="">
+    <title>Index</title>
+    
+    <!-- manifest meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json" />
+    
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="assets/img/favicon180.png" sizes="180x180">
+    <link rel="icon" href="assets/img/favicon32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="assets/img/favicon16.png" sizes="16x16" type="image/png">
+    
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="assets/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
+    
+    <!-- swiper carousel css -->
+    <link rel="stylesheet" href="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.css">
+    <script>
+        console.log('USERID:', sessionStorage.getItem('userId'));
+        
+        checkToken();
+        function checkToken(){
+            var userId = sessionStorage.getItem('userId');
+
+            if(userId==null){
+                window.location.href = 'login.html';
+            }
+        }
+        
+    </script>
+    <!-- style css for this template -->
+    <link href="assets/css/style.css" rel="stylesheet" id="style">
+    <style>
+        .tricy-icon{
+            width: 80px;
+        }
+        .tricy-div{
+            position: relative;
+            top: -30px;
+            height: 100px;
+            width: 100px;
+            /* background-color: black; */
+            box-shadow: 0px -2px 5px rgba(0,0,0,0.1);
+            background-color: white;
+            border-radius: 50%;
+            padding: 10px;
+            padding-top: 20px;
+        }
+        #go-button{
+            width: 100%;
+        }
+        .map-container{
+            min-width: 100%;
+            padding: 0px;
+        }
+        .map-inputs{
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+    </style>
+</head>
+
+<body class="body-scroll" data-page="index">
+    
+    <!-- loader section -->
+    <div class="container-fluid loader-wrap">
+        <div class="row h-100">
+            <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto text-center align-self-center">
+                <div class="loader-cube-wrap mx-auto">
+                    <div class="loader-cube1 loader-cube"></div>
+                    <div class="loader-cube2 loader-cube"></div>
+                    <div class="loader-cube4 loader-cube"></div>
+                    <div class="loader-cube3 loader-cube"></div>
+                </div>
+                <p>Great things ahead!<br><strong>Please wait...</strong></p>
+            </div>
+        </div>
+    </div>
+    <!-- loader section ends -->
+    
+    <!-- Sidebar main menu -->
+    <div class="sidebar-wrap  sidebar-overlay">
+        <!-- Add overlay or fullmenu instead overlay -->
+        <div class="closemenu text-muted">Close Menu</div>
+        <div class="sidebar">
+            <div class="row">
+                <div class="col-auto mx-auto text-center">
+                    <figure class="avatar avatar-120 rounded-circle mx-auto mb-3">
+                        <img src="assets/img/user1.jpg" alt="">
+                    </figure>
+                    <h6 class="mb-1">Ajinkya McMohan</h6>
+                    <p class="text-muted">London, UK</p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-house-door"></i></div>
+                                <div class="col">Home</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="chat.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-chat-text"></i></div>
+                                <div class="col">Messages</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="notifications.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-bell"></i></div>
+                                <div class="col">Notification</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li> -->
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="settings.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-gear"></i></div>
+                                <div class="col">Settings</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="logout" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-box-arrow-right"></i></div>
+                                <div class="col">Logout</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sidebar main menu ends -->
+    
+    <!-- Begin page -->
+    <main class="h-100">
+        
+        <!-- Header -->
+        <header class="container-fluid header">
+            <div class="row">
+                <div class="col-auto">
+                    <button type="button" class="btn btn-link menu-btn">
+                        <i class="bi bi-list"></i>
+                    </button>
+                </div>
+                <div class="col pl-0">
+                    <!-- <div class="form-group search-header">
+                        <input class="form-control border-0" placeholder="Search">
+                        <button type="button" class="btn btn-link tooltip-btn">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div> -->
+                </div>
+                <div class="col-auto align-self-center">
+                    <a href="profile.html" class="position-relative d-block mr-3">
+                        <figure class="avatar avatar-36 rounded-circle">
+                            <img src="assets/img/user1.jpg" alt="">
+                        </figure>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <!-- Header ends -->
+        
+        <!-- main page content -->
+        <div class="main-container container map-container">
+            <!-- Dark mode switch -->
+            <div id="map" style="height: 95vh; width: 100%;">
+            </div>
+            
+            <div class="mt-5 map-inputs" id="mapInputs">
+                <div class="col-12">
+                    <input id="origin-input" type="text" placeholder="Origin" class="form-control mt-2" readonly>
+                    <input id="origin-input-lat" type="hidden" placeholder="Origin Lat">
+                    <input id="origin-input-lng" type="hidden" placeholder="Origin lng">
+                    <input id="destination-input" type="text" placeholder="Destination" class="form-control mt-2" readonly>
+                    <input id="destination-input-lat" type="hidden" placeholder="Destination Lat">
+                    <input id="destination-input-lng" type="hidden" placeholder="Destination lng">
+                    <button id="go-button" class="btn btn-md btn-default btn-block mt-2 btn-justify">Lets Go!</button>
+                </div>
+            </div>
+        </div>
+        <!-- main page content ends -->
+        
+        
+    </main>
+    <!-- Page ends-->
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <ul class="nav nav-pills nav-justified">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        <span>
+                            <i class="nav-icon bi bi-house"></i>
+                            <span class="nav-text">Home</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="location.html">
+                        <span>
+                            <!-- <i class="nav-icon bi bi-pin-map"></i> -->
+                            <div class="tricy-div">
+                                <img class="tricy-icon" src="assets/tricy-selected.png" alt="">
+                            </div>
+                            <span class="nav-text">Ride</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile.html">
+                        <span>
+                            <i class="nav-icon bi bi-person"></i>
+                            <span class="nav-text">Profile</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+    <!-- Footer ends-->
+    
+    <!-- Required jquery and libraries -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/vendor/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- cookie js -->
+    <script src="assets/js/jquery.cookie.js"></script>
+    
+    <!-- Customized jquery file  -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/color-scheme.js"></script>
+    
+    <!-- PWA app service registration and works -->
+    <script src="assets/js/pwa-services.js"></script>
+    
+    <!-- Chart js script -->
+    <script src="assets/vendor/chart-js-3.3.1/chart.min.js"></script>
+    
+    <!-- Progress circle js script -->
+    <script src="assets/vendor/progressbar-js/progressbar.min.js"></script>
+    
+    <!-- swiper js script -->
+    <script src="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js"></script>
+    
+    <script>
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const originVal = urlParams.get('origin')
+        const originLatVal = urlParams.get('originLat')
+        const originLngVal = urlParams.get('originLng')
+        const destinationVal = urlParams.get('destination')
+        const destinationLatVal = urlParams.get('destinationLat')
+        const destinationLngVal = urlParams.get('destinationLng')
+        console.log(originVal);
+        document.getElementById("origin-input").value = originVal
+        document.getElementById("origin-input-lat").value = originLatVal
+        document.getElementById("origin-input-lng").value = originLngVal
+        document.getElementById("destination-input").value = destinationVal
+        document.getElementById("destination-input-lat").value = destinationLatVal
+        document.getElementById("destination-input-lng").value = destinationLngVal
+    </script>
+    
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAqdwRPpTtDGc6lWZKlSO0EPgkAKRo-8o&libraries=places&callback=initMap"></script>
+    <script>
+        let originCoordinate;
+        let destinationCoordinate;
+        function initMap() {
+            
+            function displayDirections(originLatLng, destinationLatLng) {
+                const directionsService = new google.maps.DirectionsService();
+                const directionsRenderer = new google.maps.DirectionsRenderer();
+                
+                const mapOptions = {
+                    center: originLatLng,
+                    zoom: 15,
+                    disableDefaultUI: true,
+                    zoomControl: true,
+                };
+                const map = new google.maps.Map(document.getElementById("map"), mapOptions);
+                directionsRenderer.setMap(map);
+                
+                const request = {
+                    origin: originLatLng,
+                    destination: destinationLatLng,
+                    travelMode: google.maps.TravelMode.DRIVING,
+                };
+                
+                directionsService.route(request, function (response, status) {
+                    if (status === google.maps.DirectionsStatus.OK) {
+                        directionsRenderer.setDirections(response);
+                    } else {
+                        console.error("Error displaying directions:", status);
+                    }
+                });
+            }
+            
+            const originLatLng = new google.maps.LatLng(originLatVal, originLngVal);
+            const destinationLatLng = new google.maps.LatLng(destinationLatVal, destinationLngVal); 
+            displayDirections(originLatLng, destinationLatLng);
+        }
+
+        const goButton = document.getElementById("go-button");
+
+        goButton.addEventListener("click", function() {
+            createTrip(destinationVal, originLatVal, originLngVal, destinationLatVal, destinationLngVal);
+        });
+        
+        
+    </script>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
+            authDomain: "tricycle-ride.firebaseapp.com",
+            databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "tricycle-ride",
+            storageBucket: "tricycle-ride.appspot.com",
+            messagingSenderId: "802022631435",
+            appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
+        };
+        
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        function createTrip(destination, originLat, originLng, destinationLat, destinationLng){
+            db.collection("trips").add({
+                user_id: sessionStorage.getItem('userId'),
+                driver_id: null,
+                is_started: false,
+                is_complete: false,
+                origin: new firebase.firestore.GeoPoint(originLat, originLng),
+                destination: new firebase.firestore.GeoPoint(destinationLat, destinationLng),
+                destination_name: destination,
+                driver_location: null,
+            }) .then((docRef) => {
+                localStorage.setItem('tripId', docRef.id);
+                
+                db.collection("trips").doc(docRef.id).update({
+                    id: docRef.id
+                });
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+            });
+        }
+    </script>
+    
+    </body>
+    
+    
+    </html>
+    <script>
+        
+        logout.addEventListener('click', async (e) => {
+            sessionStorage.removeItem('userId');
+            setTimeout(function () {
+                window.location.href = 'login.html';
+            }, 100);
+        })
+        
+    </script>

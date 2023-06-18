@@ -1,0 +1,236 @@
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="generator" content="">
+    <title>Sign Up</title>
+    
+    <!-- manifest meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json" />
+    
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="assets/img/favicon180.png" sizes="180x180">
+    <link rel="icon" href="assets/img/favicon32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="assets/img/favicon16.png" sizes="16x16" type="image/png">
+    
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="assets/cdn.jsdelivr.net/npm/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
+    <script>
+        console.log('USERID:', sessionStorage.getItem('userId'));
+        
+        checkToken();
+        function checkToken(){
+            var userId = sessionStorage.getItem('userId');
+
+            if(userId!=null){
+                window.location.href = 'index.html';
+            }
+        }
+        
+    </script>
+    <!-- style css for this template -->
+    <link href="assets/css/style.css" rel="stylesheet" id="style">
+    <style>
+        .card{
+            background-color: #fff0;
+        }
+    </style>
+</head>
+
+<body class="body-scroll d-flex flex-column h-100 dark-bg" data-page="signup">
+    
+    <!-- loader section -->
+    <div class="container-fluid loader-wrap">
+        <div class="row h-100">
+            <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto text-center align-self-center">
+                <div class="loader-cube-wrap mx-auto">
+                    <div class="loader-cube1 loader-cube"></div>
+                    <div class="loader-cube2 loader-cube"></div>
+                    <div class="loader-cube4 loader-cube"></div>
+                    <div class="loader-cube3 loader-cube"></div>
+                </div>
+                <p>Great things ahead!<br><strong>Please wait...</strong></p>
+            </div>
+        </div>
+    </div>
+    <!-- loader section ends -->
+    
+    <!-- Begin page content -->
+    <main class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto mt-auto pt-4 text-center mb-100px d-grid gap-2">
+                <h3 class="mb-1">Make your move easy</h3>
+                <p class="text-muted mb-4">Sign up with Tricycle Ride now</p>
+                <div class="card shadow-sm">
+                    <div class="card-body text-black" style="text-align: left; display: none;">
+                        Please use a different phone or email
+                    </div>
+                </div>
+                <div class="form-group form-floating is-valid">
+                    <input type="text" class="form-control" value="" placeholder="Full Name" id="name" required>
+                    <label for="name">Full Name</label>
+                </div>
+                <div class="form-group form-floating is-valid">
+                    <input type="tel" class="form-control" value="" placeholder="Phone" id="phone" required>
+                    <label for="phone">Phone</label>
+                </div>
+                <div class="form-group form-floating is-valid">
+                    <input type="email" class="form-control" value="" placeholder="Email" id="email" required>
+                    <label for="email">Email</label>
+                </div>
+                <div class="form-floating is-valid">
+                    <input type="password" class="form-control" value="" placeholder="Password" id="password" required>
+                    <label for="password">Password</label>
+                </div>
+                <button type="button" class="btn btn-lg btn-default mt-3" id="submitRegistration">Signup now</button>
+                <a href="login.html" target="_self" class="text-white btn btn-lg btn-link">Already have account?</a>
+            </div>
+        </div>
+    </main>
+    
+    
+    <!-- Required jquery and libraries -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/vendor/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- cookie js -->
+    <script src="assets/js/jquery.cookie.js"></script>
+    
+    <!-- Customized jquery file  -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/color-scheme.js"></script>
+    
+    <!-- PWA app service registration and works -->
+    <script src="assets/js/pwa-services.js"></script>
+    
+    <!-- page level custom script -->
+    <script src="assets/js/app.js"></script>
+    
+    <script src="https://unpkg.com/imask"></script>
+    <script>
+        let phone = document.getElementById('phone')
+        var phoneMask = IMask(phone, {
+            mask: '+{63}(000)000-00-00',
+            lazy: false,  // make placeholder always visible
+            placeholderChar: '#'     // defaults to '_'
+        });
+        
+    </script>
+</body>
+</html>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getFirestore, setDoc, addDoc, doc, collection, updateDoc, deleteDoc, onSnapshot, query, getDocs, or, where, getDoc, limit } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+    
+    
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
+        authDomain: "tricycle-ride.firebaseapp.com",
+        databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "tricycle-ride",
+        storageBucket: "tricycle-ride.appspot.com",
+        messagingSenderId: "802022631435",
+        appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    // Initialize Cloud Firestore
+    const db = getFirestore(app);
+    
+    submitRegistration.addEventListener('click', async (e) => {
+        
+        let name = document.getElementById('name').value;
+        let phone = document.getElementById('phone').value;
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        
+        if(name == '' || phone == '' || email == '' || password == ''){
+            displayError('All fields are required!');
+        }else{
+            const usersRef = collection(db, "users");
+            
+            const q = query(usersRef, 
+            or( where("phone", "==", formatPhone(phone)),
+            where("email", "==", email)
+            ),
+            limit(1)
+            );
+            
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                let counter = 0;
+                querySnapshot.forEach((doc) => {
+                    counter+=1;
+                });
+                register(name, phone, email, password, counter)
+            });
+        }
+    });
+    
+    const register = async(name, phone, email, password, counter) => {
+        if(counter == 0){
+            console.log('NAME:', name);
+            console.log('PHONE:', formatPhone(phone));
+            console.log('EMAIL:', email);
+            console.log('PASSWORD:', password);
+            
+            // insert
+            const docRef = await addDoc(collection(db, "users"), {
+                name: name,
+                phone: formatPhone(phone),
+                email: email,
+                password: password
+            });
+            
+            console.log('TOKEN: ', docRef.id);
+
+            sessionStorage.setItem('userId', docRef.id);
+            
+            updateDoc(doc(db, "users", docRef.id), {
+                id: docRef.id
+            });
+            
+            // set auth token
+            
+            loader();
+            
+            setTimeout(function () {
+                window.location.href = 'login.html';
+            }, 3000);
+        }else{
+            displayError('Phone or email already exist! Please use a different phone or email.');
+        }
+    }
+    
+    function displayError(message){
+        var r = document.querySelector('.card-body');
+        r.style.setProperty('display', 'inline');
+        r.style.setProperty('opacity', '75%');
+        r.style.setProperty('color', 'red');
+        r.style.setProperty('background-color', 'rgb(255, 240, 240)');
+        r.innerHTML = message;
+    }
+    
+    function loader(){
+        var r = document.querySelector('.loader-wrap');
+        r.style.setProperty('display', 'inline');
+        r.style.setProperty('opacity', '75%');
+    }
+    
+    function formatPhone(phone){
+        return phone.replaceAll(' ','').replace('(','').replace(')','').replace('+','').replaceAll('-','');
+    }
+    
+</script>

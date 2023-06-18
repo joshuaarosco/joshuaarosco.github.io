@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="generator" content="">
+    <title>Index</title>
+
+    <!-- manifest meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="assets/img/favicon180.png" sizes="180x180">
+    <link rel="icon" href="assets/img/favicon32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="assets/img/favicon16.png" sizes="16x16" type="image/png">
+
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="assets/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
+
+    <!-- swiper carousel css -->
+    <link rel="stylesheet" href="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.css">
+    
+    <script>
+        console.log('USERID:', sessionStorage.getItem('userId'));
+        
+        checkToken();
+        function checkToken(){
+            var userId = sessionStorage.getItem('userId');
+
+            if(userId==null){
+                window.location.href = 'login.html';
+            }
+        }
+        
+    </script>
+    <!-- style css for this template -->
+    <link href="assets/css/style.css" rel="stylesheet" id="style">
+    <style>
+        .tricy-icon{
+            width: 80px;
+        }
+        .tricy-div{
+            position: relative;
+            top: -30px;
+            height: 100px;
+            width: 100px;
+            /* background-color: black; */
+            box-shadow: 0px -2px 5px rgba(0,0,0,0.1);
+            background-color: white;
+            border-radius: 50%;
+            padding: 10px;
+            padding-top: 20px;
+        }
+    </style>
+</head>
+
+<body class="body-scroll" data-page="index">
+
+    <!-- loader section -->
+    <div class="container-fluid loader-wrap">
+        <div class="row h-100">
+            <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto text-center align-self-center">
+                <div class="loader-cube-wrap mx-auto">
+                    <div class="loader-cube1 loader-cube"></div>
+                    <div class="loader-cube2 loader-cube"></div>
+                    <div class="loader-cube4 loader-cube"></div>
+                    <div class="loader-cube3 loader-cube"></div>
+                </div>
+                <p>Great things ahead!<br><strong>Please wait...</strong></p>
+            </div>
+        </div>
+    </div>
+    <!-- loader section ends -->
+
+    <!-- Sidebar main menu -->
+    <div class="sidebar-wrap  sidebar-overlay">
+        <!-- Add overlay or fullmenu instead overlay -->
+        <div class="closemenu text-muted">Close Menu</div>
+        <div class="sidebar">
+            <div class="row">
+                <div class="col-auto mx-auto text-center">
+                    <figure class="avatar avatar-120 rounded-circle mx-auto mb-3">
+                        <img src="assets/img/user1.jpg" alt="">
+                    </figure>
+                    <h6 class="mb-1">Ajinkya McMohan</h6>
+                    <p class="text-muted">London, UK</p>
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="index.html">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-house-door"></i></div>
+                                <div class="col">Home</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+                        <!-- <li class="nav-item">
+                            <a class="nav-link" href="chat.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-chat-text"></i></div>
+                                <div class="col">Messages</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="notifications.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-bell"></i></div>
+                                <div class="col">Notification</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li> -->
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="settings.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-gear"></i></div>
+                                <div class="col">Settings</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="logout" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-box-arrow-right"></i></div>
+                                <div class="col">Logout</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sidebar main menu ends -->
+
+    <!-- Begin page -->
+    <main class="h-100 has-header has-footer">
+
+        <!-- Header -->
+        <header class="container-fluid header">
+            <div class="row">
+                <div class="col-auto">
+                    <button type="button" class="btn btn-link menu-btn">
+                        <i class="bi bi-list"></i>
+                    </button>
+                </div>
+                <div class="col pl-0">
+                    <!-- <div class="form-group search-header">
+                        <input class="form-control border-0" placeholder="Search">
+                        <button type="button" class="btn btn-link tooltip-btn">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div> -->
+                </div>
+                <div class="col-auto align-self-center">
+                    <a href="profile.html" class="position-relative d-block mr-3">
+                        <figure class="avatar avatar-36 rounded-circle">
+                            <img src="assets/img/user1.jpg" alt="">
+                        </figure>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <!-- Header ends -->
+
+        <!-- main page content -->
+        <div class="main-container container">
+            <h2 class="my-4">Welcome to<br><span class="text-primary">TricycleRide</span>App</h2>
+
+            <!-- Dark mode switch -->
+            <!-- <div class="row">
+                <div class="col-12">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <div class="form-check form-switch">
+                                <input class="form-check-input" type="checkbox" id="darkmodeswitch">
+                                <label class="form-check-label text-muted px-2 " for="darkmodeswitch">Activate Dark
+                                    Mode</label>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+
+        </div>
+        <!-- main page content ends -->
+
+
+    </main>
+    <!-- Page ends-->
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <ul class="nav nav-pills nav-justified">
+                <li class="nav-item">
+                    <a class="nav-link active" href="index.html">
+                        <span>
+                            <i class="nav-icon bi bi-house"></i>
+                            <span class="nav-text">Home</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="location.html">
+                        <span>
+                            <!-- <i class="nav-icon bi bi-pin-map"></i> -->
+                            <div class="tricy-div">
+                                <img class="tricy-icon" src="assets/tricy.png" alt="">
+                            </div>
+                            <span class="nav-text">Ride</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile.html">
+                        <span>
+                            <i class="nav-icon bi bi-person"></i>
+                            <span class="nav-text">Profile</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+    <!-- Footer ends-->
+
+    <!-- Required jquery and libraries -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/vendor/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+
+    <!-- cookie js -->
+    <script src="assets/js/jquery.cookie.js"></script>
+
+    <!-- Customized jquery file  -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/color-scheme.js"></script>
+
+    <!-- PWA app service registration and works -->
+    <script src="assets/js/pwa-services.js"></script>
+
+    <!-- Chart js script -->
+    <script src="assets/vendor/chart-js-3.3.1/chart.min.js"></script>
+
+    <!-- Progress circle js script -->
+    <script src="assets/vendor/progressbar-js/progressbar.min.js"></script>
+
+    <!-- swiper js script -->
+    <script src="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js"></script>
+
+    <!-- page level custom script -->
+    <script src="assets/js/app.js"></script>
+</body>
+
+
+</html>
+<script>
+
+
+    logout.addEventListener('click', async (e) => {
+        sessionStorage.removeItem('userId');
+        setTimeout(function () {
+            window.location.href = 'login.html';
+        }, 100);
+    })
+</script>

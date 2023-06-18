@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en" class="h-100">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="generator" content="">
+    <title>Login</title>
+
+    <!-- manifest meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json" />
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="assets/img/favicon180.png" sizes="180x180">
+    <link rel="icon" href="assets/img/favicon32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="assets/img/favicon16.png" sizes="16x16" type="image/png">
+
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="assets/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
+
+    <!-- style css for this template -->
+    <link href="assets/css/style.css" rel="stylesheet" id="style">
+    
+    <script>
+        console.log('USERID:', sessionStorage.getItem('userId'));
+        
+        checkToken();
+        function checkToken(){
+            var userId = sessionStorage.getItem('userId');
+
+            if(userId!=null){
+                window.location.href = 'index.html';
+            }
+        }
+        
+    </script>
+</head>
+
+<body class="body-scroll d-flex flex-column h-100 dark-bg" data-page="signin">
+
+    <!-- loader section -->
+    <div class="container-fluid loader-wrap">
+        <div class="row h-100">
+            <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto text-center align-self-center">
+                <div class="loader-cube-wrap mx-auto">
+                    <div class="loader-cube1 loader-cube"></div>
+                    <div class="loader-cube2 loader-cube"></div>
+                    <div class="loader-cube4 loader-cube"></div>
+                    <div class="loader-cube3 loader-cube"></div>
+                </div>
+                <p>Great things ahead!<br><strong>Please wait...</strong></p>
+            </div>
+        </div>
+    </div>
+    <!-- loader section ends -->
+
+    <!-- Begin page content -->
+    <main class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto mt-auto pt-4 text-center mb-100px d-grid gap-2">
+                <h3 class="mb-1">Make your move easy</h3>
+                <p class="text-muted mb-4">Sign in with Tricycle Ride now by<br>entering your email and Password</p>
+                <div class="card shadow-sm">
+                    <div class="card-body text-black" style="text-align: left; display: none;">
+                        Please use a different phone or email
+                    </div>
+                </div>
+                <div class="form-group form-floating is-valid">
+                    <input type="text" class="form-control" value="" id="email" placeholder="Email or Phone">
+                    <label class="form-control-label" for="email">Email or Phone</label>
+                </div>
+                <div class="form-group form-floating is-valid">
+                    <input type="password" class="form-control" id="password" placeholder="Password">
+                    <label class="form-control-label" for="password">Password</label>
+                </div>
+                <!-- <p class="mb-0"><a href="forgot-password.html" class="btn btn-link text-white">Forgot your password?</a></p> -->
+                <button type="button" class="btn btn-lg btn-default btn-block mt-3" id="login">Sign in now</button>
+                <a href="signup.html" target="_self" class="text-white btn btn-lg btn-link">Create new account?</a>
+            </div>
+        </div>
+    </main>
+
+
+    <!-- Required jquery and libraries -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/vendor/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+
+    <!-- cookie js -->
+    <script src="assets/js/jquery.cookie.js"></script>
+
+    <!-- Customized jquery file  -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/color-scheme.js"></script>
+
+    <!-- PWA app service registration and works -->
+    <script src="assets/js/pwa-services.js"></script>
+
+    <!-- page level custom script -->
+    <script src="assets/js/app.js"></script>
+</body>
+</html>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getFirestore, setDoc, addDoc, doc, collection, updateDoc, deleteDoc, onSnapshot, query, getDocs, or, where, getDoc, limit, and } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+    
+    
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
+        authDomain: "tricycle-ride.firebaseapp.com",
+        databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "tricycle-ride",
+        storageBucket: "tricycle-ride.appspot.com",
+        messagingSenderId: "802022631435",
+        appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    // Initialize Cloud Firestore
+    const db = getFirestore(app);
+    
+    login.addEventListener('click', async (e) => {
+        
+        let email = document.getElementById('email').value;
+        let password = document.getElementById('password').value;
+        
+        if(email == '' || password == ''){
+            displayError('Please enter your Email or Phone and Password');
+        }else{
+            const usersRef = collection(db, "users");
+            
+            const q = query(usersRef, 
+                and(
+                    or( where("phone", "==", formatPhone(email)),
+                        where("email", "==", email)
+                    ),
+                    where("password", "==", password)
+                ),
+                limit(1)
+            );
+            
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                let counter = 0;
+                querySnapshot.forEach((doc) => {
+                    counter+=1;
+                    //setAuthCookie(doc.data().id)
+                    //setCookie('name', doc.data().name, 1);
+                    sessionStorage.setItem('userId', doc.data().id);
+                    sessionStorage.setItem('userName', doc.data().name);
+                });
+                auth(counter);
+            });
+        }
+    });
+    
+    function auth(counter){
+        if(counter > 0){
+            setTimeout(function () {
+                window.location.href = 'index.html';
+            }, 100);
+        }
+    }
+
+    function displayError(message){
+        var r = document.querySelector('.card-body');
+        r.style.setProperty('display', 'inline');
+        r.style.setProperty('opacity', '75%');
+        r.style.setProperty('color', 'red');
+        r.style.setProperty('background-color', 'rgb(255, 240, 240)');
+        r.innerHTML = message;
+    }
+    
+    function formatPhone(phone){
+        return phone.replaceAll(' ','').replace('(','').replace(')','').replace('+','').replaceAll('-','');
+    }
+    
+</script>
