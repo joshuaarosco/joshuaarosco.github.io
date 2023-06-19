@@ -1,17 +1,18 @@
 <!doctype html>
 <html lang="en">
 
+
+<!-- Mirrored from maxartkiller.com/website/mobileux2/HTML/# by HTTrack Website Copier/3.x [XR&CO'2014], Sun, 15 May 2022 04:47:21 GMT -->
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="generator" content="">
-    <title>Home</title>
+    <title>Profile</title>
 
     <!-- manifest meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
-    <link rel="manifest" href="manifest.json" />
 
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="assets/img/favicon180.png" sizes="180x180">
@@ -26,7 +27,6 @@
 
     <!-- swiper carousel css -->
     <link rel="stylesheet" href="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.css">
-    
     <script>
         console.log('USERID:', sessionStorage.getItem('userId'));
         
@@ -43,6 +43,9 @@
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
     <style>
+        .info{
+            font-weight: 300;
+        }
         .tricy-icon{
             width: 80px;
         }
@@ -58,10 +61,13 @@
             padding: 10px;
             padding-top: 20px;
         }
+        .pull-right{
+            float: right;
+        }
     </style>
 </head>
 
-<body class="body-scroll" data-page="index">
+<body class="body-scroll" data-page="profile">
 
     <!-- loader section -->
     <div class="container-fluid loader-wrap">
@@ -81,7 +87,7 @@
 
     <!-- Sidebar main menu -->
     <div class="sidebar-wrap  sidebar-overlay">
-        <!-- Add overlay or fullmenu instead overlay -->
+        <!-- Add pushcontent or fullmenu instead overlay -->
         <div class="closemenu text-muted">Close Menu</div>
         <div class="sidebar">
             <div class="row">
@@ -89,7 +95,7 @@
                     <figure class="avatar avatar-120 rounded-circle mx-auto mb-3">
                         <img src="assets/img/user1.jpg" alt="">
                     </figure>
-                    <h6 class="mb-1 user-name"></h6>
+                    <h6 class="mb-1 user-name">Ajinkya McMohan</h6>
                     <!-- <p class="text-muted">London, UK</p> -->
                 </div>
             </div>
@@ -103,32 +109,9 @@
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="chat.html" tabindex="-1" aria-disabled="true">
-                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-chat-text"></i></div>
-                                <div class="col">Messages</div>
-                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
-                            </a>
-                        </li>
-
-                        <li class="nav-item">
-                            <a class="nav-link" href="notifications.html" tabindex="-1" aria-disabled="true">
-                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-bell"></i></div>
-                                <div class="col">Notification</div>
-                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
-                            </a>
-                        </li> -->
-
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="settings.html" tabindex="-1" aria-disabled="true">
-                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-gear"></i></div>
-                                <div class="col">Settings</div>
-                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
-                            </a>
-                        </li> -->
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="profile.html" tabindex="-1" aria-disabled="true">
+                            <a class="nav-link" href="#" tabindex="-1" aria-disabled="true">
                                 <div class="avatar avatar-40 rounded icon"><i class="bi bi-person"></i></div>
                                 <div class="col">Profile</div>
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
@@ -160,49 +143,94 @@
                         <i class="bi bi-list"></i>
                     </button>
                 </div>
-                <div class="col pl-0">
-                    <!-- <div class="form-group search-header">
-                        <input class="form-control border-0" placeholder="Search">
-                        <button type="button" class="btn btn-link tooltip-btn">
-                            <i class="bi bi-search"></i>
-                        </button>
-                    </div> -->
-                </div>
-                <div class="col-auto align-self-center">
-                    <a href="profile.html" class="position-relative d-block mr-3">
-                        <figure class="avatar avatar-36 rounded-circle">
-                            <img src="assets/img/user1.jpg" alt="">
-                        </figure>
-                    </a>
-                </div>
             </div>
         </header>
         <!-- Header ends -->
 
         <!-- main page content -->
-        <div class="main-container container">
-            <h2 class="mx-4 mt-5">Welcome to<br>
-                <span class="text-primary">TricycleRide</span> App<br>
-            </h2>
-            
-            <div class="mx-4 mt-5">
-                <a href="location.html" class="btn btn-md btn-default btn-block mt-2 btn-justify w-100">Looking for a ride?</a>
+        <div class="main-container container pt-0">
+            <!-- profile picture -->
+            <div class="row">
+                <div class="col-12 text-center bg-primary text-white position-relative py-4">
+                    <div class="coverimg position-absolute top-0 start-0 h-100 w-100 opacity-4">
+                        <img src="assets/img/backgorund1.png" alt="">
+                    </div>
+                    <figure class="avatar avatar-160 rounded-circle mb-4 mx-auto">
+                        <img src="assets/img/user1.jpg" alt="">
+                    </figure>
+                    <div class="clearfix"></div>
+                    <h5 class="position-relative profile-name">User Name</h5>
+                    <!-- <p class="text-muted">London, UK</p> -->
+                </div>
             </div>
-            <!-- Dark mode switch -->
-            <!-- <div class="row">
+
+            <!-- followers and connections -->
+            <!-- <div class="row mb-4 text-center bg-whiter py-4">
+                <div class="col">
+                    <h6 class="mb-0">+254</h6>
+                    <p class="text-muted small">Rating</p>
+                </div>
+                 <div class="col">
+                    <h6 class="mb-0">+124</h6>
+                    <p class="text-muted small">Trips</p>
+                </div>
+                <div class="col">
+                    <h6 class="mb-0">+1456</h6>
+                    <p class="text-muted small">Friends</p>
+                </div> 
+            </div> -->
+
+            <!-- <p class="text-muted text-center">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sollicitudin dignissim nisi, eget
+                malesuada ligula ultricies sit amet. Suspendisse efficitur ex eu est placerat mattis.
+            </p> -->
+
+            <!-- summary swiper carousel -->
+
+            <!-- map location -->
+            <div class="row mt-4">
                 <div class="col-12">
-                    <div class="card shadow-sm mb-4">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-header">
+                            <a href="#edit-profile.html" class="btn btn-link pull-right p-0">
+                                <i class="bi bi-pencil-square fs-3"></i>
+                            </a>
+                            <h6 class="my-1">Profile Information</h6>
+                        </div>
                         <div class="card-body">
-                            <div class="form-check form-switch">
-                                <input class="form-check-input" type="checkbox" id="darkmodeswitch">
-                                <label class="form-check-label text-muted px-2 " for="darkmodeswitch">Activate Dark
-                                    Mode</label>
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="mb-1 info profile-phone">000000000000</h6>
+                                    <p class="text-muted small">Phone</p>
+                                </div>
+                                <div class="col-auto align-self-center">
+                                    <button class="btn btn-link p-0">
+                                        <i class="bi bi-telephone fs-3"></i>
+                                    </button>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="mb-1 info profile-email">mail@mail.com</h6>
+                                    <p class="text-muted small">Email</p>
+                                </div>
+                                <div class="col-auto align-self-center">
+                                    <button class="btn btn-link p-0">
+                                        <i class="bi bi-at fs-3"></i>
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div> -->
-
+            </div>
+            
+            <div class="row mb-4">
+                <div class="col d-grid">
+                    <a href="driver-registration.html" class="btn btn-default shadow-sm">Register as a Driver</a>
+                </div>
+            </div>
         </div>
         <!-- main page content ends -->
 
@@ -215,7 +243,7 @@
         <div class="container">
             <ul class="nav nav-pills nav-justified">
                 <li class="nav-item">
-                    <a class="nav-link active" href="index.html">
+                    <a class="nav-link " href="index.html">
                         <span>
                             <i class="nav-icon bi bi-house"></i>
                             <span class="nav-text">Home</span>
@@ -234,7 +262,7 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="profile.html">
+                    <a class="nav-link active" href="profile.html">
                         <span>
                             <i class="nav-icon bi bi-person"></i>
                             <span class="nav-text">Profile</span>
@@ -258,34 +286,73 @@
     <script src="assets/js/main.js"></script>
     <script src="assets/js/color-scheme.js"></script>
 
-    <!-- PWA app service registration and works -->
-    <script src="assets/js/pwa-services.js"></script>
-
-    <!-- Chart js script -->
-    <script src="assets/vendor/chart-js-3.3.1/chart.min.js"></script>
-
-    <!-- Progress circle js script -->
-    <script src="assets/vendor/progressbar-js/progressbar.min.js"></script>
-
     <!-- swiper js script -->
     <script src="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js"></script>
 
     <!-- page level custom script -->
     <script src="assets/js/app.js"></script>
+    
+    <script>
+        var r = document.querySelector('.user-name');
+        r.innerHTML = sessionStorage.getItem('userName')
+
+        logout.addEventListener('click', async (e) => {
+            sessionStorage.removeItem('userId');
+            setTimeout(function () {
+                window.location.href = 'login.html';
+            }, 100);
+        })
+    </script>
+    
 </body>
 
-
 </html>
-<script>
 
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getFirestore, setDoc, addDoc, doc, collection, updateDoc, deleteDoc, onSnapshot, query, getDocs, or, where, getDoc, limit, and } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+    
+    
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
+        authDomain: "tricycle-ride.firebaseapp.com",
+        databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "tricycle-ride",
+        storageBucket: "tricycle-ride.appspot.com",
+        messagingSenderId: "802022631435",
+        appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    // Initialize Cloud Firestore
+    const db = getFirestore(app);
+    
+    const usersRef = collection(db, "users");
+    var userId = sessionStorage.getItem('userId');
+    if(userId != null){
+        const q = query(usersRef, 
+            where("id", "==", userId),
+            limit(1)
+        );
+        
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                sessionStorage.setItem('userId', doc.data().id);
+                sessionStorage.setItem('userName', doc.data().name);
+                
+                var r = document.querySelector('.profile-name');
+                r.innerHTML = doc.data().name;
 
-    logout.addEventListener('click', async (e) => {
-        sessionStorage.removeItem('userId');
-        setTimeout(function () {
-            window.location.href = 'login.html';
-        }, 100);
-    })
+                var p = document.querySelector('.profile-phone');
+                p.innerHTML = doc.data().phone
 
-    var r = document.querySelector('.user-name');
-    r.innerHTML = sessionStorage.getItem('userName')
+                var e = document.querySelector('.profile-email');
+                e.innerHTML = doc.data().email
+            });
+        });
+    }
+    
 </script>

@@ -39,6 +39,9 @@
         #airtemp-value {
             color: #0098db;
         }
+        .pull-right{
+            float: right;
+        }
     </style>
 </head>
 <body class="layout-boxed">
@@ -57,11 +60,13 @@
         <!--  BEGIN CONTENT AREA  -->
         <div id="content" class="main-content">
             <div class="layout-px-spacing">
-
                 <div class="middle-content container-xxl p-0">
-                    
+                    <div class="row">
+                        <div class="col-xs-2">
+                            <button class="btn btn-success btn-sm pull-right" id="refresh">↻ REFRESH</button>
+                        </div>
+                    </div>
                     <div class="row layout-top-spacing">
-
                         <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="row widget-statistic">
 
@@ -181,7 +186,13 @@
     <script src="oyster-assets/src/plugins/src/apex/apexcharts.min.js"></script>
     <script src="oyster-assets/src/assets/js/dashboard/dash_1.js"></script>
     <!-- BEGIN PAGE LEVEL PLUGINS/CUSTOM SCRIPTS -->
-    
+    <script>
+        const refresh = document.getElementById("refresh");
+
+        refresh.addEventListener('click', function(){
+            document.location.reload();
+        });
+    </script>
 </body>
 
 </html>

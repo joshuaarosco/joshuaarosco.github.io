@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="generator" content="">
-    <title>Index</title>
+    <title>Location</title>
     
     <!-- manifest meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -35,6 +35,15 @@
 
             if(userId==null){
                 window.location.href = 'login.html';
+            }
+        }
+        checkActiveTrip();
+
+        function checkActiveTrip(){
+            var tripId = sessionStorage.getItem('tripId');
+            
+            if(tripId !=  null){
+                window.location.href = 'waiting.html';
             }
         }
     </script>
@@ -102,8 +111,8 @@
                     <figure class="avatar avatar-120 rounded-circle mx-auto mb-3">
                         <img src="assets/img/user1.jpg" alt="">
                     </figure>
-                    <h6 class="mb-1">Ajinkya McMohan</h6>
-                    <p class="text-muted">London, UK</p>
+                    <h6 class="mb-1 user-name"></h6>
+                    <!-- <p class="text-muted">London, UK</p> -->
                 </div>
             </div>
             <div class="row mt-3">
@@ -116,26 +125,11 @@
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
-                        <!-- <li class="nav-item">
-                            <a class="nav-link" href="chat.html" tabindex="-1" aria-disabled="true">
-                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-chat-text"></i></div>
-                                <div class="col">Messages</div>
-                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
-                            </a>
-                        </li>
                         
                         <li class="nav-item">
-                            <a class="nav-link" href="notifications.html" tabindex="-1" aria-disabled="true">
-                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-bell"></i></div>
-                                <div class="col">Notification</div>
-                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
-                            </a>
-                        </li> -->
-                        
-                        <li class="nav-item">
-                            <a class="nav-link" href="settings.html" tabindex="-1" aria-disabled="true">
-                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-gear"></i></div>
-                                <div class="col">Settings</div>
+                            <a class="nav-link" href="profile.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-person"></i></div>
+                                <div class="col">Profile</div>
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
@@ -332,6 +326,11 @@
                     );
                 },
                 function() {
+                    const defaultLatLng = {
+                        lat: 16.0321918,
+                        lng: 120.2296854
+                    };
+                    map.setCenter(defaultLatLng);
                     console.log("Error: The Geolocation service failed.");
                 }
                 );
@@ -433,4 +432,5 @@
         r.style.setProperty('display', 'none');
         r.style.setProperty('opacity', '0%');
     }
+    
 </script>

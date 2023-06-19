@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="generator" content="">
-    <title>Map Route</title>
+    <title>Waiting</title>
     
     <!-- manifest meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -32,9 +32,22 @@
         checkToken();
         function checkToken(){
             var userId = sessionStorage.getItem('userId');
-
+            
             if(userId==null){
                 window.location.href = 'login.html';
+            }
+        }
+        
+    </script>
+    <script>
+        console.log('TRIPID:', sessionStorage.getItem('tripId'));
+        
+        tripChecker();
+        function tripChecker(){
+            var tripId = sessionStorage.getItem('tripId');
+            
+            if(tripId == null){
+                window.location.href = 'location.html';
             }
         }
         
@@ -56,9 +69,6 @@
             border-radius: 50%;
             padding: 10px;
             padding-top: 20px;
-        }
-        #go-button{
-            width: 100%;
         }
         .map-container{
             min-width: 100%;
@@ -98,12 +108,12 @@
             position: absolute;
             top: 50%;
             left: 50%;
-            margin-top: -160px;
+            margin-top: -300px;
             margin-left: -160px;
             width: 320px;
-            height: 320px;
+            height: 500px;
             background-color: #000000a1;
-            display: none;
+            border-radius: 5px;
         }
         .waiting-div > #waiting-loader{
             top: 50%;
@@ -111,6 +121,7 @@
             height: 50px;
             position: absolute;
             margin-left: 50px;
+            margin-top: 100px;
             text-align: center;
         }
         #waiting-for-driver{
@@ -121,7 +132,10 @@
             font-weight: 400;
             font-size: 20px;
         }
-
+        #going-to{
+            font-weight: bolder;
+        }
+        
         @keyframes ballbns{
             0%{
                 left: 0;
@@ -131,6 +145,9 @@
                 left: 100%;
                 transform: translateX(0%);
             }
+        }
+        #cancel-button{
+            background-color: #000;
         }
     </style>
 </head>
@@ -238,20 +255,21 @@
             
             <div class="mt-5 map-inputs" id="mapInputs">
                 <div class="col-12">
-                    <input id="origin-input" type="text" placeholder="Origin" class="form-control mt-2" readonly>
+                    <input id="origin-input" type="hidden" placeholder="Origin" class="form-control mt-2" readonly>
                     <input id="origin-input-lat" type="hidden" placeholder="Origin Lat">
                     <input id="origin-input-lng" type="hidden" placeholder="Origin lng">
-                    <input id="destination-input" type="text" placeholder="Destination" class="form-control mt-2" readonly>
+                    <input id="destination-input" type="hidden" placeholder="Destination" class="form-control mt-2" readonly>
                     <input id="destination-input-lat" type="hidden" placeholder="Destination Lat">
                     <input id="destination-input-lng" type="hidden" placeholder="Destination lng">
-                    <button id="go-button" class="btn btn-md btn-default btn-block mt-2 btn-justify">Lets Go!</button>
+                    <!-- <button id="go-button" class="btn btn-md btn-default btn-block mt-2 btn-justify">Lets Go!</button> -->
                 </div>
             </div>
-
+            
             <div class="waiting-div">
-                <h3 id="waiting-for-driver">Looking for a tricycle driver...</h3>
+                <h3 id="waiting-for-driver">Going to <span id="going-to"></span>... <br> <br>Looking for a Tricycle Driver...</h3>
                 <div id="waiting-loader">
                     <span class="loader"></span>
+                    <button id="cancel-button" class="btn btn-md btn-default btn-block mt-4 btn-justify w-100">Cancel Trip</button>
                 </div>
             </div>
         </div>
@@ -322,21 +340,13 @@
     <script src="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js"></script>
     
     <script>
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const originVal = urlParams.get('origin')
-        const originLatVal = urlParams.get('originLat')
-        const originLngVal = urlParams.get('originLng')
-        const destinationVal = urlParams.get('destination')
-        const destinationLatVal = urlParams.get('destinationLat')
-        const destinationLngVal = urlParams.get('destinationLng')
-        console.log(originVal);
-        document.getElementById("origin-input").value = originVal
-        document.getElementById("origin-input-lat").value = originLatVal
-        document.getElementById("origin-input-lng").value = originLngVal
-        document.getElementById("destination-input").value = destinationVal
-        document.getElementById("destination-input-lat").value = destinationLatVal
-        document.getElementById("destination-input-lng").value = destinationLngVal
+        var tripDetails = JSON.parse(sessionStorage.getItem('tripDetails'))
+        document.getElementById("origin-input").value = tripDetails[0]
+        document.getElementById("origin-input-lat").value = tripDetails[1]
+        document.getElementById("origin-input-lng").value = tripDetails[2]
+        document.getElementById("destination-input").value = tripDetails[3]
+        document.getElementById("destination-input-lat").value = tripDetails[3]
+        document.getElementById("destination-input-lng").value = tripDetails[4]
     </script>
     
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAqdwRPpTtDGc6lWZKlSO0EPgkAKRo-8o&libraries=places&callback=initMap"></script>
@@ -373,16 +383,16 @@
                 });
             }
             
-            const originLatLng = new google.maps.LatLng(originLatVal, originLngVal);
-            const destinationLatLng = new google.maps.LatLng(destinationLatVal, destinationLngVal); 
+            const originLatLng = new google.maps.LatLng(tripDetails[1], tripDetails[2]);
+            const destinationLatLng = new google.maps.LatLng(tripDetails[4], tripDetails[5]); 
             displayDirections(originLatLng, destinationLatLng);
+            
+            const cancel = document.getElementById("cancel-button");
+            
+            cancel.addEventListener("click", function() {
+                cancelTrip();
+            });
         }
-
-        const goButton = document.getElementById("go-button");
-
-        goButton.addEventListener("click", function() {
-            createTrip(destinationVal, originLatVal, originLngVal, destinationLatVal, destinationLngVal);
-        });
         
         
     </script>
@@ -404,103 +414,49 @@
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         
-        function createTrip(destination, originLat, originLng, destinationLat, destinationLng){
-            db.collection("trips").add({
-                user_id: sessionStorage.getItem('userId'),
-                driver_id: null,
-                is_started: false,
-                is_complete: false,
-                is_cancelled: false,
-                origin: new firebase.firestore.GeoPoint(originLat, originLng),
-                destination: new firebase.firestore.GeoPoint(destinationLat, destinationLng),
-                destination_name: destination,
-                driver_location: null,
-            }) .then((docRef) => {
-                sessionStorage.setItem('tripId', docRef.id);
-                sessionStorage.setItem('tripDetails', JSON.stringify([
-                    document.getElementById("origin-input").value,
-                    document.getElementById("origin-input-lat").value,
-                    document.getElementById("origin-input-lng").value,
-                    document.getElementById("destination-input").value,
-                    document.getElementById("destination-input-lat").value,
-                    document.getElementById("destination-input-lng").value
-                ]));
-                
-                db.collection("trips").doc(docRef.id).update({
-                    id: docRef.id
+        function cancelTrip(){
+            var tripId = sessionStorage.getItem('tripId');
+            if(tripId != null){
+                db.collection("trips").doc(tripId).update({
+                    is_cancelled: true
+                })
+                .then((docRef) => {
+                    sessionStorage.removeItem('tripId');
+                    window.location.href = 'location.html';
+                })
+                .catch((error) => {
+                    console.error("Error adding document: ", error);
                 });
-
-                window.location.href = 'waiting.html?origin='+document.getElementById("origin-input").value
-                                        +'&originLat='+document.getElementById("origin-input-lat").value
-                                        +'&originLng='+document.getElementById("origin-input-lng").value
-                                        +'&destination='+document.getElementById("destination-input").value
-                                        +'&destinationLat='+document.getElementById("destination-input-lat").value
-                                        +'&destinationLng='+document.getElementById("destination-input-lng").value;
-            })
-            .catch((error) => {
-                console.error("Error adding document: ", error);
-            });
+            }
         }
-
-        // lookingForARide();
-
-        // function lookingForARide(){
-        //     const tripsRef = db.collection("trips");
-            
-        //     const q = query(tripsRef, 
-        //         and(
-        //             where("user_id", "==", sessionStorage.getItem('userId')),
-        //             where("is_started", "==", false),
-        //             where("is_complete", "==", false),
-        //             where("is_cancelled", "==", false)
-        //         ),
-        //         limit(1)
-        //     );
-            
-        //     const unsubscribe = onSnapshot(q, (querySnapshot) => {
-        //         let counter = 0;
-        //         querySnapshot.forEach((doc) => {
-        //             counter+=1;
-        //             sessionStorage.setItem('userId', doc.data().id);
-        //             sessionStorage.setItem('userName', doc.data().name);
-        //         });
-        //     });
-        // }
     </script>
     
-    </body>
-    
-    
-    </html>
-    <script>
-        
-        logout.addEventListener('click', async (e) => {
-            sessionStorage.removeItem('userId');
-            setTimeout(function () {
-                window.location.href = 'login.html';
-            }, 100);
-        })
-        
-        var r = document.querySelector('.user-name');
-        r.innerHTML = sessionStorage.getItem('userName')
-    </script>
+</body>
 
-    
+
+</html>
 <script>
-    console.log('TRIPID:', sessionStorage.getItem('tripId'));
-
-    tripChecker();
-
-    function tripChecker(){
-        var tripId = sessionStorage.getItem('tripId');
-
-        if(tripId != null){
-            window.location.href = 'waiting.html?origin='+document.getElementById("origin-input").value
-                                        +'&originLat='+document.getElementById("origin-input-lat").value
-                                        +'&originLng='+document.getElementById("origin-input-lng").value
-                                        +'&destination='+document.getElementById("destination-input").value
-                                        +'&destinationLat='+document.getElementById("destination-input-lat").value
-                                        +'&destinationLng='+document.getElementById("destination-input-lng").value;
-        }
-    }
+    
+    logout.addEventListener('click', async (e) => {
+        sessionStorage.removeItem('userId');
+        setTimeout(function () {
+            window.location.href = 'login.html';
+        }, 100);
+    })
+    
+    var r = document.querySelector('.user-name');
+    r.innerHTML = sessionStorage.getItem('userName')
+    
+    var tripDetails = JSON.parse(sessionStorage.getItem('tripDetails'))
+    document.getElementById('going-to').innerHTML = tripDetails[3];
+    // checkActiveTrip();
+    
+    // function checkActiveTrip(){
+    //     var tripDetails = sessionStorage.getItem('tripDetails');
+        
+    //     if(tripDetails != null){
+            
+    //         document.getElementById('going-to').innerHTML = tripDetails.origin;
+    //     }
+    // }
 </script>
