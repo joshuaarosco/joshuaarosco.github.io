@@ -28,13 +28,56 @@
     <link rel="stylesheet" href="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.css">
     <style>
         .border-left-1{
-            border-left: 1px dashed #000000a1;
+            border-left: 1px solid #000000a1;
+            padding-left: 10px!important;
+            margin-left: 10px;
+            height: 30px;
+            margin-top: 7px!important;
+        }
+        .origin::before{
+            content: '';
+            position: absolute;
+            left: -16.5px;
+            bottom: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #FFF;
+            border: 1px solid #000;
+            box-sizing: border-box;
+        }
+        .destination::before{
+            content: '';
+            position: absolute;
+            left: -16px;
+            bottom: 5px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #FFF;
+            border: 5px solid #000;
+            box-sizing: border-box;
+        }
+        .border-left-1 > .origin{
+            margin-top: -5px;
+            position: absolute;
+            font-weight: 200;
+        }
+        .border-left-1 > .destination{
+            margin-top: 20px;
+            position: absolute;
         }
         .pr-10{
             padding-right: 10px!important;
         }
         .pl-10{
             padding-left: 10px!important;
+        }
+        #view{
+            cursor: pointer;
+        }
+        #view:hover{
+            background-color: #f0fcff;
         }
     </style>
     <script>
@@ -439,12 +482,14 @@
         }
         
         let tripAdded = [];
+        let tripsObj = {};
         let tripRemoved = [];
 
         const unsubscribe = listenToNewDataWithCondition('trips', (newData) => {
-            console.log('New document added:', newData);
+            // console.log('New document added:', newData);
             if(newData[1] == 'added'){
-                tripAdded.push(newData);
+                tripsObj[newData[0]] = newData;
+                // tripAdded.push(newData[0], newData) ;
                 var r = document.querySelector('.waiting-div');
                 r.style.setProperty('background-color', '#00000000');
 
@@ -456,63 +501,124 @@
 
                 var rd = document.querySelector('.requests-div');
                 rd.style.setProperty('display', 'block');
-
-                var origin = newData[2].origin_name;
-                if(origin.length > 10) origin = origin.substring(0,10);
-
-                var destination = newData[2].destination_name;
-                if(destination.length > 10) destination = destination.substring(0,10);
                 
-                                    
-                rd.innerHTML += `
-                    <div class="col-12 col-md-6" id="${newData[0]}">
-                        <div class="card shadow-sm mb-3">
-                            <div class="card-body">
-                                <div class="row gx-2">
-                                    <div class="col-auto align-self-center pr-10">
-                                        <h3>99<sub>km</sub></h3>
-                                    </div>
-                                    <div class="col border-left-1 pl-10">
-                                        <h6 class="mb-1"><i class="bi bi-bullseye"></i> ${origin}</h6>
-                                        <h6 class="mb-1"><i class="bi bi-flag"></i> ${destination}</h6>
-                                    </div>
-                                    <div class="col-auto align-self-center">
-                                        <button class="btn btn-link text-primary" data-bs-toggle="collapse" aria-expanded="false"
-                                            data-bs-target="#collapseTwo"><i class="bi bi-chevron-down"></i></button>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="card-footer accordion-collapse collapse py-0" id="collapseTwo">
-                                <div class="map">
-                                    
-                                </div>
-                                <div class="row py-3">
-                                    <div class="col-6">
-                                        <button class="btn btn-default btn-sm w-100">ACCEPT</button>
-                                    </div>
-                                    <div class="col-6 align-self-center">
-                                        <button class="btn btn-secondary btn-sm w-100">DECLINE</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>`;
-            }
-
-            if(tripAdded.length > 0){
+                // <div class="col-auto align-self-center pr-10">
+                //  <h3>99<sub>km</sub></h3>
+                // </div>        
                 
+                displayTrips(tripsObj);
             }
 
             if(newData[1] == 'removed'){
-                // location.reload();
-                
-                console.log('CHILD DIVs:',document.getElementById("requests-div").children.length);
-
-                let parent = document.getElementById("requests-div")
-                parent.innerHTML = '';
+                Reflect.deleteProperty(tripsObj, newData[0]);
+                displayTrips(tripsObj);
             }
+
         });
         // unsubscribe();
+
+        function displayTrips(trips){
+            var rd = document.querySelector('.requests-div');
+            rd.style.setProperty('display', 'block');
+
+            let parent = document.getElementById("requests-div")
+            parent.innerHTML = '';
+
+            let i = 0;
+            console.log('TRIPS:',trips)
+            for (const trip_id in trips) {
+                console.log('TRIP:',trips[trip_id][2]);
+
+                var originLatLng = trips[trip_id][2].origin;
+                var destinationLatLng = trips[trip_id][2].destination;
+                
+                var origin = trips[trip_id][2].origin_name;
+                if(origin.length > 10) origin = origin.substring(0,25);
+
+                var destination = trips[trip_id][2].destination_name;
+                if(destination.length > 10) destination = destination.substring(0,25);
+
+                var tripId = trips[trip_id][0];
+
+                rd.innerHTML += `
+                <div class="col-12 col-md-6" id="${tripId}">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-body">
+                            <div class="row gx-2">
+                                <div class="col border-left-1">
+                                    <h6 class="origin"> ${origin}...</h6>
+                                    <h6 class="destination mb-1"> ${destination}...</h6>
+                                </div>
+                                <div class="col-auto align-self-center">
+                                    <button class="btn btn-link text-primary" data-bs-toggle="collapse" aria-expanded="false"
+                                        data-bs-target="#${tripId}-modal"
+                                        id="view-${tripId}" 
+                                        data-origin="[${originLatLng.latitude},${originLatLng.longitude}]" 
+                                        data-destination="[${destinationLatLng.latitude},${destinationLatLng.longitude}]">
+                                            <i class="bi bi-chevron-down"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer accordion-collapse collapse py-0" id="${tripId}-modal">
+                            <div id="${tripId}-map" style="height: 200px; width: 200px;">
+                                
+                            </div>
+                            <div class="row py-3">
+                                <div class="col">
+                                    <button class="btn btn-default btn-sm" id="btn-accept">ACCEPT</button>
+                                </div>
+                                <div class="col-auto align-self-center">
+                                    <button class="btn btn-link btn-sm w-100 text-danger" id="btn-decline">DECLINE</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                
+                $(`#view-${tripId}`).on('click', function() {
+                    let element = document.getElementById(tripId+'-modal');
+                    // if(element.classList.contains('show')){
+                        function displayDirections(originLatLng, destinationLatLng) {
+                            const directionsService = new google.maps.DirectionsService();
+                            const directionsRenderer = new google.maps.DirectionsRenderer();
+                            
+                            const mapOptions = {
+                                center: originLatLng,
+                                zoom: 15,
+                                disableDefaultUI: true,
+                                zoomControl: true,
+                            };
+                            const map = new google.maps.Map(document.getElementById(tripId+"-map"), mapOptions);
+                            directionsRenderer.setMap(map);
+                            
+                            const request = {
+                                origin: originLatLng,
+                                destination: destinationLatLng,
+                                travelMode: google.maps.TravelMode.DRIVING,
+                            };
+                            
+                            directionsService.route(request, function (response, status) {
+                                if (status === google.maps.DirectionsStatus.OK) {
+                                    directionsRenderer.setDirections(response);
+                                } else {
+                                    console.error("Error displaying directions:", status);
+                                }
+                            });
+                        }
+                        const originLatLng = new google.maps.LatLng($(this).data('origin')[0], $(this).data('origin')[1]);
+                        const destinationLatLng = new google.maps.LatLng($(this).data('destination')[0], $(this).data('destination')[1]); 
+
+                        displayDirections(originLatLng, destinationLatLng);
+                    // }else{
+                    //     initMap();
+                    // }
+                });
+            }
+        }
+        function hasClass(element, clsName) {
+            return(' ' + element.className + ' ').indexOf(' ' + clsName + ' ') > -1;
+        }
 
     </script>
     
