@@ -439,6 +439,7 @@
     
     logout.addEventListener('click', async (e) => {
         sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('driverId');
         setTimeout(function () {
             window.location.href = 'login.html';
         }, 100);

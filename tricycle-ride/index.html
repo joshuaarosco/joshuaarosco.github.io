@@ -58,6 +58,9 @@
             padding: 10px;
             padding-top: 20px;
         }
+        #driver{
+            display: none;
+        }
     </style>
 </head>
 
@@ -185,8 +188,11 @@
                 <span class="text-primary">TricycleRide</span> App<br>
             </h2>
             
-            <div class="mx-4 mt-5">
+            <div class="mx-4 mt-5" id="normal">
                 <a href="location.html" class="btn btn-md btn-default btn-block mt-2 btn-justify w-100">Looking for a ride?</a>
+            </div>
+            <div class="mx-4 mt-5" id="driver">
+                <a href="standby.html" class="btn btn-md btn-default btn-block mt-2 btn-justify w-100">Start Driving</a>
             </div>
             <!-- Dark mode switch -->
             <!-- <div class="row">
@@ -281,6 +287,7 @@
 
     logout.addEventListener('click', async (e) => {
         sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('driverId');
         setTimeout(function () {
             window.location.href = 'login.html';
         }, 100);
@@ -288,4 +295,19 @@
 
     var r = document.querySelector('.user-name');
     r.innerHTML = sessionStorage.getItem('userName')
+
+    console.log('DRIVERID:', sessionStorage.getItem('driverId'));
+        
+    checkDriver();
+    function checkDriver(){
+        var driverId = sessionStorage.getItem('driverId');
+
+        if(driverId!=null){
+            var r = document.querySelector('#normal');
+            r.style.setProperty('display', 'none');
+            
+            var r = document.querySelector('#driver');
+            r.style.setProperty('display', 'block');
+        }
+    }
 </script>

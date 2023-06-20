@@ -28,6 +28,7 @@
     
     <script>
         console.log('USERID:', sessionStorage.getItem('userId'));
+        console.log('DRIVERID:', sessionStorage.getItem('driverId'));
         
         checkToken();
         function checkToken(){
@@ -156,8 +157,24 @@
                     //setCookie('name', doc.data().name, 1);
                     sessionStorage.setItem('userId', doc.data().id);
                     sessionStorage.setItem('userName', doc.data().name);
+
+                    checkIfDriver(doc.data().id);
                 });
                 auth(counter);
+            });
+        }
+
+        function checkIfDriver(userId){
+            const driversRef = collection(db, "drivers");
+            const q = query(driversRef, 
+                where("user_id", "==", userId),
+                limit(1)
+            );
+
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    sessionStorage.setItem('driverId', doc.data().id);
+                });
             });
         }
     });
@@ -166,7 +183,7 @@
         if(counter > 0){
             setTimeout(function () {
                 window.location.href = 'index.html';
-            }, 100);
+            }, 1000);
         }
     }
 

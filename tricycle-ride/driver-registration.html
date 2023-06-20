@@ -25,6 +25,34 @@
 
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
+    <style>
+        .card{
+            background-color: #fff0;
+        }
+    </style>
+    <script>
+        console.log('USERID:', sessionStorage.getItem('userId'));
+        
+        checkToken();
+        function checkToken(){
+            var userId = sessionStorage.getItem('userId');
+            
+            if(userId==null){
+                window.location.href = 'login.html';
+            }
+        }
+        console.log('DRIVERID:', sessionStorage.getItem('driverId'));
+        
+        checkDriver();
+        function checkDriver(){
+            var driverId = sessionStorage.getItem('driverId');
+            
+            if(driverId!=null){
+                window.location.href = 'profile.html';
+            }
+        }
+        
+    </script>
 </head>
 
 <body class="body-scroll" data-page="settings">
@@ -73,60 +101,55 @@
         <!-- main page content -->
         <div class="main-container container">
 
-            <!-- profile picture -->
-            <div class="row  mb-4">
-                <div class="col-12 text-center bg-primary text-white position-relative py-4">
-                    <div class="coverimg position-absolute top-0 start-0 h-100 w-100 opacity-4">
-                        <img src="assets/img/user1.jpg" alt="">
-                    </div>
-                    <figure class="avatar avatar-160 rounded-circle mb-4 mx-auto">
-                        <img src="assets/img/user1.jpg" alt="">
-                    </figure>
-                    <div class="clearfix"></div>
-                    <h5 class="position-relative">Ajinkya McMohan</h5>
-                    <p class="text-muted">London, UK</p>
-                </div>
-            </div>
-
             <!-- profile information -->
             <div class="row mb-2">
                 <div class="col">
                     <h6 class="my-1">Basic Information</h6>
                 </div>
             </div>
-            <div class="row h-100 mb-4">
+            <div class="row h-100 mb-2">
                 <div class="col-12 col-md-6 col-lg-4">
-                    <div class="form-floating mb-3">
-                        <select class="form-control" id="country">
-                            <option selected>United States (+1)</option>
-                            <option>United Kingdoms (+44)</option>
-                        </select>
-                        <label for="country">Contry</label>
+                    <div class="form-group form-floating  mb-3">
+                        <input type="text" class="form-control" value="" placeholder="First Name" id="fname">
+                        <label for="fname">First Name</label>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="form-group form-floating  mb-3">
-                        <input type="text" class="form-control" value="Ajinkya " placeholder="Name" id="names">
-                        <label for="names">Name</label>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="form-group form-floating   mb-3">
-                        <input type="text" class="form-control" value="McMohan" placeholder="Surname" id="surnames">
-                        <label for="surnames">Surname</label>
+                        <input type="text" class="form-control" value="" placeholder="Last Name" id="lname">
+                        <label for="lname">Last Name</label>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="form-group form-floating  mb-3">
-                        <input type="text" class="form-control" value="info@maxartkiller.com" placeholder="Email or Phone"
-                            id="emailphone">
-                        <label for="emailphone">Email or Phone</label>
+                        <input type="text" class="form-control" value="" placeholder="Address" id="address">
+                        <label for="address">Address</label>
+                    </div>
+                </div>
+                <!-- <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating  mb-3">
+                        <input type="text" class="form-control" value="" placeholder="Contact person in case of emergency"
+                            id="contact_person">
+                        <label for="contact_person">Contact person in case of emergency</label>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="form-group form-floating  mb-3">
-                        <input type="file" class="form-control" id="fileupload">
-                        <label for="fileupload">Uplaod File</label>
+                        <input type="text" class="form-control" value="" placeholder="Contact # in case of emergency"
+                            id="phone">
+                        <label for="phone">Contact # in case of emergency</label>
+                    </div>
+                </div> -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating mb-3">
+                        <input type="text" class="form-control" value="" placeholder="License No." id="driver_license">
+                        <label for="driver_license">License No.</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating  mb-3">
+                        <input type="text" class="form-control" value="" placeholder="DL Codes" id="dl_codes">
+                        <label for="dl_codes">DL Codes</label>
                     </div>
                 </div>
             </div>
@@ -134,169 +157,46 @@
             <!-- add edit address form -->
             <div class="row mb-2">
                 <div class="col">
-                    <h6 class="my-1">Address Change</h6>
+                    <h6 class="my-1">Tricycle Information</h6>
                 </div>
             </div>
             <div class="row">
                 <div class="col-12 col-md-6 col-lg-4 mb-3">
                     <div class="form-group form-floating">
-                        <input type="text" class="form-control" value="Maxartkiller" id="address1" placeholder="Your Name">
-                        <label class="form-control-label" for="address1">Your Name</label>
+                        <input type="text" class="form-control" value="" id="make" placeholder="Make">
+                        <label class="form-control-label" for="make">Make</label>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4 mb-3">
                     <div class="form-group form-floating">
-                        <input type="text" class="form-control" value="265B, Arohhi Appartment" id="address2"
-                            placeholder="Address Line 1">
-                        <label class="form-control-label" for="address2">Address Line 1</label>
+                        <input type="text" class="form-control" value="" id="model" placeholder="Model">
+                        <label class="form-control-label" for="model">Model</label>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4 mb-3">
                     <div class="form-group form-floating">
-                        <input type="text" class="form-control" value="Bhuvandi Baug" id="address3" placeholder="Address Line 2">
-                        <label class="form-control-label" for="address3">Address Line 2</label>
+                        <input type="text" class="form-control" value="" id="color" placeholder="Color">
+                        <label class="form-control-label" for="color">Color</label>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4 mb-3">
                     <div class="form-group form-floating">
-                        <input type="text" list="datalistOptions" class="form-control" value="" id="address4"
-                            placeholder="Select Country">
-                        <datalist id="datalistOptions">
-                            <option value="United Kingdom">
-                            <option value="United States" selected>
-                            <option value="Australia">
-                            <option value="India">
-                            <option value="Russia">
-                        </datalist>
-                        <label class="form-control-label" for="address4">Country</label>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 mb-3">
-                    <div class="form-group form-floating">
-                        <input type="text" list="datalistStates" class="form-control" value="" id="address5"
-                            placeholder="Select State">
-                        <datalist id="datalistStates">
-                            <option value="California">
-                            <option value="Texas" selected>
-                            <option value="Florida">
-                            <option value="Georgia">
-                            <option value="Virginia">
-                        </datalist>
-                        <label class="form-control-label" for="address5">State</label>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 mb-3">
-                    <div class="form-group form-floating">
-                        <input type="text" class="form-control" value="Raipur" id="address6" placeholder="City">
-                        <label class="form-control-label" for="address6">City</label>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4 mb-4">
-                    <div class="form-group form-floating">
-                        <input type="text" class="form-control" value="68541-44" id="address7" placeholder="Pincode">
-                        <label class="form-control-label" for="address7">Pincode</label>
+                        <input type="text" class="form-control" value="" id="license_plate" placeholder="License Plate No.">
+                        <label class="form-control-label" for="license_plate">License Plate No.</label>
                     </div>
                 </div>
             </div>
 
-            <!-- change password -->
-            <div class="row mb-2">
-                <div class="col">
-                    <h6 class="my-1">Change Password</h6>
-                </div>
-            </div>
-            <div class="row h-100 mb-4">
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="form-floating  mb-3">
-                        <input type="password" class="form-control" value="asdasdasdsd" placeholder="Password" id="password">
-                        <label for="password">Password</label>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="form-floating ">
-                        <input type="password" class="form-control" placeholder="Confirm Password" id="confirmpassword">
-                        <label for="confirmpassword">Confirm Password</label>
-                        <button type="button" class="btn btn-link text-danger tooltip-btn" data-bs-toggle="tooltip"
-                            data-bs-placement="left" title="Enter valid Password" id="passworderror">
-                            <i class="bi bi-info-circle"></i>
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Email Notifications settings -->
-            <div class="row mb-2">
-                <div class="col">
-                    <h6 class="my-1">Notification Receive</h6>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-12">
-                    <div class="card shadow-sm">
-                        <ul class="list-group list-group-flush bg-none">
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-auto pr-0 align-self-center text-end">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="settingscheck1" checked>
-                                            <label class="form-check-label" for="settingscheck1"></label>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <h6 class="mb-1">Email Notification</h6>
-                                        <p class="text-muted small">Default all notification will be sent</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-auto pr-0 align-self-center text-end">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="settingscheck2" checked>
-                                            <label class="form-check-label" for="settingscheck2"></label>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <h6 class="mb-1">SMS Notification</h6>
-                                        <p class="text-muted small">Receive SMS notification</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-auto pr-0 align-self-center text-end">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="settingscheck3">
-                                            <label class="form-check-label" for="settingscheck3"></label>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <h6 class="mb-1">Profile Avaialability</h6>
-                                        <p class="text-muted small">Everyone can see my profile in search</p>
-                                    </div>
-                                </div>
-                            </li>
-                            <li class="list-group-item">
-                                <div class="row">
-                                    <div class="col-auto pr-0 align-self-center text-end">
-                                        <div class="form-check form-switch">
-                                            <input class="form-check-input" type="checkbox" id="settingscheck4">
-                                            <label class="form-check-label" for="settingscheck4"></label>
-                                        </div>
-                                    </div>
-                                    <div class="col">
-                                        <h6 class="mb-1">Sent Request</h6>
-                                        <p class="text-muted small">Everyone can sent me a request</p>
-                                    </div>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+            <div class="card shadow-sm">
+                <div class="card-body text-black" style="text-align: left; display: none;">
+                    XXXX
                 </div>
             </div>
 
             <div class="row h-100 mb-4">
-                <div class="col-12 d-grid"><a href="settings.html" target="_self" class="btn btn-default mt-3">Update</a></div>
+                <div class="col-12 d-grid">
+                    <button id="register" class="btn btn-default mt-3">Register</button>
+                </div>
             </div>
 
 
@@ -322,6 +222,106 @@
     <!-- page level custom script -->
     <script src="assets/js/app.js"></script>
 
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+    <script>
+
+        const register = document.getElementById("register");
+
+        register.addEventListener("click", function() {
+            let fname = document.getElementById("fname").value;
+            let lname = document.getElementById("lname").value;
+            let address = document.getElementById("address").value;
+            let driver_license = document.getElementById("driver_license").value;
+            let dl_codes = document.getElementById("dl_codes").value;
+            let make = document.getElementById("make").value;
+            let model = document.getElementById("model").value;
+            let color = document.getElementById("color").value;
+            let license_plate = document.getElementById("license_plate").value;   
+
+            if(
+                fname == '' || 
+                lname == '' || 
+                address == '' || 
+                driver_license == '' ||
+                dl_codes == '' ||
+                make == '' ||
+                model == '' ||
+                color == '' ||
+                license_plate == ''){
+                displayError('All fields are required!');
+            }else{
+                registerDriver();
+            }
+        });
+
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
+            authDomain: "tricycle-ride.firebaseapp.com",
+            databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "tricycle-ride",
+            storageBucket: "tricycle-ride.appspot.com",
+            messagingSenderId: "802022631435",
+            appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
+        };
+        
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        function registerDriver(destination, originLat, originLng, destinationLat, destinationLng){
+
+            let fname = document.getElementById("fname").value;
+            let lname = document.getElementById("lname").value;
+            let address = document.getElementById("address").value;
+            let driver_license = document.getElementById("driver_license").value;
+            let dl_codes = document.getElementById("dl_codes").value;
+            let make = document.getElementById("make").value;
+            let model = document.getElementById("model").value;
+            let color = document.getElementById("color").value;
+            let license_plate = document.getElementById("license_plate").value;   
+            
+            db.collection("drivers").add({
+                user_id: sessionStorage.getItem('userId'),
+                id: null,
+                fname: fname,
+                lname: lname,
+                address: address,
+                driver_license: driver_license,
+                dl_codes: dl_codes,
+                make: make,
+                model: model,
+                color: color,
+                license_plate: license_plate
+            }) .then((docRef) => {
+                sessionStorage.setItem('driverId', docRef.id);
+                
+                db.collection("drivers").doc(docRef.id).update({
+                    id: docRef.id
+                });
+                
+                db.collection("users").doc(sessionStorage.getItem('userId')).update({
+                    name: fname+' '+lname
+                });
+
+                window.location.href = 'profile.html';
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+            });
+        }
+        
+        function displayError(message){
+            var r = document.querySelector('.card-body');
+            r.style.setProperty('display', 'inline');
+            r.style.setProperty('opacity', '75%');
+            r.style.setProperty('color', 'red');
+            r.style.setProperty('background-color', 'rgb(255, 240, 240)');
+            r.innerHTML = message;
+        }
+    </script>
+
 </body>
 
 </html>
+

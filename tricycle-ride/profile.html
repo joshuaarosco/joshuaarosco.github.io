@@ -64,6 +64,12 @@
         .pull-right{
             float: right;
         }
+        #tricycle{
+            display: none;
+        } 
+        #driver{
+            display: none;
+        }
     </style>
 </head>
 
@@ -225,8 +231,82 @@
                     </div>
                 </div>
             </div>
+
+            <div class="row" id="driver">
+                <div class="col-12">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-header">
+                            <a href="#edit-driver.html" class="btn btn-link pull-right p-0">
+                                <i class="bi bi-pencil-square fs-3"></i>
+                            </a>
+                            <h6 class="my-1">Driver Information</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="mb-1 info driver-address">000000000000</h6>
+                                    <p class="text-muted small">Address</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="mb-1 info driver-license">00000000000</h6>
+                                    <p class="text-muted small">License No.</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="mb-1 info driver-dl-codes">X0</h6>
+                                    <p class="text-muted small">DL Codes</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row" id="tricycle">
+                <div class="col-12">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-header">
+                            <h6 class="my-1">Tricycle Information</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="mb-1 info tricy-make">XXXXX</h6>
+                                    <p class="text-muted small">Make</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="mb-1 info tricy-model">XXXXX</h6>
+                                    <p class="text-muted small">Model</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="mb-1 info tricy-color">XXXXX</h6>
+                                    <p class="text-muted small">Color</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="mb-1 info tricy-license">00000000000</h6>
+                                    <p class="text-muted small">License Plate No.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             
-            <div class="row mb-4">
+            <div class="row mb-4" id="register">
                 <div class="col d-grid">
                     <a href="driver-registration.html" class="btn btn-default shadow-sm">Register as a Driver</a>
                 </div>
@@ -298,6 +378,7 @@
 
         logout.addEventListener('click', async (e) => {
             sessionStorage.removeItem('userId');
+            sessionStorage.removeItem('driverId');
             setTimeout(function () {
                 window.location.href = 'login.html';
             }, 100);
@@ -353,6 +434,64 @@
                 e.innerHTML = doc.data().email
             });
         });
+    }
+    
+    const driversRef = collection(db, "drivers");
+    var driverId = sessionStorage.getItem('driverId');
+    if(driverId != null){
+        const q = query(driversRef, 
+            where("id", "==", driverId),
+            limit(1)
+        );
+        
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                sessionStorage.setItem('driverId', doc.data().id);
+                
+                var r = document.querySelector('.profile-name');
+                r.innerHTML = doc.data().fname+" "+doc.data().lname;
+
+                var da = document.querySelector('.driver-address');
+                da.innerHTML = doc.data().address
+
+                var dl = document.querySelector('.driver-license');
+                dl.innerHTML = doc.data().driver_license
+
+                var dlcodes = document.querySelector('.driver-dl-codes');
+                dlcodes.innerHTML = doc.data().dl_codes
+
+                var tmake = document.querySelector('.tricy-make');
+                tmake.innerHTML = doc.data().make
+
+                var tmodel = document.querySelector('.tricy-model');
+                tmodel.innerHTML = doc.data().model
+
+                var tcolor = document.querySelector('.tricy-color');
+                tcolor.innerHTML = doc.data().color
+
+                var tlicense = document.querySelector('.tricy-license');
+                tlicense.innerHTML = doc.data().license_plate
+                
+                var regBtn = document.querySelector('#register');
+                regBtn.remove();
+            });
+        });
+    }
+
+    console.log('DRIVERID:', sessionStorage.getItem('driverId'));
+        
+    checkDriver();
+    function checkDriver(){
+        var driverId = sessionStorage.getItem('driverId');
+
+        if(driverId!=null){
+            
+            var r = document.querySelector('#driver');
+            r.style.setProperty('display', 'block');
+
+            var r = document.querySelector('#tricycle');
+            r.style.setProperty('display', 'block');
+        }
     }
     
 </script>
