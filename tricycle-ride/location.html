@@ -280,7 +280,8 @@
             const q = query(tripsRef, 
                 and(
                     where("user_id", "==", userId),
-                    where("is_complete", "==", false)
+                    where("is_complete", "==", false),
+                    where("is_cancelled", "==", false)
                 ),
                 limit(1)
             );
