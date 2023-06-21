@@ -1,0 +1,874 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="generator" content="">
+    <title>Standby</title>
+    
+    <!-- manifest meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json" />
+    
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="assets/img/favicon180.png" sizes="180x180">
+    <link rel="icon" href="assets/img/favicon32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="assets/img/favicon16.png" sizes="16x16" type="image/png">
+    
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="assets/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
+    
+    <!-- swiper carousel css -->
+    <link rel="stylesheet" href="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.css">
+    <style>
+        .border-left-1{
+            border-left: 1px solid #000000a1;
+            padding-left: 10px!important;
+            margin-left: 10px;
+            height: 30px;
+            margin-top: 7px!important;
+        }
+        .origin::before{
+            content: '';
+            position: absolute;
+            left: -16.5px;
+            bottom: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #FFF;
+            border: 1px solid #000;
+            box-sizing: border-box;
+        }
+        .destination::before{
+            content: '';
+            position: absolute;
+            left: -16px;
+            bottom: 5px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #FFF;
+            border: 5px solid #000;
+            box-sizing: border-box;
+        }
+        .border-left-1 > .origin{
+            margin-top: -5px;
+            position: absolute;
+            font-weight: 200;
+        }
+        .border-left-1 > .destination{
+            margin-top: 20px;
+            position: absolute;
+        }
+        .pr-10{
+            padding-right: 10px!important;
+        }
+        .pl-10{
+            padding-left: 10px!important;
+        }
+        #view{
+            cursor: pointer;
+        }
+        #view:hover{
+            background-color: #f0fcff;
+        }
+        .pull-right{
+            float: right;
+        }
+    </style>
+    <script>
+        console.log('USERID:', sessionStorage.getItem('userId'));
+        
+        checkToken();
+        function checkToken(){
+            var userId = sessionStorage.getItem('userId');
+            
+            if(userId==null){
+                window.location.href = 'login.html';
+            }
+        }
+        console.log('DRIVERID:', sessionStorage.getItem('driverId'));
+        
+        // checkDriver();
+        // function checkDriver(){
+        //     var driverId = sessionStorage.getItem('driverId');
+
+        //     if(driverId==null){
+        //         window.location.href = 'index.html';
+        //     }
+        // }
+    </script>
+    <script>
+        console.log('TRIPID:', sessionStorage.getItem('tripId'));
+        
+        // tripChecker();
+        // function tripChecker(){
+        //     var tripId = sessionStorage.getItem('tripId');
+            
+        //     if(tripId == null){
+        //         window.location.href = 'location.html';
+        //     }
+        // }
+        
+    </script>
+    <!-- style css for this template -->
+    <link href="assets/css/style.css" rel="stylesheet" id="style">
+    <style>
+        .tricy-icon{
+            width: 80px;
+        }
+        .tricy-div{
+            position: relative;
+            top: -30px;
+            height: 100px;
+            width: 100px;
+            /* background-color: black; */
+            box-shadow: 0px -2px 5px rgba(0,0,0,0.1);
+            background-color: white;
+            border-radius: 50%;
+            padding: 10px;
+            padding-top: 20px;
+        }
+        .map-container{
+            min-width: 100%;
+            padding: 0px;
+        }
+        .map-inputs{
+            position: absolute;
+            top: 0;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+        .loader{
+            display: block;
+            position: relative;
+            height: 35px;
+            width: 100%;
+            background: linear-gradient(#fff 3px, transparent 0) no-repeat;
+            background-position: 0 16px;
+            box-sizing: border-box;
+            overflow: hidden;
+        }
+        .loader:before{
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 2px;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            background: #FFF;
+            border: 6px solid #000;
+            box-sizing: border-box;
+            animation: ballbns 1.5s linear infinite;
+        }
+        .waiting-div{
+            position: absolute;
+            top: 45%;
+            left: 50%;
+            margin-top: -300px;
+            margin-left: -160px;
+            width: 320px;
+            background-color: none;
+            border-radius: 5px;
+        }
+        .waiting-div > #waiting-loader{
+            top: 50%;
+            width: 220px;
+            height: 50px;
+            position: absolute;
+            margin-left: 50px;
+            margin-top: 80px;
+            text-align: center;
+        }
+        #waiting-for-driver{
+            color: #FFF;
+            margin-left: 50px;
+            margin-right: 50px;
+            margin-top: 100px;
+            font-weight: 400;
+            font-size: 20px;
+        }
+        .info-div{
+            position: absolute;
+            height: 200px;
+            background: #fff;
+            width: 100%;
+            left: 0;
+            bottom: 0;
+            box-shadow: 0px -2px 5px rgba(0,0,0,0.1);
+            display: none;
+        }
+        #going-to{
+            font-weight: bolder;
+        }
+        
+        @keyframes ballbns{
+            0%{
+                left: 0;
+                transform: translateX(-100%);
+            }
+            100%{
+                left: 100%;
+                transform: translateX(0%);
+            }
+        }
+        .loading{
+            font-weight: 200;
+        }
+        .loading:after {
+            overflow: hidden;
+            display: inline-block;
+            vertical-align: bottom;
+            -webkit-animation: ellipsis steps(4, end) 900ms infinite;
+            animation: ellipsis steps(4, end) 900ms infinite;
+            content: "\2026";
+            /* ascii code for the ellipsis character */
+            width: 0px;
+        }
+
+        @keyframes ellipsis {
+            to {
+                width: 40px;
+            }
+            }
+
+            @-webkit-keyframes ellipsis {
+            to {
+                width: 40px;
+            }
+        }
+        #pickup-button{
+            display: none;
+        }
+        #arrive-button{
+            display: none;
+        }
+        #rate-button{
+            display: none;
+        }
+        .py-2{
+            padding-top: 0px!important;
+        }
+        .action-btn{
+            padding: 10px 25px;
+        }
+        .person-info{
+            padding: 10px;
+            border-bottom: 1px solid #ebebeb;
+        }
+        .person-name{
+            font-weight: 300;
+            font-size: 23px;
+            /* padding: 5px 0px; */
+        }
+        .fs-30{
+            font-size: 30px;
+        }
+        .otw{
+            display: none;
+        }
+    </style>
+</head>
+
+<body class="body-scroll" data-page="index">
+    
+    <!-- loader section -->
+    <div class="container-fluid loader-wrap">
+        <div class="row h-100">
+            <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto text-center align-self-center">
+                <div class="loader-cube-wrap mx-auto">
+                    <div class="loader-cube1 loader-cube"></div>
+                    <div class="loader-cube2 loader-cube"></div>
+                    <div class="loader-cube4 loader-cube"></div>
+                    <div class="loader-cube3 loader-cube"></div>
+                </div>
+                <p>Great things ahead!<br><strong>Please wait...</strong></p>
+            </div>
+        </div>
+    </div>
+    <!-- loader section ends -->
+    
+    <!-- Sidebar main menu -->
+    <div class="sidebar-wrap  sidebar-overlay">
+        <!-- Add overlay or fullmenu instead overlay -->
+        <div class="closemenu text-muted">Close Menu</div>
+        <div class="sidebar">
+            <div class="row">
+                <div class="col-auto mx-auto text-center">
+                    <figure class="avatar avatar-120 rounded-circle mx-auto mb-3">
+                        <img src="assets/img/user1.jpg" alt="">
+                    </figure>
+                    <h6 class="mb-1 user-name"></h6>
+                    <!-- <p class="text-muted">London, UK</p> -->
+                </div>
+            </div>
+            <div class="row mt-3">
+                <div class="col-12">
+                    <ul class="nav nav-pills">
+                        <li class="nav-item">
+                            <a class="nav-link" href="index.html">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-house-door"></i></div>
+                                <div class="col">Home</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="profile.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-person"></i></div>
+                                <div class="col">Profile</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+                        
+                        <li class="nav-item">
+                            <a class="nav-link" href="#" id="logout" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-box-arrow-right"></i></div>
+                                <div class="col">Logout</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Sidebar main menu ends -->
+    
+    <!-- Begin page -->
+    <main class="h-100">
+        
+        <!-- Header -->
+        <header class="container-fluid header">
+            <div class="row">
+                <div class="col-auto">
+                    <button type="button" class="btn btn-link menu-btn">
+                        <i class="bi bi-list"></i>
+                    </button>
+                </div>
+                <div class="col pl-0">
+                    <!-- <div class="form-group search-header">
+                        <input class="form-control border-0" placeholder="Search">
+                        <button type="button" class="btn btn-link tooltip-btn">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div> -->
+                </div>
+                <div class="col-auto align-self-center">
+                    <a href="profile.html" class="position-relative d-block mr-3">
+                        <figure class="avatar avatar-36 rounded-circle">
+                            <img src="assets/img/user1.jpg" alt="">
+                        </figure>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <!-- Header ends -->
+        
+        <!-- main page content -->
+        <div class="main-container container map-container">
+            <!-- Dark mode switch -->
+            
+            <div id="map" style="height: 95vh; width: 100%;">
+            </div>
+            
+            <div class="waiting-div">
+                <div class="requests-div" id="requests-div">
+                    <div class="col-12" id="${tripId}">
+                        <div class="card shadow-sm mb-3">
+                            <div class="card-header otw">
+                                <span class="loading">The Tricycle Driver is on it's way</span>
+                            </div>
+                            <div class="card-body">
+                                <div class="row gx-2 py-2">
+                                    <div class="col border-left-1">
+                                        <h6 class="origin"> ${origin}...</h6>
+                                        <h6 class="destination mb-1"> ${destination}...</h6>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="info-div">
+                <div class="person-info">
+                    <div class="row">
+                        <div class="col-3">
+                            <figure class="avatar avatar-70 rounded-circle pull-right">
+                                <img src="assets/img/user1.jpg" alt="">
+                            </figure>
+                        </div>
+                        <div class="col">
+                            <a href="#"><i class="bi bi-chat-dots pull-right fs-30"></i></a>
+                            <span class="person-name">John Doe</span><br>
+                            <span class="person-type">Passenger</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="action-btn">
+                    <div class="row">
+                        <div class="col-4">
+                            <button class="btn btn-default btn-sm w-100" id="pickup-button">PICK UP</button>
+                            <button class="btn btn-default btn-sm w-100" id="arrive-button">ARRIVED</button>
+                            <button class="btn btn-default btn-sm w-100" id="rate-button">RATE</button>
+                        </div>
+                        <div class="col-4">
+                            <!-- <button class="btn btn-default btn-sm w-100" id="btn-cancel">CANCEL TRIP</button> -->
+                        </div>
+                        <div class="col-4">
+                            <button class="btn btn-danger btn-sm w-100" id="cancel-button">CANCEL</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- main page content ends -->
+    </main>
+    <!-- Page ends-->
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <ul class="nav nav-pills nav-justified">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.html">
+                        <span>
+                            <i class="nav-icon bi bi-house"></i>
+                            <span class="nav-text">Home</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link active" href="location.html">
+                        <span>
+                            <!-- <i class="nav-icon bi bi-pin-map"></i> -->
+                            <div class="tricy-div">
+                                <img class="tricy-icon" src="assets/tricy-selected.png" alt="">
+                            </div>
+                            <span class="nav-text">Ride</span>
+                        </span>
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="profile.html">
+                        <span>
+                            <i class="nav-icon bi bi-person"></i>
+                            <span class="nav-text">Profile</span>
+                        </span>
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </footer>
+    <!-- Footer ends-->
+    
+    <!-- Required jquery and libraries -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/vendor/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- cookie js -->
+    <script src="assets/js/jquery.cookie.js"></script>
+    
+    <!-- Customized jquery file  -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/color-scheme.js"></script>
+    
+    <!-- PWA app service registration and works -->
+    <script src="assets/js/pwa-services.js"></script>
+    
+    <!-- Chart js script -->
+    <script src="assets/vendor/chart-js-3.3.1/chart.min.js"></script>
+    
+    <!-- Progress circle js script -->
+    <script src="assets/vendor/progressbar-js/progressbar.min.js"></script>
+    
+    <!-- swiper js script -->
+    <script src="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js"></script>
+    
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAqdwRPpTtDGc6lWZKlSO0EPgkAKRo-8o&libraries=places&callback="></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+    <script>
+        
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const tripId = urlParams.get('tripId')?urlParams.get('tripId'):sessionStorage.getItem('tripId');
+        const originVal = urlParams.get('origin')
+        const originLatVal = urlParams.get('originLat')
+        const originLngVal = urlParams.get('originLng')
+        const destinationVal = urlParams.get('destination')
+        const destinationLatVal = urlParams.get('destinationLat')
+        const destinationLngVal = urlParams.get('destinationLng')
+
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
+            authDomain: "tricycle-ride.firebaseapp.com",
+            databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "tricycle-ride",
+            storageBucket: "tricycle-ride.appspot.com",
+            messagingSenderId: "802022631435",
+            appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
+        };
+        
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+
+        function listenToTrip(collectionName, callback) {
+            const collectionRef = db.collection(collectionName);
+
+            var tripId = sessionStorage.getItem('tripId');
+            var userId = sessionStorage.getItem('userId');
+            var driverId = sessionStorage.getItem('driverId');
+            
+            if(driverId!=null){
+                return collectionRef
+                    .where("id", "==", tripId)
+                    .where("driver_id", "==", userId)
+                    .onSnapshot((snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'modified') {
+                            callback(change.doc.data());
+                        }
+                    });
+                });
+            }else{
+                return collectionRef
+                    .where("id", "==", tripId)
+                    .where("user_id", "==", userId)
+                    .onSnapshot((snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        
+                        if (change.type === 'modified') {
+                            callback(change.doc.data());
+                        }
+                    });
+                });
+            }
+        }
+
+        const unsubscribe = listenToTrip('trips', (newData) => {
+            let data = newData;
+            const driverLatLng = {
+                lat: data.driver_location.latitude,
+                lng:  data.driver_location.longitude
+            };
+            buttonLogic(data);
+            console.log('UPDATE:', data);
+            displayDirections(originLatLng, destinationLatLng, driverLatLng);
+        });
+        
+        // function initMap() {
+            
+        // Google map
+        const map = new google.maps.Map(document.getElementById("map"), {
+            zoom: 15,
+            disableDefaultUI: true,
+            zoomControl: true
+        });
+        
+        var origin = originVal;
+        if(origin.length > 10) origin = origin.substring(0,25);
+
+        var destination = destinationVal;
+        if(destination.length > 10) destination = destination.substring(0,25);
+
+        document.querySelector('.origin').innerHTML = '<i class="bi bi-geo"></i> '+ origin
+        document.querySelector('.destination').innerHTML ='<i class="bi bi-geo-alt"></i> '+ destination
+
+        const originLatLng = new google.maps.LatLng(originLatVal, originLngVal);
+        const destinationLatLng = new google.maps.LatLng(destinationLatVal, destinationLngVal);
+
+        const getDocumentById = async (collectionName, documentId) => {
+            try {
+                const documentRef = firebase.firestore().collection(collectionName).doc(documentId);
+                const documentSnapshot = await documentRef.get();
+
+                if (documentSnapshot.exists) {
+                    const data = documentSnapshot.data();
+                    // Handle the retrieved data
+                    
+                    const driverLatLng = {
+                        lat: data.driver_location.latitude,
+                        lng: data.driver_location.longitude
+                    };
+
+                    sessionStorage.setItem('driverUserId', data.driver_id);
+                    sessionStorage.setItem('passengerUserId', data.user_id);
+                    
+                    displayDirections(originLatLng, destinationLatLng, driverLatLng);
+                } else {
+                console.log('Document does not exist!');
+                }
+            } catch (error) {
+                console.error('Error getting document:', error);
+            }
+        };
+        
+        getDocumentById('trips', tripId);
+
+        function displayDirections(originLatLng, destinationLatLng, driverLatLng) {
+            const directionsService = new google.maps.DirectionsService();
+            const directionsRenderer = new google.maps.DirectionsRenderer();
+            
+            const mapOptions = {
+                center: originLatLng,
+                zoom: 15,
+                disableDefaultUI: true,
+            };
+            
+            const map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            directionsRenderer.setMap(map);
+            
+            const request = {
+                origin: originLatLng,
+                destination: destinationLatLng,
+                travelMode: google.maps.TravelMode.DRIVING,
+            };
+            
+            // const driverLatLng = {
+            //     lat: 16.0024318,
+            //     lng: 120.2627999
+            // };
+            
+            const image = "assets/tricydriver.png";
+            let driverMarker = new google.maps.Marker({
+                position: new google.maps.LatLng(driverLatLng),
+                map: map,
+                animation: google.maps.Animation.DROP,
+                icon: image,
+                title: 'Tricycle Driver Location'
+            });
+            
+            directionsService.route(request, function (response, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsRenderer.setDirections(response);
+                } else {
+                    console.error("Error displaying directions:", status);
+                }
+            });
+        }
+    // }
+
+    // window.initMap = initMap;
+    
+    </script>
+    
+</body>
+
+
+</html>
+<script>
+    logout.addEventListener('click', async (e) => {
+        sessionStorage.removeItem('userId');
+        sessionStorage.removeItem('driverId');
+        setTimeout(function () {
+            window.location.href = 'login.html';
+        }, 100);
+    })
+
+    let driverId = sessionStorage.getItem('driverId')
+    if(driverId != null){
+
+        const getTripDetail = async (collectionName, documentId) => {
+            try {
+                const documentRef = firebase.firestore().collection(collectionName).doc(documentId);
+                const documentSnapshot = await documentRef.get();
+
+                if (documentSnapshot.exists) {
+                    const data = documentSnapshot.data();
+                    // Handle the retrieved data
+                    // console.log(data.name);
+                    buttonLogic(data);
+                } else {
+                    console.log('Document does not exist!');
+                }
+            } catch (error) {
+                console.error('Error getting document:', error);
+            }
+        };
+
+        getTripDetail('trips', tripId)
+        
+    }else{
+        var r = document.querySelector('.otw');
+        r.style.setProperty('display','block');
+
+        const getTripDetail = async (collectionName, documentId) => {
+            try {
+                const documentRef = firebase.firestore().collection(collectionName).doc(documentId);
+                const documentSnapshot = await documentRef.get();
+
+                if (documentSnapshot.exists) {
+                    const data = documentSnapshot.data();
+                    // Handle the retrieved data
+                    // console.log(data.name);
+                    if(data.is_complete == true){
+                        generateRate();
+                    }
+                } else {
+                    console.log('Document does not exist!');
+                }
+            } catch (error) {
+                console.error('Error getting document:', error);
+            }
+        };
+
+        getTripDetail('trips', tripId)
+    }
+
+    function buttonLogic(data){
+        if(data.is_started == true && data.driver_id == sessionStorage.getItem('userId')){
+            generateArrive()
+            var r = document.getElementById('pickup-button');
+            r.style.setProperty('display','none');
+        }
+        if(data.is_started == false && data.driver_id == sessionStorage.getItem('userId')){
+            generatePickup()
+            var r = document.getElementById('arrive-button');
+            r.style.setProperty('display','none');
+        }
+        if(data.is_complete == true && data.user_id == sessionStorage.getItem('userId')){
+            generateRate()
+            var r = document.getElementById('arrive-button');
+            r.style.setProperty('display','none');
+            var r = document.getElementById('pickup-button');
+            r.style.setProperty('display','none');
+            var r = document.getElementById('cancel-button');
+            r.style.setProperty('display','none');
+        }
+        if(data.is_complete == true && data.driver_id == sessionStorage.getItem('userId')){
+            var r = document.getElementById('arrive-button');
+            r.style.setProperty('display','none');
+            var r = document.getElementById('pickup-button');
+            r.style.setProperty('display','none');
+            var r = document.getElementById('cancel-button');
+            r.style.setProperty('display','none');
+        }
+    }
+
+    function generatePickup(){
+        const pickup = document.getElementById('pickup-button');
+        pickup.style.setProperty('display','block');
+        
+        pickup.addEventListener('click', function() {
+            db.collection("trips").doc(tripId).update({
+                is_started: true
+            })
+            .then((docRef) => {
+
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+            });
+        })
+    }
+
+    function generateArrive(){
+        const arrive = document.getElementById('arrive-button');
+        arrive.style.setProperty('display','block');
+
+        arrive.addEventListener('click', function() {
+            db.collection("trips").doc(tripId).update({
+                is_complete: true
+            })
+            .then((docRef) => {
+                var r = document.getElementById('cancel-button');
+                r.style.setProperty('display','none');
+                var r = document.getElementById('arrive-button');
+                r.style.setProperty('display','none');
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+            });
+        })
+    }
+
+    function generateRate(){
+        const rate = document.getElementById('rate-button');
+        rate.style.setProperty('display','block');
+        var r = document.getElementById('cancel-button');
+        r.style.setProperty('display','none');
+    }
+    
+    setTimeout(function () {
+        console.log('PASSENGER ID: ', sessionStorage.getItem('passengerUserId'));
+        console.log('DRIVER ID: ', sessionStorage.getItem('driverUserId'));
+
+        const passengerUserId = sessionStorage.getItem('passengerUserId');
+        const driverUserId = sessionStorage.getItem('driverUserId');
+
+        const getUserByid = async (collectionName, documentId) => {
+            try {
+                const documentRef = firebase.firestore().collection(collectionName).doc(documentId);
+                const documentSnapshot = await documentRef.get();
+
+                if (documentSnapshot.exists) {
+                    const data = documentSnapshot.data();
+                    // Handle the retrieved data
+                    // console.log(data.name);
+                    var r = document.querySelector('.info-div');
+                    r.style.setProperty('display','block');
+
+                    var pname = document.querySelector('.person-name');
+                    pname.innerHTML = data.name;
+                } else {
+                    console.log('Document does not exist!');
+                }
+            } catch (error) {
+                console.error('Error getting document:', error);
+            }
+        };
+        let userId = sessionStorage.getItem('userId')
+        let driverId = sessionStorage.getItem('driverId')
+        
+        if(driverId!=null){
+            getUserByid('users', passengerUserId);
+            var ptype = document.querySelector('.person-type');
+            ptype.innerHTML = 'PASSENGER';
+        }else{
+            getUserByid('users', driverUserId)
+            var ptype = document.querySelector('.person-type');
+            ptype.innerHTML = 'DRIVER';
+        }
+
+    }, 1000);
+
+
+    const cancel = document.getElementById("cancel-button");
+            
+    cancel.addEventListener("click", function() {
+        cancelTrip();
+    });
+
+    function cancelTrip(){
+        var tripId = sessionStorage.getItem('tripId');
+        if(tripId != null){
+            db.collection("trips").doc(tripId).update({
+                is_cancelled: true
+            })
+            .then((docRef) => {
+                sessionStorage.removeItem('tripId');
+                window.location.href = 'location.html';
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+            });
+        }
+    }
+
+    var r = document.querySelector('.user-name');
+    r.innerHTML = sessionStorage.getItem('userName')
+
+</script>

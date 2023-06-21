@@ -447,6 +447,41 @@
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         
+        
+        checkActiveTrip(sessionStorage.getItem('userId'));
+
+        function checkActiveTrip(userId){
+            const getDocumentsByCondition = async (collectionName, userId) => {
+                try {
+                    const collectionRef = firebase.firestore().collection(collectionName);
+                    const querySnapshot = await collectionRef
+                                        .where('driver_id', '==', userId)
+                                        .where('is_complete', '==', false)
+                                        .where('is_cancelled', '==', false)
+                                        .get();
+
+                    querySnapshot.forEach((documentSnapshot) => {
+                    if (documentSnapshot.exists) {
+                        const data = documentSnapshot.data();
+                        sessionStorage.setItem('tripId', data.id);
+                        
+                        window.location.href = 'travel.html?origin='+data.origin_name
+                                        +'&originLat='+data.origin.latitude
+                                        +'&originLng='+data.origin.longitude
+                                        +'&destination='+data.destination_name
+                                        +'&destinationLat='+data.destination.latitude
+                                        +'&destinationLng='+data.destination.longitude;
+                    } else {
+                        console.log('Document does not exist!');
+                    }
+                    });
+                } catch (error) {
+                    console.error('Error getting documents:', error);
+                }
+            };
+            getDocumentsByCondition('trips',userId);
+        }
+        
         function cancelTrip(){
             var tripId = sessionStorage.getItem('tripId');
             if(tripId != null){
@@ -541,79 +576,43 @@
                 var tripId = trips[trip_id][0];
 
                 rd.innerHTML += `
-                <div class="col-12 col-md-6" id="${tripId}">
+                <div class="col-12" id="${tripId}">
                     <div class="card shadow-sm mb-3">
                         <div class="card-body">
                             <div class="row gx-2">
                                 <div class="col border-left-1">
-                                    <h6 class="origin"> ${origin}...</h6>
-                                    <h6 class="destination mb-1"> ${destination}...</h6>
+                                    <h6 class="origin"><i class="bi bi-geo"></i> ${origin}...</h6>
+                                    <h6 class="destination mb-1"><i class="bi bi-geo-alt"></i> ${destination}...</h6>
                                 </div>
                                 <div class="col-auto align-self-center">
                                     <button class="btn btn-link text-primary" data-bs-toggle="collapse" aria-expanded="false"
-                                        data-bs-target="#${tripId}-modal"
-                                        id="view-${tripId}" 
-                                        data-origin="[${originLatLng.latitude},${originLatLng.longitude}]" 
-                                        data-destination="[${destinationLatLng.latitude},${destinationLatLng.longitude}]">
+                                        data-bs-target="#${tripId}-modal">
                                             <i class="bi bi-chevron-down"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
                         <div class="card-footer accordion-collapse collapse py-0" id="${tripId}-modal">
-                            <div id="${tripId}-map" style="height: 200px; width: 200px;">
+                            <div id="${tripId}-map">
                                 
                             </div>
                             <div class="row py-3">
                                 <div class="col">
-                                    <button class="btn btn-default btn-sm" id="btn-accept">ACCEPT</button>
+                                    <a class="btn btn-primary btn-sm w-100 view-btn-${tripId}" id="btn-view"
+                                        href="view.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatLng.latitude}&originLng=${originLatLng.longitude}&destinationLat=${destinationLatLng.latitude}&destinationLng=${destinationLatLng.longitude}">
+                                            VIEW
+                                    </a>
                                 </div>
-                                <div class="col-auto align-self-center">
-                                    <button class="btn btn-link btn-sm w-100 text-danger" id="btn-decline">DECLINE</button>
+                                <div class="col">
+                                    <a class="btn btn-default btn-sm w-100" id="btn-accept"
+                                        href="accept.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatLng.latitude}&originLng=${originLatLng.longitude}&destinationLat=${destinationLatLng.latitude}&destinationLng=${destinationLatLng.longitude}">
+                                        ACCEPT
+                                    </a>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>`;
-                
-                $(`#view-${tripId}`).on('click', function() {
-                    let element = document.getElementById(tripId+'-modal');
-                    // if(element.classList.contains('show')){
-                        function displayDirections(originLatLng, destinationLatLng) {
-                            const directionsService = new google.maps.DirectionsService();
-                            const directionsRenderer = new google.maps.DirectionsRenderer();
-                            
-                            const mapOptions = {
-                                center: originLatLng,
-                                zoom: 15,
-                                disableDefaultUI: true,
-                                zoomControl: true,
-                            };
-                            const map = new google.maps.Map(document.getElementById(tripId+"-map"), mapOptions);
-                            directionsRenderer.setMap(map);
-                            
-                            const request = {
-                                origin: originLatLng,
-                                destination: destinationLatLng,
-                                travelMode: google.maps.TravelMode.DRIVING,
-                            };
-                            
-                            directionsService.route(request, function (response, status) {
-                                if (status === google.maps.DirectionsStatus.OK) {
-                                    directionsRenderer.setDirections(response);
-                                } else {
-                                    console.error("Error displaying directions:", status);
-                                }
-                            });
-                        }
-                        const originLatLng = new google.maps.LatLng($(this).data('origin')[0], $(this).data('origin')[1]);
-                        const destinationLatLng = new google.maps.LatLng($(this).data('destination')[0], $(this).data('destination')[1]); 
-
-                        displayDirections(originLatLng, destinationLatLng);
-                    // }else{
-                    //     initMap();
-                    // }
-                });
             }
         }
         function hasClass(element, clsName) {
@@ -651,5 +650,4 @@
     //         document.getElementById('going-to').innerHTML = tripDetails.origin;
     //     }
     // }
-
 </script>

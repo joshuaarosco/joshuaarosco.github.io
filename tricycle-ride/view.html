@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="generator" content="">
-    <title>Waiting</title>
+    <title>Standby</title>
     
     <!-- manifest meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -26,6 +26,60 @@
     
     <!-- swiper carousel css -->
     <link rel="stylesheet" href="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.css">
+    <style>
+        .border-left-1{
+            border-left: 1px solid #000000a1;
+            padding-left: 10px!important;
+            margin-left: 10px;
+            height: 30px;
+            margin-top: 7px!important;
+        }
+        .origin::before{
+            content: '';
+            position: absolute;
+            left: -16.5px;
+            bottom: 5px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #FFF;
+            border: 1px solid #000;
+            box-sizing: border-box;
+        }
+        .destination::before{
+            content: '';
+            position: absolute;
+            left: -16px;
+            bottom: 5px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #FFF;
+            border: 5px solid #000;
+            box-sizing: border-box;
+        }
+        .border-left-1 > .origin{
+            margin-top: -5px;
+            position: absolute;
+            font-weight: 200;
+        }
+        .border-left-1 > .destination{
+            margin-top: 20px;
+            position: absolute;
+        }
+        .pr-10{
+            padding-right: 10px!important;
+        }
+        .pl-10{
+            padding-left: 10px!important;
+        }
+        #view{
+            cursor: pointer;
+        }
+        #view:hover{
+            background-color: #f0fcff;
+        }
+    </style>
     <script>
         console.log('USERID:', sessionStorage.getItem('userId'));
         
@@ -37,19 +91,28 @@
                 window.location.href = 'login.html';
             }
         }
+        console.log('DRIVERID:', sessionStorage.getItem('driverId'));
         
+        checkDriver();
+        function checkDriver(){
+            var driverId = sessionStorage.getItem('driverId');
+
+            if(driverId==null){
+                window.location.href = 'index.html';
+            }
+        }
     </script>
     <script>
         console.log('TRIPID:', sessionStorage.getItem('tripId'));
         
-        tripChecker();
-        function tripChecker(){
-            var tripId = sessionStorage.getItem('tripId');
+        // tripChecker();
+        // function tripChecker(){
+        //     var tripId = sessionStorage.getItem('tripId');
             
-            if(tripId == null){
-                window.location.href = 'location.html';
-            }
-        }
+        //     if(tripId == null){
+        //         window.location.href = 'location.html';
+        //     }
+        // }
         
     </script>
     <!-- style css for this template -->
@@ -106,13 +169,12 @@
         }
         .waiting-div{
             position: absolute;
-            top: 50%;
+            top: 45%;
             left: 50%;
             margin-top: -300px;
             margin-left: -160px;
             width: 320px;
-            height: 500px;
-            background-color: #000000a1;
+            background-color: none;
             border-radius: 5px;
         }
         .waiting-div > #waiting-loader{
@@ -121,14 +183,14 @@
             height: 50px;
             position: absolute;
             margin-left: 50px;
-            margin-top: 100px;
+            margin-top: 80px;
             text-align: center;
         }
         #waiting-for-driver{
             color: #FFF;
             margin-left: 50px;
             margin-right: 50px;
-            margin-top: 110px;
+            margin-top: 100px;
             font-weight: 400;
             font-size: 20px;
         }
@@ -155,7 +217,7 @@
 <body class="body-scroll" data-page="index">
     
     <!-- loader section -->
-    <!-- <div class="container-fluid loader-wrap">
+    <div class="container-fluid loader-wrap">
         <div class="row h-100">
             <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto text-center align-self-center">
                 <div class="loader-cube-wrap mx-auto">
@@ -167,7 +229,7 @@
                 <p>Great things ahead!<br><strong>Please wait...</strong></p>
             </div>
         </div>
-    </div> -->
+    </div>
     <!-- loader section ends -->
     
     <!-- Sidebar main menu -->
@@ -250,6 +312,7 @@
         <!-- main page content -->
         <div class="main-container container map-container">
             <!-- Dark mode switch -->
+            
             <div id="map" style="height: 95vh; width: 100%;">
             </div>
             
@@ -266,10 +329,32 @@
             </div>
             
             <div class="waiting-div">
-                <h3 id="waiting-for-driver">Going to <span id="going-to"></span>... <br> <br>Looking for a Tricycle Driver...</h3>
-                <div id="waiting-loader">
-                    <span class="loader"></span>
-                    <button id="cancel-button" class="btn btn-md btn-default btn-block mt-4 btn-justify w-100">Cancel Trip</button>
+                <div class="requests-div" id="requests-div">
+                    <div class="col-12" id="${tripId}">
+                        <div class="card shadow-sm mb-3">
+                            <div class="card-body">
+                                <div class="row gx-2">
+                                    <div class="col border-left-1">
+                                        <h6 class="origin"> ${origin}...</h6>
+                                        <h6 class="destination mb-1"> ${destination}...</h6>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="card-footer accordion-collapse collapse py-0 show" id="${tripId}-modal">
+                                <div id="${tripId}-map">
+                                    
+                                </div>
+                                <div class="row py-3">
+                                    <div class="col">
+                                        <a href="standby.html" class="btn btn-primary btn-sm w-100" id="btn-view">BACK</a>
+                                    </div>
+                                    <div class="col">
+                                        <button class="btn btn-default btn-sm w-100" id="btn-accept">ACCEPT</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -340,13 +425,13 @@
     <script src="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js"></script>
     
     <script>
-        var tripDetails = JSON.parse(sessionStorage.getItem('tripDetails'))
-        document.getElementById("origin-input").value = tripDetails[0]
-        document.getElementById("origin-input-lat").value = tripDetails[1]
-        document.getElementById("origin-input-lng").value = tripDetails[2]
-        document.getElementById("destination-input").value = tripDetails[3]
-        document.getElementById("destination-input-lat").value = tripDetails[3]
-        document.getElementById("destination-input-lng").value = tripDetails[4]
+        // var tripDetails = JSON.parse(sessionStorage.getItem('tripDetails'))
+        // document.getElementById("origin-input").value = tripDetails[0]
+        // document.getElementById("origin-input-lat").value = tripDetails[1]
+        // document.getElementById("origin-input-lng").value = tripDetails[2]
+        // document.getElementById("destination-input").value = tripDetails[3]
+        // document.getElementById("destination-input-lat").value = tripDetails[3]
+        // document.getElementById("destination-input-lng").value = tripDetails[4]
     </script>
     
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAqdwRPpTtDGc6lWZKlSO0EPgkAKRo-8o&libraries=places&callback=initMap"></script>
@@ -354,44 +439,22 @@
         let originCoordinate;
         let destinationCoordinate;
         function initMap() {
-            
-            function displayDirections(originLatLng, destinationLatLng) {
-                const directionsService = new google.maps.DirectionsService();
-                const directionsRenderer = new google.maps.DirectionsRenderer();
-                
-                const mapOptions = {
-                    center: originLatLng,
-                    zoom: 15,
-                    disableDefaultUI: true,
-                    zoomControl: true,
-                };
-                const map = new google.maps.Map(document.getElementById("map"), mapOptions);
-                directionsRenderer.setMap(map);
-                
-                const request = {
-                    origin: originLatLng,
-                    destination: destinationLatLng,
-                    travelMode: google.maps.TravelMode.DRIVING,
-                };
-                
-                directionsService.route(request, function (response, status) {
-                    if (status === google.maps.DirectionsStatus.OK) {
-                        directionsRenderer.setDirections(response);
-                    } else {
-                        console.error("Error displaying directions:", status);
-                    }
-                });
-            }
-            
-            const originLatLng = new google.maps.LatLng(tripDetails[1], tripDetails[2]);
-            const destinationLatLng = new google.maps.LatLng(tripDetails[4], tripDetails[5]); 
-            displayDirections(originLatLng, destinationLatLng);
-            
-            const cancel = document.getElementById("cancel-button");
-            
-            cancel.addEventListener("click", function() {
-                cancelTrip();
+
+            const map = new google.maps.Map(document.getElementById("map"), {
+                zoom: 14,
+                disableDefaultUI: true,
+                zoomControl: true
             });
+            
+            const directionsService = new google.maps.DirectionsService();
+            const directionsDisplay = new google.maps.DirectionsRenderer();
+            directionsDisplay.setMap(map);
+
+            const defaultLatLng = {
+                lat: 16.0059867,
+                lng: 120.2397336
+            };
+            map.setCenter(defaultLatLng);
         }
         
         
@@ -414,61 +477,61 @@
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         
-        function cancelTrip(){
-            var tripId = sessionStorage.getItem('tripId');
-            if(tripId != null){
-                db.collection("trips").doc(tripId).update({
-                    is_cancelled: true
-                })
-                .then((docRef) => {
-                    sessionStorage.removeItem('tripId');
-                    window.location.href = 'location.html';
-                })
-                .catch((error) => {
-                    console.error("Error adding document: ", error);
-                });
-            }
-        }
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const tripid = urlParams.get('tripId')
+        const originVal = urlParams.get('origin')
+        const originLatVal = urlParams.get('originLat')
+        const originLngVal = urlParams.get('originLng')
+        const destinationVal = urlParams.get('destination')
+        const destinationLatVal = urlParams.get('destinationLat')
+        const destinationLngVal = urlParams.get('destinationLng')
         
-        function listenToNewDataWithCondition(collectionName, callback) {
-            const collectionRef = db.collection(collectionName);
+        var origin = originVal;
+        if(origin.length > 10) origin = origin.substring(0,25);
 
-            var tripId = sessionStorage.getItem('tripId');
-            var userId = sessionStorage.getItem('userId');
+        var destination = destinationVal;
+        if(destination.length > 10) destination = destination.substring(0,25);
 
-            return collectionRef
-                .where("id", "==", tripId)
-                .where("user_id", "==", userId)
-                .onSnapshot((snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    if (change.type === 'modified') {
-                        callback(change.doc.data());
-                    }
-                });
+        document.querySelector('.origin').innerHTML ='<i class="bi bi-geo"></i> '+  origin
+        document.querySelector('.destination').innerHTML ='<i class="bi bi-geo-alt"></i> '+  destination
+        
+        const originLatLng = new google.maps.LatLng(originLatVal, originLngVal);
+        const destinationLatLng = new google.maps.LatLng(destinationLatVal, destinationLngVal); 
+
+        displayDirections(originLatLng, destinationLatLng);
+
+        function displayDirections(originLatLng, destinationLatLng) {
+            console.log('in here');
+            const directionsService = new google.maps.DirectionsService();
+            const directionsRenderer = new google.maps.DirectionsRenderer();
+            
+            const mapOptions = {
+                center: originLatLng,
+                zoom: 15,
+                disableDefaultUI: true,
+            };
+            const map = new google.maps.Map(document.getElementById("map"), mapOptions);
+            directionsRenderer.setMap(map);
+            
+            const request = {
+                origin: originLatLng,
+                destination: destinationLatLng,
+                travelMode: google.maps.TravelMode.DRIVING,
+            };
+            
+            directionsService.route(request, function (response, status) {
+                if (status === google.maps.DirectionsStatus.OK) {
+                    directionsRenderer.setDirections(response);
+                } else {
+                    console.error("Error displaying directions:", status);
+                }
             });
         }
 
-        const unsubscribe = listenToNewDataWithCondition('trips', (newData) => {
-            let data = newData;
-            sessionStorage.setItem('tripId', data.id);
-
-            sessionStorage.setItem('tripDetails', JSON.stringify([
-                data.origin_name,
-                data.origin.latitude,
-                data.origin.longitude,
-                data.destination_name,
-                data.destination.latitude,
-                data.destination.longitude
-            ]));
-            
-            if(data.driver_id !=  null){
-                window.location.href = 'travel.html?origin='+data.origin_name
-                                +'&originLat='+data.origin.latitude
-                                +'&originLng='+data.origin.longitude
-                                +'&destination='+data.destination_name
-                                +'&destinationLat='+data.destination.latitude
-                                +'&destinationLng='+data.destination.longitude;
-            }
+        const accept = document.getElementById('btn-accept');
+        accept.addEventListener('click', function(){
+            window.location.href = `accept.html?tripId=${tripid}&origin=${origin}&destination=${destination}&originLat=${originLatVal}&originLng=${originLngVal}&destinationLat=${destinationLatVal}&destinationLng=${destinationLngVal}`
         });
     </script>
     
@@ -477,7 +540,6 @@
 
 </html>
 <script>
-    
     logout.addEventListener('click', async (e) => {
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('driverId');
@@ -488,17 +550,5 @@
     
     var r = document.querySelector('.user-name');
     r.innerHTML = sessionStorage.getItem('userName')
-    
-    var tripDetails = JSON.parse(sessionStorage.getItem('tripDetails'))
-    document.getElementById('going-to').innerHTML = tripDetails[3];
-    // checkActiveTrip();
-    
-    // function checkActiveTrip(){
-    //     var tripDetails = sessionStorage.getItem('tripDetails');
-        
-    //     if(tripDetails != null){
-            
-    //         document.getElementById('going-to').innerHTML = tripDetails.origin;
-    //     }
-    // }
+
 </script>

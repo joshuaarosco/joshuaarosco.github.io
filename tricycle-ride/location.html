@@ -37,15 +37,6 @@
                 window.location.href = 'login.html';
             }
         }
-        checkActiveTrip();
-
-        function checkActiveTrip(){
-            var tripId = sessionStorage.getItem('tripId');
-            
-            if(tripId !=  null){
-                window.location.href = 'waiting.html';
-            }
-        }
     </script>
     
     <!-- style css for this template -->
@@ -262,10 +253,75 @@
     <!-- swiper js script -->
     <script src="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js"></script>
     
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script> -->
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getFirestore, setDoc, addDoc, doc, collection, updateDoc, deleteDoc, onSnapshot, query, getDocs, or, where, getDoc, limit, and } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
+            authDomain: "tricycle-ride.firebaseapp.com",
+            databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "tricycle-ride",
+            storageBucket: "tricycle-ride.appspot.com",
+            messagingSenderId: "802022631435",
+            appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        // Initialize Cloud Firestore
+        const db = getFirestore(app);
+
+        checkActiveTrip(sessionStorage.getItem('userId'));
+
+        function checkActiveTrip(userId){
+            const tripsRef = collection(db, "trips");
+            const q = query(tripsRef, 
+                and(
+                    where("user_id", "==", userId),
+                    where("is_complete", "==", false)
+                ),
+                limit(1)
+            );
+
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    let data = doc.data();
+                    sessionStorage.setItem('tripId', data.id);
+
+                    sessionStorage.setItem('tripDetails', JSON.stringify([
+                        data.origin_name,
+                        data.origin.latitude,
+                        data.origin.longitude,
+                        data.destination_name,
+                        data.destination.latitude,
+                        data.destination.longitude
+                    ]));
+                    
+                    if(data.driver_id ==  null){
+                        window.location.href = 'waiting.html?origin='+data.origin_name
+                                        +'&originLat='+data.origin.latitude
+                                        +'&originLng='+data.origin.longitude
+                                        +'&destination='+data.destination_name
+                                        +'&destinationLat='+data.destination.latitude
+                                        +'&destinationLng='+data.destination.longitude;
+                    }else{
+                        window.location.href = 'travel.html?origin='+data.origin_name
+                                        +'&originLat='+data.origin.latitude
+                                        +'&originLng='+data.origin.longitude
+                                        +'&destination='+data.destination_name
+                                        +'&destinationLat='+data.destination.latitude
+                                        +'&destinationLng='+data.destination.longitude;
+                    }
+                });
+            });
+        }
+
+    </script>
+    
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAqdwRPpTtDGc6lWZKlSO0EPgkAKRo-8o&libraries=places&callback=initMap"></script>
     <script>
-        let originCoordinate;
-        let destinationCoordinate;
         function initMap() {
             const map = new google.maps.Map(document.getElementById("map"), {
                 zoom: 15,
@@ -305,8 +361,8 @@
                     });
                     
                     const currentLocation = new google.maps.LatLng(
-                    position.coords.latitude,
-                    position.coords.longitude
+                        position.coords.latitude,
+                        position.coords.longitude
                     );
                     
                     const geocoder = new google.maps.Geocoder();
@@ -397,7 +453,7 @@
                     });
                 }
                 setTimeout(function () {
-                window.location.href = 'map.html?origin='+origin
+                    window.location.href = 'map.html?origin='+origin
                                         +'&originLat='+document.getElementById("origin-input-lat").value
                                         +'&originLng='+document.getElementById("origin-input-lng").value
                                         +'&destination='+destination
