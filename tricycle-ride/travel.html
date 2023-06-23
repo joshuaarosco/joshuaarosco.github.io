@@ -120,6 +120,7 @@
     </script>
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
+    <link href="assets/css/custom.css" rel="stylesheet" id="style">
     <style>
         .tricy-icon{
             width: 80px;
@@ -329,6 +330,14 @@
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
+
+                        <li class="nav-item trips">
+                            <a class="nav-link" href="trips.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-geo-alt"></i></div>
+                                <div class="col">Trips</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
                         
                         <li class="nav-item">
                             <a class="nav-link" href="#" id="logout" tabindex="-1" aria-disabled="true">
@@ -395,6 +404,9 @@
                                         <h6 class="destination mb-1"> ${destination}...</h6>
                                     </div>
                                 </div>
+                            </div>
+                            <div class="card-footer">
+                                <h3 class="price">₱ 0.00</h3>
                             </div>
                         </div>
                     </div>
@@ -496,7 +508,7 @@
     <!-- swiper js script -->
     <script src="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js"></script>
     
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAqdwRPpTtDGc6lWZKlSO0EPgkAKRo-8o&libraries=places&callback="></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s&libraries=places&callback="></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
     <script>
@@ -608,6 +620,8 @@
                     sessionStorage.setItem('passengerUserId', data.user_id);
                     
                     displayDirections(originLatLng, destinationLatLng, driverLatLng);
+                    
+                    getDistanceAndTime(originLatLng, destinationLatLng);
                 } else {
                 console.log('Document does not exist!');
                 }
@@ -660,6 +674,53 @@
             });
         }
     // }
+        function getDistanceAndTime(origin, destination) {
+            var service = new google.maps.DistanceMatrixService();
+            service.getDistanceMatrix(
+                {
+                origins: [origin],
+                destinations: [destination],
+                travelMode: 'DRIVING',
+                unitSystem: google.maps.UnitSystem.METRIC,
+                avoidHighways: false,
+                avoidTolls: false
+                },
+                function(response, status) {
+                    if (status !== 'OK') {
+                        console.log('Error:', status);
+                        return;
+                    }
+
+                    var results = response.rows[0].elements[0];
+                    var distance = results.distance.text;
+                    var duration = results.duration.text;
+                    
+                    console.log('Distance:', distance);
+                    console.log('Duration:', duration);
+                    
+                    var meters = results.distance.value;
+                    console.log('distance: ', meters);
+                    const r = document.querySelector(".price");
+                    if(meters <= 3000){
+                        let price = 0;
+                        price = 30.00
+                        r.innerHTML = '₱ '+price.toFixed(2);
+                    }else{
+                        let price = 0;
+                        meters -= 3000;
+                        price = 30+((meters / 1000)*10);
+                        r.innerHTML = '₱ '+price.toFixed(2);
+                    }
+
+                }
+            );
+        }
+
+        // Provide your own API key and the origin/destination addresses
+        // var apiKey = 'YOUR_API_KEY';
+        // var origin = 'New York, NY';
+        // var destination = 'Los Angeles, CA';
+
 
     // window.initMap = initMap;
     
@@ -870,5 +931,15 @@
 
     var r = document.querySelector('.user-name');
     r.innerHTML = sessionStorage.getItem('userName')
+    
+    checkAdmin();
+    function checkAdmin(){
+        var userType = sessionStorage.getItem('userType');
+
+        if(userType=='admin'){
+            var r = document.querySelector('.trips');
+            r.style.setProperty('display', 'block');
+        }
+    }
 
 </script>

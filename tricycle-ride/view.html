@@ -117,6 +117,7 @@
     </script>
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
+    <link href="assets/css/custom.css" rel="stylesheet" id="style">
     <style>
         .tricy-icon{
             width: 80px;
@@ -261,6 +262,14 @@
                             <a class="nav-link" href="profile.html" tabindex="-1" aria-disabled="true">
                                 <div class="avatar avatar-40 rounded icon"><i class="bi bi-person"></i></div>
                                 <div class="col">Profile</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+
+                        <li class="nav-item trips">
+                            <a class="nav-link" href="trips.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-geo-alt"></i></div>
+                                <div class="col">Trips</div>
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
@@ -479,13 +488,14 @@
         
         const queryString = window.location.search;
         const urlParams = new URLSearchParams(queryString);
-        const tripid = urlParams.get('tripId')
+        const tripId = urlParams.get('tripId')
         const originVal = urlParams.get('origin')
         const originLatVal = urlParams.get('originLat')
         const originLngVal = urlParams.get('originLng')
         const destinationVal = urlParams.get('destination')
         const destinationLatVal = urlParams.get('destinationLat')
         const destinationLngVal = urlParams.get('destinationLng')
+
         
         var origin = originVal;
         if(origin.length > 10) origin = origin.substring(0,25);
@@ -528,10 +538,13 @@
                 }
             });
         }
+        
 
         const accept = document.getElementById('btn-accept');
         accept.addEventListener('click', function(){
-            window.location.href = `accept.html?tripId=${tripid}&origin=${origin}&destination=${destination}&originLat=${originLatVal}&originLng=${originLngVal}&destinationLat=${destinationLatVal}&destinationLng=${destinationLngVal}`
+            
+            console.log(tripId);
+            window.location.href = `accept.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatVal}&originLng=${originLngVal}&destinationLat=${destinationLatVal}&destinationLng=${destinationLngVal}`
         });
     </script>
     
@@ -550,5 +563,15 @@
     
     var r = document.querySelector('.user-name');
     r.innerHTML = sessionStorage.getItem('userName')
+    
+    checkAdmin();
+    function checkAdmin(){
+        var userType = sessionStorage.getItem('userType');
+
+        if(userType=='admin'){
+            var r = document.querySelector('.trips');
+            r.style.setProperty('display', 'block');
+        }
+    }
 
 </script>

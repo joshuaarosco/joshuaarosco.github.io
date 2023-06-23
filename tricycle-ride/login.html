@@ -157,6 +157,7 @@
                     //setCookie('name', doc.data().name, 1);
                     sessionStorage.setItem('userId', doc.data().id);
                     sessionStorage.setItem('userName', doc.data().name);
+                    sessionStorage.setItem('userType', doc.data().type);
 
                     checkIfDriver(doc.data().id);
                 });

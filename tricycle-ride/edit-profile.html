@@ -1,0 +1,327 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="generator" content="">
+    <title>Driver Registration</title>
+
+    <!-- manifest meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="assets/img/favicon180.png" sizes="180x180">
+    <link rel="icon" href="assets/img/favicon32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="assets/img/favicon16.png" sizes="16x16" type="image/png">
+
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="assets/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
+
+    <!-- style css for this template -->
+    <link href="assets/css/style.css" rel="stylesheet" id="style">
+    <style>
+        .card{
+            background-color: #fff0;
+        }
+    </style>
+    <script>
+        console.log('USERID:', sessionStorage.getItem('userId'));
+        
+        checkToken();
+        function checkToken(){
+            var userId = sessionStorage.getItem('userId');
+            
+            if(userId==null){
+                window.location.href = 'login.html';
+            }
+        }
+        console.log('DRIVERID:', sessionStorage.getItem('driverId'));
+        
+        checkDriver();
+        function checkDriver(){
+            var driverId = sessionStorage.getItem('driverId');
+            
+            if(driverId!=null){
+                window.location.href = 'profile.html';
+            }
+        }
+        
+    </script>
+</head>
+
+<body class="body-scroll" data-page="settings">
+
+    <!-- loader section -->
+    <div class="container-fluid loader-wrap">
+        <div class="row h-100">
+            <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto text-center align-self-center">
+                <div class="loader-cube-wrap mx-auto">
+                    <div class="loader-cube1 loader-cube"></div>
+                    <div class="loader-cube2 loader-cube"></div>
+                    <div class="loader-cube4 loader-cube"></div>
+                    <div class="loader-cube3 loader-cube"></div>
+                </div>
+                <p>Great things ahead!<br><strong>Please wait...</strong></p>
+            </div>
+        </div>
+    </div>
+    <!-- loader section ends -->
+
+    <!-- Begin page -->
+    <main class="h-100 has-header">
+
+        <!-- Header -->
+        <header class="container-fluid header">
+            <div class="row">
+                <div class="col-auto">
+                    <button type="button" class="btn btn-link back-btn">
+                        <i class="bi bi-arrow-left"></i>
+                    </button>
+                </div>
+                <div class="col text-center align-self-center">
+                    <h6 class="my-0">Driver Registration</h6>
+                </div>
+                <div class="col-auto align-self-center">
+                    <a href="profile.html" class="position-relative d-block mr-3">
+                        <figure class="avatar avatar-36 rounded-circle">
+                            <img src="assets/img/user1.jpg" alt="">
+                        </figure>
+                    </a>
+                </div>
+            </div>
+        </header>
+        <!-- Header ends -->
+
+        <!-- main page content -->
+        <div class="main-container container">
+
+            <!-- profile information -->
+            <div class="row mb-2">
+                <div class="col">
+                    <h6 class="my-1">Basic Information</h6>
+                </div>
+            </div>
+            <div class="row h-100 mb-2">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating  mb-3">
+                        <input type="text" class="form-control" value="" placeholder="First Name" id="fname">
+                        <label for="fname">First Name</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating  mb-3">
+                        <input type="text" class="form-control" value="" placeholder="Last Name" id="lname">
+                        <label for="lname">Last Name</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating  mb-3">
+                        <input type="text" class="form-control" value="" placeholder="Address" id="address">
+                        <label for="address">Address</label>
+                    </div>
+                </div>
+                <!-- <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating  mb-3">
+                        <input type="text" class="form-control" value="" placeholder="Contact person in case of emergency"
+                            id="contact_person">
+                        <label for="contact_person">Contact person in case of emergency</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating  mb-3">
+                        <input type="text" class="form-control" value="" placeholder="Contact # in case of emergency"
+                            id="phone">
+                        <label for="phone">Contact # in case of emergency</label>
+                    </div>
+                </div> -->
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating mb-3">
+                        <input type="text" class="form-control" value="" placeholder="License No." id="driver_license">
+                        <label for="driver_license">License No.</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating  mb-3">
+                        <input type="text" class="form-control" value="" placeholder="DL Codes" id="dl_codes">
+                        <label for="dl_codes">DL Codes</label>
+                    </div>
+                </div>
+            </div>
+
+            <!-- add edit address form -->
+            <div class="row mb-2">
+                <div class="col">
+                    <h6 class="my-1">Tricycle Information</h6>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <div class="form-group form-floating">
+                        <input type="text" class="form-control" value="" id="make" placeholder="Make">
+                        <label class="form-control-label" for="make">Make</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <div class="form-group form-floating">
+                        <input type="text" class="form-control" value="" id="model" placeholder="Model">
+                        <label class="form-control-label" for="model">Model</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <div class="form-group form-floating">
+                        <input type="text" class="form-control" value="" id="color" placeholder="Color">
+                        <label class="form-control-label" for="color">Color</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4 mb-3">
+                    <div class="form-group form-floating">
+                        <input type="text" class="form-control" value="" id="license_plate" placeholder="License Plate No.">
+                        <label class="form-control-label" for="license_plate">License Plate No.</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm">
+                <div class="card-body text-black" style="text-align: left; display: none;">
+                    XXXX
+                </div>
+            </div>
+
+            <div class="row h-100 mb-4">
+                <div class="col-12 d-grid">
+                    <button id="register" class="btn btn-default mt-3">Register</button>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- main page content ends -->
+
+    </main>
+    <!-- Page ends-->
+
+
+    <!-- Required jquery and libraries -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/vendor/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+
+    <!-- cookie js -->
+    <script src="assets/js/jquery.cookie.js"></script>
+
+    <!-- Customized jquery file  -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/color-scheme.js"></script>
+
+    <!-- page level custom script -->
+    <script src="assets/js/app.js"></script>
+
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+    <script>
+
+        const register = document.getElementById("register");
+
+        register.addEventListener("click", function() {
+            let fname = document.getElementById("fname").value;
+            let lname = document.getElementById("lname").value;
+            let address = document.getElementById("address").value;
+            let driver_license = document.getElementById("driver_license").value;
+            let dl_codes = document.getElementById("dl_codes").value;
+            let make = document.getElementById("make").value;
+            let model = document.getElementById("model").value;
+            let color = document.getElementById("color").value;
+            let license_plate = document.getElementById("license_plate").value;   
+
+            if(
+                fname == '' || 
+                lname == '' || 
+                address == '' || 
+                driver_license == '' ||
+                dl_codes == '' ||
+                make == '' ||
+                model == '' ||
+                color == '' ||
+                license_plate == ''){
+                displayError('All fields are required!');
+            }else{
+                registerDriver();
+            }
+        });
+
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
+            authDomain: "tricycle-ride.firebaseapp.com",
+            databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "tricycle-ride",
+            storageBucket: "tricycle-ride.appspot.com",
+            messagingSenderId: "802022631435",
+            appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
+        };
+        
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        function registerDriver(destination, originLat, originLng, destinationLat, destinationLng){
+
+            let fname = document.getElementById("fname").value;
+            let lname = document.getElementById("lname").value;
+            let address = document.getElementById("address").value;
+            let driver_license = document.getElementById("driver_license").value;
+            let dl_codes = document.getElementById("dl_codes").value;
+            let make = document.getElementById("make").value;
+            let model = document.getElementById("model").value;
+            let color = document.getElementById("color").value;
+            let license_plate = document.getElementById("license_plate").value;   
+            
+            db.collection("drivers").add({
+                user_id: sessionStorage.getItem('userId'),
+                id: null,
+                fname: fname,
+                lname: lname,
+                address: address,
+                driver_license: driver_license,
+                dl_codes: dl_codes,
+                make: make,
+                model: model,
+                color: color,
+                license_plate: license_plate
+            }) .then((docRef) => {
+                sessionStorage.setItem('driverId', docRef.id);
+                
+                db.collection("drivers").doc(docRef.id).update({
+                    id: docRef.id
+                });
+                
+                db.collection("users").doc(sessionStorage.getItem('userId')).update({
+                    name: fname+' '+lname
+                });
+
+                window.location.href = 'profile.html';
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+            });
+        }
+        
+        function displayError(message){
+            var r = document.querySelector('.card-body');
+            r.style.setProperty('display', 'inline');
+            r.style.setProperty('opacity', '75%');
+            r.style.setProperty('color', 'red');
+            r.style.setProperty('background-color', 'rgb(255, 240, 240)');
+            r.innerHTML = message;
+        }
+    </script>
+
+</body>
+
+</html>
+

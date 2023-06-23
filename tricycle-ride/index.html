@@ -29,6 +29,7 @@
     
     <script>
         console.log('USERID:', sessionStorage.getItem('userId'));
+        console.log('USERTYPE:', sessionStorage.getItem('userType'));
         
         checkToken();
         function checkToken(){
@@ -42,6 +43,7 @@
     </script>
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
+    <link href="assets/css/custom.css" rel="stylesheet" id="style">
     <style>
         .tricy-icon{
             width: 80px;
@@ -134,6 +136,14 @@
                             <a class="nav-link" href="profile.html" tabindex="-1" aria-disabled="true">
                                 <div class="avatar avatar-40 rounded icon"><i class="bi bi-person"></i></div>
                                 <div class="col">Profile</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+
+                        <li class="nav-item trips">
+                            <a class="nav-link" href="trips.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-geo-alt"></i></div>
+                                <div class="col">Trips</div>
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
@@ -307,6 +317,16 @@
             r.style.setProperty('display', 'none');
             
             var r = document.querySelector('#driver');
+            r.style.setProperty('display', 'block');
+        }
+    }
+
+    checkAdmin();
+    function checkAdmin(){
+        var userType = sessionStorage.getItem('userType');
+
+        if(userType=='admin'){
+            var r = document.querySelector('.trips');
             r.style.setProperty('display', 'block');
         }
     }

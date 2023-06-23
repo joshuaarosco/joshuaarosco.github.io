@@ -7,50 +7,46 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="generator" content="">
-    <title>Waiting</title>
-    
+    <title>Home</title>
+
     <!-- manifest meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <link rel="manifest" href="manifest.json" />
-    
+
     <!-- Favicons -->
     <link rel="apple-touch-icon" href="assets/img/favicon180.png" sizes="180x180">
     <link rel="icon" href="assets/img/favicon32.png" sizes="32x32" type="image/png">
     <link rel="icon" href="assets/img/favicon16.png" sizes="16x16" type="image/png">
-    
+
     <!-- Google fonts-->
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
-    
+
     <!-- bootstrap icons -->
     <link rel="stylesheet" href="assets/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
-    
+
     <!-- swiper carousel css -->
     <link rel="stylesheet" href="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.css">
+    
     <script>
         console.log('USERID:', sessionStorage.getItem('userId'));
+        console.log('USERTYPE:', sessionStorage.getItem('userType'));
         
         checkToken();
         function checkToken(){
             var userId = sessionStorage.getItem('userId');
-            
+
             if(userId==null){
                 window.location.href = 'login.html';
             }
         }
-        
-    </script>
-    <script>
-        console.log('TRIPID:', sessionStorage.getItem('tripId'));
-        
-        tripChecker();
-        function tripChecker(){
-            var tripId = sessionStorage.getItem('tripId');
-            
-            if(tripId == null){
-                window.location.href = 'location.html';
+
+        checkAccess();
+        function checkAccess(){
+            let userType = sessionStorage.getItem('userType');
+            if(userType!='admin'){
+                window.location.href = 'index.html'
             }
         }
-        
     </script>
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
@@ -71,92 +67,69 @@
             padding: 10px;
             padding-top: 20px;
         }
-        .map-container{
-            min-width: 100%;
-            padding: 0px;
+        #driver{
+            display: none;
         }
-        .map-inputs{
-            position: absolute;
-            top: 0;
-            width: 100%;
-            padding: 20px;
-            text-align: center;
+
+        .border-left-1{
+            border-left: 1px solid #000000a1;
+            padding-left: 10px!important;
+            margin-left: 10px;
+            height: 30px;
+            margin-top: 7px!important;
         }
-        .loader{
-            display: block;
-            position: relative;
-            height: 35px;
-            width: 100%;
-            background: linear-gradient(#fff 3px, transparent 0) no-repeat;
-            background-position: 0 16px;
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-        .loader:before{
+        .origin::before{
             content: '';
             position: absolute;
-            left: 0;
-            bottom: 2px;
-            width: 28px;
-            height: 28px;
+            left: -16.5px;
+            bottom: 5px;
+            width: 10px;
+            height: 10px;
             border-radius: 50%;
             background: #FFF;
-            border: 6px solid #000;
+            border: 1px solid #000;
             box-sizing: border-box;
-            animation: ballbns 1.5s linear infinite;
         }
-        .waiting-div{
+        .destination::before{
+            content: '';
             position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-top: -300px;
-            margin-left: -160px;
-            width: 320px;
-            height: 500px;
-            background-color: #000000a1;
-            border-radius: 5px;
+            left: -16px;
+            bottom: 5px;
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #FFF;
+            border: 5px solid #000;
+            box-sizing: border-box;
         }
-        .waiting-div > #waiting-loader{
-            top: 50%;
-            width: 220px;
-            height: 50px;
+        .border-left-1 > .origin{
+            margin-top: -5px;
             position: absolute;
-            margin-left: 50px;
-            margin-top: 100px;
-            text-align: center;
+            font-weight: 200;
         }
-        #waiting-for-driver{
-            color: #FFF;
-            margin-left: 50px;
-            margin-right: 50px;
-            margin-top: 110px;
-            font-weight: 400;
-            font-size: 20px;
+        .border-left-1 > .destination{
+            margin-top: 20px;
+            position: absolute;
         }
-        #going-to{
-            font-weight: bolder;
+        .pr-10{
+            padding-right: 10px!important;
         }
-        
-        @keyframes ballbns{
-            0%{
-                left: 0;
-                transform: translateX(-100%);
-            }
-            100%{
-                left: 100%;
-                transform: translateX(0%);
-            }
+        .pl-10{
+            padding-left: 10px!important;
         }
-        #cancel-button{
-            background-color: #000;
+        #view{
+            cursor: pointer;
+        }
+        #view:hover{
+            background-color: #f0fcff;
         }
     </style>
 </head>
 
 <body class="body-scroll" data-page="index">
-    
+
     <!-- loader section -->
-    <!-- <div class="container-fluid loader-wrap">
+    <div class="container-fluid loader-wrap">
         <div class="row h-100">
             <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto text-center align-self-center">
                 <div class="loader-cube-wrap mx-auto">
@@ -168,9 +141,9 @@
                 <p>Great things ahead!<br><strong>Please wait...</strong></p>
             </div>
         </div>
-    </div> -->
+    </div>
     <!-- loader section ends -->
-    
+
     <!-- Sidebar main menu -->
     <div class="sidebar-wrap  sidebar-overlay">
         <!-- Add overlay or fullmenu instead overlay -->
@@ -225,10 +198,10 @@
         </div>
     </div>
     <!-- Sidebar main menu ends -->
-    
+
     <!-- Begin page -->
-    <main class="h-100">
-        
+    <main class="h-100 has-header has-footer">
+
         <!-- Header -->
         <header class="container-fluid header">
             <div class="row">
@@ -237,13 +210,8 @@
                         <i class="bi bi-list"></i>
                     </button>
                 </div>
-                <div class="col pl-0">
-                    <!-- <div class="form-group search-header">
-                        <input class="form-control border-0" placeholder="Search">
-                        <button type="button" class="btn btn-link tooltip-btn">
-                            <i class="bi bi-search"></i>
-                        </button>
-                    </div> -->
+                <div class="col text-center align-self-center">
+                    <h6 class="my-0">Active Trips</h6>
                 </div>
                 <div class="col-auto align-self-center">
                     <a href="profile.html" class="position-relative d-block mr-3">
@@ -255,45 +223,22 @@
             </div>
         </header>
         <!-- Header ends -->
-        
+
         <!-- main page content -->
-        <div class="main-container container map-container">
-            <!-- Dark mode switch -->
-            <div id="map" style="height: 95vh; width: 100%;">
-            </div>
-            
-            <div class="mt-5 map-inputs" id="mapInputs">
-                <div class="col-12">
-                    <input id="origin-input" type="hidden" placeholder="Origin" class="form-control mt-2" readonly>
-                    <input id="origin-input-lat" type="hidden" placeholder="Origin Lat">
-                    <input id="origin-input-lng" type="hidden" placeholder="Origin lng">
-                    <input id="destination-input" type="hidden" placeholder="Destination" class="form-control mt-2" readonly>
-                    <input id="destination-input-lat" type="hidden" placeholder="Destination Lat">
-                    <input id="destination-input-lng" type="hidden" placeholder="Destination lng">
-                    <!-- <button id="go-button" class="btn btn-md btn-default btn-block mt-2 btn-justify">Lets Go!</button> -->
-                </div>
-            </div>
-            
-            <div class="waiting-div">
-                <h3 id="waiting-for-driver">Going to <span id="going-to"></span>... <br> <br>Looking for a Tricycle Driver...</h3>
-                <div id="waiting-loader">
-                    <span class="loader"></span>
-                    <button id="cancel-button" class="btn btn-md btn-default btn-block mt-4 btn-justify w-100">Cancel Trip</button>
-                </div>
-            </div>
+        <div class="main-container container requests-div" id="requests-div">
         </div>
         <!-- main page content ends -->
-        
-        
+
+
     </main>
     <!-- Page ends-->
-    
+
     <!-- Footer -->
     <footer class="footer">
         <div class="container">
             <ul class="nav nav-pills nav-justified">
                 <li class="nav-item">
-                    <a class="nav-link" href="index.html">
+                    <a class="nav-link active" href="index.html">
                         <span>
                             <i class="nav-icon bi bi-house"></i>
                             <span class="nav-text">Home</span>
@@ -301,11 +246,11 @@
                     </a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link active" href="location.html">
+                    <a class="nav-link" href="location.html">
                         <span>
                             <!-- <i class="nav-icon bi bi-pin-map"></i> -->
                             <div class="tricy-div">
-                                <img class="tricy-icon" src="assets/tricy-selected.png" alt="">
+                                <img class="tricy-icon" src="assets/tricy.png" alt="">
                             </div>
                             <span class="nav-text">Ride</span>
                         </span>
@@ -323,89 +268,33 @@
         </div>
     </footer>
     <!-- Footer ends-->
-    
+
     <!-- Required jquery and libraries -->
     <script src="assets/js/jquery-3.3.1.min.js"></script>
     <script src="assets/js/popper.min.js"></script>
     <script src="assets/vendor/bootstrap-5/js/bootstrap.bundle.min.js"></script>
-    
+
     <!-- cookie js -->
     <script src="assets/js/jquery.cookie.js"></script>
-    
+
     <!-- Customized jquery file  -->
     <script src="assets/js/main.js"></script>
     <script src="assets/js/color-scheme.js"></script>
-    
+
     <!-- PWA app service registration and works -->
     <script src="assets/js/pwa-services.js"></script>
-    
+
     <!-- Chart js script -->
     <script src="assets/vendor/chart-js-3.3.1/chart.min.js"></script>
-    
+
     <!-- Progress circle js script -->
     <script src="assets/vendor/progressbar-js/progressbar.min.js"></script>
-    
+
     <!-- swiper js script -->
     <script src="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js"></script>
-    
-    <script>
-        var tripDetails = JSON.parse(sessionStorage.getItem('tripDetails'))
-        document.getElementById("origin-input").value = tripDetails[0]
-        document.getElementById("origin-input-lat").value = tripDetails[1]
-        document.getElementById("origin-input-lng").value = tripDetails[2]
-        document.getElementById("destination-input").value = tripDetails[3]
-        document.getElementById("destination-input-lat").value = tripDetails[3]
-        document.getElementById("destination-input-lng").value = tripDetails[4]
-    </script>
-    
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAqdwRPpTtDGc6lWZKlSO0EPgkAKRo-8o&libraries=places&callback=initMap"></script>
-    <script>
-        let originCoordinate;
-        let destinationCoordinate;
-        function initMap() {
-            
-            function displayDirections(originLatLng, destinationLatLng) {
-                const directionsService = new google.maps.DirectionsService();
-                const directionsRenderer = new google.maps.DirectionsRenderer();
-                
-                const mapOptions = {
-                    center: originLatLng,
-                    zoom: 15,
-                    disableDefaultUI: true,
-                    zoomControl: true,
-                };
-                const map = new google.maps.Map(document.getElementById("map"), mapOptions);
-                directionsRenderer.setMap(map);
-                
-                const request = {
-                    origin: originLatLng,
-                    destination: destinationLatLng,
-                    travelMode: google.maps.TravelMode.DRIVING,
-                };
-                
-                directionsService.route(request, function (response, status) {
-                    if (status === google.maps.DirectionsStatus.OK) {
-                        directionsRenderer.setDirections(response);
-                    } else {
-                        console.error("Error displaying directions:", status);
-                    }
-                });
-            }
-            
-            const originLatLng = new google.maps.LatLng(tripDetails[1], tripDetails[2]);
-            const destinationLatLng = new google.maps.LatLng(tripDetails[4], tripDetails[5]); 
-            displayDirections(originLatLng, destinationLatLng);
-            
-            const cancel = document.getElementById("cancel-button");
-            
-            cancel.addEventListener("click", function() {
-                cancelTrip();
-            });
-        }
-        
-        
-    </script>
-    
+
+    <!-- page level custom script -->
+    <!-- <script src="assets/js/app.js"></script> -->
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
     <script>
@@ -422,71 +311,103 @@
         
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
-        
-        function cancelTrip(){
-            var tripId = sessionStorage.getItem('tripId');
-            if(tripId != null){
-                db.collection("trips").doc(tripId).update({
-                    is_cancelled: true
-                })
-                .then((docRef) => {
-                    sessionStorage.removeItem('tripId');
-                    window.location.href = 'location.html';
-                })
-                .catch((error) => {
-                    console.error("Error adding document: ", error);
-                });
-            }
-        }
-        
+
         function listenToNewDataWithCondition(collectionName, callback) {
             const collectionRef = db.collection(collectionName);
 
-            var tripId = sessionStorage.getItem('tripId');
-            var userId = sessionStorage.getItem('userId');
-
-            return collectionRef
-                .where("id", "==", tripId)
-                .where("user_id", "==", userId)
+            return collectionRef.where("is_cancelled", "==", false)
+                .where("is_complete", "==", false)
                 .onSnapshot((snapshot) => {
                 snapshot.docChanges().forEach((change) => {
-                    if (change.type === 'modified') {
-                        callback(change.doc.data());
+                    if (change.type === 'added') {
+                        callback([change.doc.data().id, 'added', change.doc.data() ]);
+                    }if (change.type === 'removed') {
+                        callback([change.doc.data().id, 'removed', change.doc.data() ]);
                     }
                 });
             });
         }
+        
+        let tripsObj = {};
 
         const unsubscribe = listenToNewDataWithCondition('trips', (newData) => {
-            let data = newData;
-            sessionStorage.setItem('tripId', data.id);
-
-            sessionStorage.setItem('tripDetails', JSON.stringify([
-                data.origin_name,
-                data.origin.latitude,
-                data.origin.longitude,
-                data.destination_name,
-                data.destination.latitude,
-                data.destination.longitude
-            ]));
-            
-            if(data.driver_id !=  null){
-                window.location.href = 'travel.html?origin='+data.origin_name
-                                +'&originLat='+data.origin.latitude
-                                +'&originLng='+data.origin.longitude
-                                +'&destination='+data.destination_name
-                                +'&destinationLat='+data.destination.latitude
-                                +'&destinationLng='+data.destination.longitude;
+            // console.log('New document added:', newData);
+            if(newData[1] == 'added'){
+                tripsObj[newData[0]] = newData;
+                // tripAdded.push(newData[0], newData) ;
+                
+                // <div class="col-auto align-self-center pr-10">
+                //  <h3>99<sub>km</sub></h3>
+                // </div>        
+                
+                displayTrips(tripsObj);
             }
+
+            if(newData[1] == 'removed'){
+                Reflect.deleteProperty(tripsObj, newData[0]);
+                displayTrips(tripsObj);
+            }
+
         });
+
+        function displayTrips(trips){
+            var rd = document.querySelector('.requests-div');
+            rd.style.setProperty('display', 'block');
+
+            let parent = document.getElementById("requests-div")
+            parent.innerHTML = '';
+
+            let i = 0;
+            console.log('TRIPS:',trips)
+            for (const trip_id in trips) {
+                console.log('TRIP:',trips[trip_id][2]);
+
+                var originLatLng = trips[trip_id][2].origin;
+                var destinationLatLng = trips[trip_id][2].destination;
+                
+                var origin = trips[trip_id][2].origin_name;
+                if(origin.length > 10) origin = origin.substring(0,25);
+
+                var destination = trips[trip_id][2].destination_name;
+                if(destination.length > 10) destination = destination.substring(0,25);
+
+                var tripId = trips[trip_id][0];
+
+                
+                var originLatVal = trips[trip_id][2].origin.latitude;
+                var originLngVal = trips[trip_id][2].origin.longitude;
+                var destinationLatVal = trips[trip_id][2].destination.latitude;
+                var destinationLngVal = trips[trip_id][2].destination.longitude;
+
+                rd.innerHTML += `
+                <div class="col-12" id="${tripId}">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-body">
+                            <div class="row gx-2">
+                                <div class="col border-left-1">
+                                    <h6 class="origin"><i class="bi bi-geo"></i> ${origin}...</h6>
+                                    <h6 class="destination mb-1"><i class="bi bi-geo-alt"></i> ${destination}...</h6>
+                                </div>
+                                <div class="col-auto align-self-center">
+                                    <a class="btn btn-link text-primary" href="view-trip.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatVal}&originLng=${originLngVal}&destinationLat=${destinationLatVal}&destinationLng=${destinationLngVal}">
+                                        <i class="bi bi-chevron-right"></i>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>`;
+                
+            }
+        }
     </script>
-    
 </body>
 
 
 </html>
 <script>
-    
+
+
     logout.addEventListener('click', async (e) => {
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('driverId');
@@ -494,13 +415,12 @@
             window.location.href = 'login.html';
         }, 100);
     })
-    
+
     var r = document.querySelector('.user-name');
     r.innerHTML = sessionStorage.getItem('userName')
-    
-    var tripDetails = JSON.parse(sessionStorage.getItem('tripDetails'))
-    document.getElementById('going-to').innerHTML = tripDetails[3];
-    
+
+    console.log('DRIVERID:', sessionStorage.getItem('driverId'));
+        
     checkAdmin();
     function checkAdmin(){
         var userType = sessionStorage.getItem('userType');
@@ -510,15 +430,4 @@
             r.style.setProperty('display', 'block');
         }
     }
-
-    // checkActiveTrip();
-    
-    // function checkActiveTrip(){
-    //     var tripDetails = sessionStorage.getItem('tripDetails');
-        
-    //     if(tripDetails != null){
-            
-    //         document.getElementById('going-to').innerHTML = tripDetails.origin;
-    //     }
-    // }
 </script>

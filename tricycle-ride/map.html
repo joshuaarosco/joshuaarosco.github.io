@@ -41,6 +41,7 @@
     </script>
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
+    <link href="assets/css/custom.css" rel="stylesheet" id="style">
     <style>
         .tricy-icon{
             width: 80px;
@@ -132,6 +133,33 @@
                 transform: translateX(0%);
             }
         }
+        .payment-option{
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        .payment-method{
+            margin-top: 10px;
+            border-radius: 3px;
+            padding: 20px;
+            padding-left: 20px;
+            background-color: #FFF;
+            font-weight: 200;
+        }
+        .price{
+            text-align: left;
+            margin-bottom: 0px;
+            font-weight: 300;
+        }
+        .text-left{
+            text-align: left;
+        }
+        .gcash{
+            width: 100px;
+            margin-top: -15px;
+        }
+        .form-check{
+            height: 10px!important;
+        }
     </style>
 </head>
 
@@ -182,6 +210,14 @@
                             <a class="nav-link" href="profile.html" tabindex="-1" aria-disabled="true">
                                 <div class="avatar avatar-40 rounded icon"><i class="bi bi-person"></i></div>
                                 <div class="col">Profile</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+
+                        <li class="nav-item trips">
+                            <a class="nav-link" href="trips.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-geo-alt"></i></div>
+                                <div class="col">Trips</div>
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
@@ -244,7 +280,32 @@
                     <input id="destination-input" type="text" placeholder="Destination" class="form-control mt-2" readonly>
                     <input id="destination-input-lat" type="hidden" placeholder="Destination Lat">
                     <input id="destination-input-lng" type="hidden" placeholder="Destination lng">
-                    <button id="go-button" class="btn btn-md btn-default btn-block mt-2 btn-justify">Lets Go!</button>
+                    <div class="payment-method">
+                        <h3 class="price">₱ 0.00</h3>
+                        <hr>
+                        <div class="row">
+                            <div class="payment-option">
+                                <p>Payment Method</p>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check text-left">
+                                    <input class="form-check-input" type="radio" name="payment-method" value="cash" id="cash" checked>
+                                    <label class="form-check-label" for="cash">
+                                      CASH
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="col-6">
+                                <div class="form-check text-left">
+                                    <input class="form-check-input" type="radio" name="payment-method" value="gcash" id="gcash">
+                                    <label class="form-check-label" for="gcash">
+                                      <img src="assets/gcash.png" class="gcash">
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="go-button" class="btn btn-md btn-default btn-block mt-2 btn-justify">Let's Go!</button>
                 </div>
             </div>
 
@@ -339,7 +400,7 @@
         document.getElementById("destination-input-lng").value = destinationLngVal
     </script>
     
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAqdwRPpTtDGc6lWZKlSO0EPgkAKRo-8o&libraries=places&callback=initMap"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s&libraries=places&callback=initMap"></script>
     <script>
         let originCoordinate;
         let destinationCoordinate;
@@ -372,16 +433,67 @@
                     }
                 });
             }
+
+            
+            function getDistanceAndTime(origin, destination) {
+                var service = new google.maps.DistanceMatrixService();
+                service.getDistanceMatrix(
+                    {
+                    origins: [origin],
+                    destinations: [destination],
+                    travelMode: 'DRIVING',
+                    unitSystem: google.maps.UnitSystem.METRIC,
+                    avoidHighways: false,
+                    avoidTolls: false
+                    },
+                    function(response, status) {
+                        if (status !== 'OK') {
+                            console.log('Error:', status);
+                            return;
+                        }
+
+                        var results = response.rows[0].elements[0];
+                        var distance = results.distance.text;
+                        var duration = results.duration.text;
+                        
+                        console.log('Distance:', distance);
+                        console.log('Duration:', duration);
+                        
+                        var meters = results.distance.value;
+                        console.log('distance: ', meters);
+                        const r = document.querySelector(".price");
+                        if(meters <= 3000){
+                            let price = 0;
+                            price = 30.00
+                            r.innerHTML = '₱ '+price.toFixed(2);
+                        }else{
+                            let price = 0;
+                            meters -= 3000;
+                            price = 30+((meters / 1000)*10);
+                            r.innerHTML = '₱ '+price.toFixed(2);
+                        }
+
+                    }
+                );
+            }
             
             const originLatLng = new google.maps.LatLng(originLatVal, originLngVal);
             const destinationLatLng = new google.maps.LatLng(destinationLatVal, destinationLngVal); 
             displayDirections(originLatLng, destinationLatLng);
+            getDistanceAndTime(originLatLng, destinationLatLng);
         }
 
         const goButton = document.getElementById("go-button");
 
         goButton.addEventListener("click", function() {
-            createTrip(originVal, destinationVal, originLatVal, originLngVal, destinationLatVal, destinationLngVal);
+            var ele = document.getElementsByName('payment-method');
+ 
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked){
+                    let paymentMethod = ele[i].value;
+                    createTrip(originVal, destinationVal, originLatVal, originLngVal, destinationLatVal, destinationLngVal, paymentMethod);
+                }
+            }
         });
         
         
@@ -404,13 +516,14 @@
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         
-        function createTrip(origin, destination, originLat, originLng, destinationLat, destinationLng){
+        function createTrip(origin, destination, originLat, originLng, destinationLat, destinationLng, paymentMethod){
             db.collection("trips").add({
                 user_id: sessionStorage.getItem('userId'),
                 driver_id: null,
                 is_started: false,
                 is_complete: false,
                 is_cancelled: false,
+                payment_method: paymentMethod,
                 origin_name: origin,
                 origin: new firebase.firestore.GeoPoint(originLat, originLng),
                 destination: new firebase.firestore.GeoPoint(destinationLat, destinationLng),
@@ -503,6 +616,16 @@
                                         +'&destination='+document.getElementById("destination-input").value
                                         +'&destinationLat='+document.getElementById("destination-input-lat").value
                                         +'&destinationLng='+document.getElementById("destination-input-lng").value;
+        }
+    }
+    
+    checkAdmin();
+    function checkAdmin(){
+        var userType = sessionStorage.getItem('userType');
+
+        if(userType=='admin'){
+            var r = document.querySelector('.trips');
+            r.style.setProperty('display', 'block');
         }
     }
 </script>

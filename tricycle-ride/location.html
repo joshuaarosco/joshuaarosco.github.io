@@ -41,6 +41,7 @@
     
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
+    <link href="assets/css/custom.css" rel="stylesheet" id="style">
     <style>
         .tricy-icon{
             width: 80px;
@@ -121,6 +122,14 @@
                             <a class="nav-link" href="profile.html" tabindex="-1" aria-disabled="true">
                                 <div class="avatar avatar-40 rounded icon"><i class="bi bi-person"></i></div>
                                 <div class="col">Profile</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+
+                        <li class="nav-item trips">
+                            <a class="nav-link" href="trips.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-geo-alt"></i></div>
+                                <div class="col">Trips</div>
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
@@ -491,4 +500,13 @@
         r.style.setProperty('opacity', '0%');
     }
     
+    checkAdmin();
+    function checkAdmin(){
+        var userType = sessionStorage.getItem('userType');
+
+        if(userType=='admin'){
+            var r = document.querySelector('.trips');
+            r.style.setProperty('display', 'block');
+        }
+    }
 </script>

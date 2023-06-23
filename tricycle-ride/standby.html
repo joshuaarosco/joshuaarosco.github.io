@@ -117,6 +117,7 @@
     </script>
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
+    <link href="assets/css/custom.css" rel="stylesheet" id="style">
     <style>
         .tricy-icon{
             width: 80px;
@@ -215,6 +216,18 @@
         .requests-div{
             display: none;
         }
+        .gcash{
+            width: 100px;
+            margin-top: 0px;
+        }
+        .payment-method{
+            padding: 10px;
+            padding-left: 0px
+            /* margin-top: 0px; */
+        }
+        .pt-0{
+            padding-top: 0px!important;
+        }
     </style>
 </head>
 
@@ -251,6 +264,14 @@
                             <a class="nav-link" href="profile.html" tabindex="-1" aria-disabled="true">
                                 <div class="avatar avatar-40 rounded icon"><i class="bi bi-person"></i></div>
                                 <div class="col">Profile</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+
+                        <li class="nav-item trips">
+                            <a class="nav-link" href="trips.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-geo-alt"></i></div>
+                                <div class="col">Trips</div>
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
@@ -574,6 +595,15 @@
                 if(destination.length > 10) destination = destination.substring(0,25);
 
                 var tripId = trips[trip_id][0];
+                console.log(tripId);
+
+                var paymentMethod = trips[trip_id][2].payment_method;
+                var payment = ``;
+                if(paymentMethod == 'gcash'){
+                    payment = `<img src="assets/gcash.png" class="gcash">`;
+                }else{
+                    payment = `<span class="cash"> CASH </span>`;
+                }
 
                 rd.innerHTML += `
                 <div class="col-12" id="${tripId}">
@@ -586,17 +616,17 @@
                                 </div>
                                 <div class="col-auto align-self-center">
                                     <button class="btn btn-link text-primary" data-bs-toggle="collapse" aria-expanded="false"
-                                        data-bs-target="#${tripId}-modal">
+                                        data-bs-target="#A${tripId}-modal">
                                             <i class="bi bi-chevron-down"></i>
                                     </button>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer accordion-collapse collapse py-0" id="${tripId}-modal">
-                            <div id="${tripId}-map">
-                                
+                        <div class="card-footer accordion-collapse collapse py-0" id="A${tripId}-modal">
+                            <div class="payment-method">
+                                <small>PAYMENT METHOD</small>   : ${payment}
                             </div>
-                            <div class="row py-3">
+                            <div class="row py-3 pt-0">
                                 <div class="col">
                                     <a class="btn btn-primary btn-sm w-100 view-btn-${tripId}" id="btn-view"
                                         href="view.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatLng.latitude}&originLng=${originLatLng.longitude}&destinationLat=${destinationLatLng.latitude}&destinationLng=${destinationLatLng.longitude}">
@@ -606,7 +636,7 @@
                                 <div class="col">
                                     <a class="btn btn-default btn-sm w-100" id="btn-accept"
                                         href="accept.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatLng.latitude}&originLng=${originLatLng.longitude}&destinationLat=${destinationLatLng.latitude}&destinationLng=${destinationLatLng.longitude}">
-                                        ACCEPT
+                                            ACCEPT
                                     </a>
                                 </div>
                             </div>
@@ -637,6 +667,16 @@
     
     var r = document.querySelector('.user-name');
     r.innerHTML = sessionStorage.getItem('userName')
+    
+    checkAdmin();
+    function checkAdmin(){
+        var userType = sessionStorage.getItem('userType');
+
+        if(userType=='admin'){
+            var r = document.querySelector('.trips');
+            r.style.setProperty('display', 'block');
+        }
+    }
     
     // var tripDetails = JSON.parse(sessionStorage.getItem('tripDetails'))
     // document.getElementById('going-to').innerHTML = tripDetails[3];
