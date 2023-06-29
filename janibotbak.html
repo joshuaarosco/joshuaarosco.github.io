@@ -1,126 +1,206 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
+
 <head>
-  <title>Janibot Controller</title>
-  <style>
-    body {
-      background-color: #F0F0F0;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      flex-direction: column;
-    }
-    .title {
-      color: #6c757d;
-      font-size: 5vw;
-      font-weight: bold;
-      margin-bottom: 4vw;
-    }
-    .button-container {
-      display: flex;
-      flex-direction: row;
-      margin-bottom: 4vw;
-    }
-    .button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 18vw;
-      height: 18vw;
-      border-radius: 9vw;
-      background-color: #FFFFFF;
-      margin: 0 2vw;
-      font-size: 5vw;
-    }
-    .wifi-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 15vw;
-      height: 15vw;
-      border-radius: 7.5vw;
-      background-color: #FFFFFF;
-      margin-right: 4vw;
-      font-size: 5vw;
-    }
-    .on-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      width: 15vw;
-      height: 15vw;
-      border-radius: 7.5vw;
-      background-color: #FFFFFF;
-      margin-right: 4vw;
-      font-size: 5vw;
-    }
-    .auto-button {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background-color: #FFFFFF;
-      padding: 2vw 5vw;
-      border-radius: 10vw;
-    }
-    .auto-button-text {
-      color: #6c757d;
-      font-size: 4vw;
-      font-weight: bold;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remote Control App | theuicode.com </title>
+    <link rel="stylesheet" href="assets/css/plugins/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="janibot-assets/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css">
+    <style>
+        .white{
+            color: #ffffff!important;
+        }
+        .btn-control{
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            background-color: #555555;
+        }
+        .btn-control-sm{
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            background-color: #555555;
+        }
+        .mr-20{
+            margin-right: 20px;
+        }
+        .mr-30{
+            margin-right: 30px;
+        }
+        .mt-25{
+            margin-top: 40px;
+        }
+        .mt-30{
+            margin-top: 30px;
+        }
+        .mt-100{
+            margin-top: 100px;
+        }
+        .mt-50{
+            margin-top: 50px;
+        }
+        .h-100{
+            height: 100%;
+        }
+        .btn-auto{
+            height: 75px;
+            width: 150px;
+            border-radius: 50px;
+            font-size: 25px;
+            background-color: #555555;
+        }
+        .p-10{
+            padding-bottom: 10px;
+        }
+        .pb-15{
+            padding: 15px;
+        }
+        .ml-25{
+            margin-left: 25px;
+        }
+        .mr-25{
+            margin-right: 25px;
+        }
+        .pt-30{
+            padding-top: 30px;
+        }
+        .container{
+            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/003/047/541/small_2x/abstract-digital-background-with-technology-circuit-board-free-vector.jpg');
+            
+        }
+        .power{
+            color: #ff6e6e!important;
+        }
+        .wifi{
+            color: #5db4ff!important;
+        }
+        .title{
+            color: #555555;
+        }
+    </style>
 </head>
+
 <body>
-  <div id="modal" style="display: none;">
-    <div id="modal-content">
-      <h2>Enter IP Address</h2>
-      <input type="text" id="ip-address" placeholder="192.168.0.1" />
-      <button id="connect-button">Connect</button>
+    <!--container-->
+    <div class="container">
+        <div class="row text-center">
+            <h1 class="title"><strong>JANIBOT</strong></h1>
+        </div>
+        <div class="row p-10">
+            <div class="col-xs-5">
+                <div class="row pb-15">
+                    <div class="col-xs-6">
+                        <button onclick="sendCommand('K')" class="btn btn-control-sm pull-right"><i class="white fas fa-chevron-left py-3 control-icon"></i></button>
+                    </div>
+                    <div class="col-xs-6">
+                        <button onclick="sendCommand('E')" class="btn btn-control-sm"><i class="white fas fa-chevron-right py-3 control-icon"></i></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-5">
+                        <button onclick="sendCommand('L')" class="btn btn-control pull-right"><i class="white fas fa-chevron-left py-3 control-icon"></i></button>
+                    </div>
+                    <div class="col-xs-2">
+                        
+                    </div>
+                    <div class="col-xs-5">
+                        <button onclick="sendCommand('R')" class="btn btn-control"><i class="white fas fa-chevron-right py-3 control-icon"></i></button>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-4 text-center">
+                    </div>
+                    <div class="col-xs-4 text-center">
+                        <button onclick="sendCommand('T')" class="btn btn-control"><i class="white fas fa-arrows-rotate py-3 control-icon"></i></button>
+                    </div>
+                    <div class="col-xs-4 text-center">
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-6">
+                <div class="row pt-30">
+                    <div class="col-xs-12">
+                        <button onclick="sendCommand('F')" class="btn btn-control pull-right mr-25"><i class="white fas fa-chevron-up py-3 control-icon"></i></button>
+                    </div>
+                    <div class="col-xs-12">
+                        <button onclick="sendCommand('B')" class="btn btn-control mt-30 pull-right mr-25"><i class="white fas fa-chevron-down py-3 control-icon"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 text-center">
+                <input type="hidden" class="ipAddress" value="">
+                <button class="btn btn-control ml-25 mr-20" id="connection"><i class="wifi fas fa-wifi py-3 control-icon"></i></button>
+                <button onclick="sendCommand('A')" class="btn btn-auto mr-20 white">AUTO</button>
+                <button onclick="sendCommand('O')" class="btn btn-control mr-20"><i class="power fas fa-power-off py-3 control-icon"></i></button>
+            </div>
+        </div>
     </div>
-  </div>
-  <div class="title">Janibot Controller</div>
-  <div class="button-container">
-    <button class="button" onclick="sendCommand('F')">&#8593;</button>
-  </div>
-  <div class="button-container">
-    <button class="button" onclick="sendCommand('L')">&#8592;</button>
-    <button class="button" onclick="sendCommand('S')">Pause</button>
-    <button class="button" onclick="sendCommand('R')">&#8594;</button>
-  </div>
-  <div class="button-container">
-    <button class="button" onclick="sendCommand('B')">&#8595;</button>
-  </div>
-  <div class="button-container">
-    <button class="wifi-button" onclick="toggleModal()">&#128246;</button>
-    <button class="on-button" onclick="sendCommand('O')">&#9881;</button>
-    <button class="auto-button" onclick="sendCommand('A')"><span class="auto-button-text">AUTO</span></button>
-  </div>
-  
-  <script>
-    const ipAddressInput = document.getElementById('ip-address');
-    const connectButton = document.getElementById('connect-button');
-    const modal = document.getElementById('modal');
-
-    let ipAddress = '';
-    let modalVisible = true;
-
-    function sendCommand(command) {
-      fetch(`http://${ipAddress}/${command}`)
-        .catch((error) => {
-          console.error(error);
+    <script src="janibot-assets/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
+    <script>
+        let ipAddress = $(".ipAddress").val();
+        $("#connection").on("click", function(){
+            Swal.fire({
+                title: 'Enter Device IP Address',
+                input: 'text',
+                inputValue: ipAddress,
+                inputPlaceholder: '192.168.1.213',
+                showCancelButton: true,
+                confirmButtonText: 'Submit',
+                cancelButtonText: 'Cancel',
+                allowOutsideClick: false,
+                allowEscapeKey: false,
+                allowEnterKey: false,
+                inputValidator: (value) => {
+                    if (!value) {
+                        return 'You must enter an IP Address!';
+                    }
+                }
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    const enteredValue = result.value;
+                    $(".ipAddress").val(enteredValue);
+                    console.log(enteredValue);
+                }
+            });
         });
-    }
 
-    function handleConnect() {
-      modal.style.display = 'none';
-      modalVisible = false;
-    }
+        function sendCommand(command) {
+            let ipAddress = $(".ipAddress").val();
 
-    function toggleModal() {
-      modal.style.display = modalVisible ? 'none' : 'block';
-      modalVisible = !modalVisible;
-    }
-
-    connectButton.addEventListener('click', handleConnect);
-  </script>
+            if(ipAddress == ''){
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Oops...',
+                    text: 'Please enter the device IP Address first!'
+                })
+            }else{
+                const url = "http://"+ipAddress+"/"+command; // Replace with your desired URL
+                const xhr = new XMLHttpRequest();
+                xhr.open('GET', url, true);
+                xhr.onreadystatechange = function() {
+                    if (xhr.readyState === XMLHttpRequest.DONE) {
+                        if (xhr.status === 200) {
+                            const response = JSON.parse(xhr.responseText);
+                            // Handle the response data
+                            console.log(response);
+                        } else {
+                            // Handle request error
+                            // console.error('Request failed:', xhr.status);
+                        }
+                    }
+                };
+                xhr.send();
+            }
+        }
+    </script>
 </body>
+
 </html>

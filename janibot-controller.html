@@ -6,11 +6,21 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Remote Control App | theuicode.com </title>
-    <link rel="stylesheet" href="assets/css/plugins/bootstrap.min.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha512-iecdLmaskl7CVkqkXNQ/ZH/XLlvWZOJyj7Yy7tcenmpD1ypASozpmT/E0iPtmFIB46ZmdtAc9eNBvH0H/ZpiBw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
-    <link rel="stylesheet" href="janibot-assets/style.css">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.css">
     <style>
+        *{
+            font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+            -webkit-box-sizing: border-box;
+            -moz-box-sizing: border-box;
+            box-sizing: border-box;
+            overflow: hidden; /* Hide scrollbars */
+        }
+        .text-center {
+            text-align: center;
+        }
+        .btn{
+            border: 1px solid #555555;
+            font-size: 20px;
+        }
         .white{
             color: #ffffff!important;
         }
@@ -18,13 +28,15 @@
             width: 75px;
             height: 75px;
             border-radius: 50%;
-            background-color: #555555;
+            background-color: #ffffff;
+            color: #555555;
         }
         .btn-control-sm{
             width: 55px;
             height: 55px;
             border-radius: 50%;
-            background-color: #555555;
+            background-color: #ffffff;
+            color: #555555;
         }
         .mr-20{
             margin-right: 20px;
@@ -52,7 +64,8 @@
             width: 150px;
             border-radius: 50px;
             font-size: 25px;
-            background-color: #555555;
+            background-color: #ffffff;
+            color: #555555;
         }
         .p-10{
             padding-bottom: 10px;
@@ -69,10 +82,6 @@
         .pt-30{
             padding-top: 30px;
         }
-        .container{
-            background-image: url('https://static.vecteezy.com/system/resources/thumbnails/003/047/541/small_2x/abstract-digital-background-with-technology-circuit-board-free-vector.jpg');
-            
-        }
         .power{
             color: #ff6e6e!important;
         }
@@ -80,7 +89,72 @@
             color: #5db4ff!important;
         }
         .title{
+            color: #ffffff;
             color: #555555;
+        }
+        .col-xs-5{
+            width: 50%;
+        }
+        .col-xs-6 {
+            width: 50%;
+            position: relative;
+            min-height: 1px;
+            padding-left: 13px;
+            padding-right: 13px;
+            float: left;
+        }
+        .col-xs-4 {
+            width: 33.33333333%;
+            position: relative;
+            min-height: 1px;
+            padding-left: 13px;
+            padding-right: 13px;
+            float: left;
+        }
+        .col-xs-5 {
+            width: 41.66666667%;
+            position: relative;
+            min-height: 1px;
+            padding-left: 13px;
+            padding-right: 13px;
+            float: left;
+        }
+        .col-xs-2 {
+            width: 16.66666667%;
+            position: relative;
+            min-height: 1px;
+            padding-left: 13px;
+            padding-right: 13px;
+            float: left;
+        }
+        .col-xs-3 {
+            width: 25%;
+            position: relative;
+            min-height: 1px;
+            padding-left: 13px;
+            padding-right: 13px;
+            float: left;
+        }
+        .col-xs-12 {
+            width: 100%;
+            position: relative;
+            min-height: 1px;
+            padding-left: 13px;
+            padding-right: 13px;
+            float: left;
+        }
+        .row {
+            margin-left: -13px;
+            margin-right: -13px;
+        }
+        .pull-right {
+            float: right !important;
+        }
+        .pt-90 {
+            padding-top: 90px;
+        }
+        .h-50{
+            height: 50px;
         }
     </style>
 </head>
@@ -95,111 +169,78 @@
             <div class="col-xs-5">
                 <div class="row pb-15">
                     <div class="col-xs-6">
-                        <button onclick="sendCommand('K')" class="btn btn-control-sm pull-right"><i class="white fas fa-chevron-left py-3 control-icon"></i></button>
+                        <form method="POST" action="K">
+                            <button name="command" value="K" type="submit" class="btn btn-control-sm pull-right">◀</button>
+                        </form>
                     </div>
                     <div class="col-xs-6">
-                        <button onclick="sendCommand('E')" class="btn btn-control-sm"><i class="white fas fa-chevron-right py-3 control-icon"></i></button>
+                        <form method="POST" action="E">
+                            <button name="command" value="E" type="submit" class="btn btn-control-sm">▶</button>
+                        </form>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-5">
-                        <button onclick="sendCommand('L')" class="btn btn-control pull-right"><i class="white fas fa-chevron-left py-3 control-icon"></i></button>
+                        <form method="POST" action="L">
+                            <button name="command" value="L" type="submit" class="btn btn-control pull-right">◀</button>
+                        </form>
                     </div>
                     <div class="col-xs-2">
                         
                     </div>
                     <div class="col-xs-5">
-                        <button onclick="sendCommand('R')" class="btn btn-control"><i class="white fas fa-chevron-right py-3 control-icon"></i></button>
+                        <form method="POST" action="E">
+                            <button name="command" value="R" type="submit" class="btn btn-control">▶</button>
+                        </form>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-xs-4 text-center">
                     </div>
                     <div class="col-xs-4 text-center">
-                        <button onclick="sendCommand('T')" class="btn btn-control"><i class="white fas fa-arrows-rotate py-3 control-icon"></i></button>
+                        <form method="POST" action="T">
+                            <button name="command" value="T" type="submit" class="btn btn-control">⟳</button>
+                        </form>
                     </div>
                     <div class="col-xs-4 text-center">
                     </div>
                 </div>
             </div>
-            <div class="col-xs-6">
-                <div class="row pt-30">
-                    <div class="col-xs-12">
-                        <button onclick="sendCommand('F')" class="btn btn-control pull-right mr-25"><i class="white fas fa-chevron-up py-3 control-icon"></i></button>
+            <div class="col-xs-4 pt-90">
+                <div class="row">
+                    <div class="col-xs-5">
+                        <form method="POST" action="O">
+                            <button name="command" value="O" type="submit" class="btn btn-control mr-20">☉</button>
+                        </form>
                     </div>
-                    <div class="col-xs-12">
-                        <button onclick="sendCommand('B')" class="btn btn-control mt-30 pull-right mr-25"><i class="white fas fa-chevron-down py-3 control-icon"></i></button>
+                    <div class="col-xs-7">
+                        <form method="POST" action="A">
+                            <button name="command" value="A" type="submit" class="btn btn-auto mr-20">AUTO</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xs-3">
+                <div class="row pt-30">
+                    <div class="col-xs-12 text-center">
+                        <form method="POST" action="F">
+                            <button name="command" value="F" type="submit" class="btn btn-control mr-25">▲</button>
+                        </form>
+                    </div>
+                    <div class="col-xs-12 text-center">
+                        <form method="POST" action="B">
+                            <button name="command" value="B" type="submit" class="btn btn-control mt-30 mr-25">▼</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
         <div class="row">
-            <div class="col-xs-12 text-center">
-                <input type="hidden" class="ipAddress" value="">
-                <button class="btn btn-control ml-25 mr-20" id="connection"><i class="wifi fas fa-wifi py-3 control-icon"></i></button>
-                <button onclick="sendCommand('A')" class="btn btn-auto mr-20 white">AUTO</button>
-                <button onclick="sendCommand('O')" class="btn btn-control mr-20"><i class="power fas fa-power-off py-3 control-icon"></i></button>
+            <div class="col-xs-12 text-center h-50">
             </div>
         </div>
     </div>
-    <script src="janibot-assets/jquery.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10.15.5/dist/sweetalert2.min.js"></script>
     <script>
-        let ipAddress = $(".ipAddress").val();
-        $("#connection").on("click", function(){
-            Swal.fire({
-                title: 'Enter Device IP Address',
-                input: 'text',
-                inputValue: ipAddress,
-                inputPlaceholder: '192.168.1.213',
-                showCancelButton: true,
-                confirmButtonText: 'Submit',
-                cancelButtonText: 'Cancel',
-                allowOutsideClick: false,
-                allowEscapeKey: false,
-                allowEnterKey: false,
-                inputValidator: (value) => {
-                    if (!value) {
-                        return 'You must enter an IP Address!';
-                    }
-                }
-            }).then((result) => {
-                if (result.isConfirmed) {
-                    const enteredValue = result.value;
-                    $(".ipAddress").val(enteredValue);
-                    console.log(enteredValue);
-                }
-            });
-        });
-
-        function sendCommand(command) {
-            let ipAddress = $(".ipAddress").val();
-
-            if(ipAddress == ''){
-                Swal.fire({
-                    icon: 'error',
-                    title: 'Oops...',
-                    text: 'Please enter the device IP Address first!'
-                })
-            }else{
-                const url = "http://"+ipAddress+"/"+command; // Replace with your desired URL
-                const xhr = new XMLHttpRequest();
-                xhr.open('GET', url, true);
-                xhr.onreadystatechange = function() {
-                    if (xhr.readyState === XMLHttpRequest.DONE) {
-                        if (xhr.status === 200) {
-                            const response = JSON.parse(xhr.responseText);
-                            // Handle the response data
-                            console.log(response);
-                        } else {
-                            // Handle request error
-                            // console.error('Request failed:', xhr.status);
-                        }
-                    }
-                };
-                xhr.send();
-            }
-        }
     </script>
 </body>
 
