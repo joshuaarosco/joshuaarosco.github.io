@@ -37,42 +37,19 @@
                 window.location.href = 'login.html';
             }
         }
+
+        checkSuspension();
+        function checkSuspension(){
+            let suspended = sessionStorage.getItem('suspended');
+            if(suspended){
+                window.location.href = 'index.html';
+            }
+        }
     </script>
     
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
     <link href="assets/css/custom.css" rel="stylesheet" id="style">
-    <style>
-        .tricy-icon{
-            width: 80px;
-        }
-        .tricy-div{
-            position: relative;
-            top: -30px;
-            height: 100px;
-            width: 100px;
-            /* background-color: black; */
-            box-shadow: 0px -2px 5px rgba(0,0,0,0.1);
-            background-color: white;
-            border-radius: 50%;
-            padding: 10px;
-            padding-top: 20px;
-        }
-        #search-button{
-            width: 100%;
-        }
-        .map-container{
-            min-width: 100%;
-            padding: 0px;
-        }
-        .map-inputs{
-            position: absolute;
-            top: 0;
-            width: 100%;
-            padding: 20px;
-            text-align: center;
-        }
-    </style>
 </head>
 
 <body class="body-scroll" data-page="index">
@@ -133,6 +110,14 @@
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
+
+                        <li class="nav-item reports">
+                            <a class="nav-link" href="report_list.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-exclamation-circle"></i></div>
+                                <div class="col">Reports</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
                         
                         <li class="nav-item">
                             <a class="nav-link" href="#" id="logout" tabindex="-1" aria-disabled="true">
@@ -185,15 +170,84 @@
             </div>
             
             <div class="mt-5 map-inputs">
-                <div class="col-12">
-                    <input id="origin-input" type="text" placeholder="Origin"  class="form-control mt-2">
-                    <input id="origin-input-lat" type="hidden" placeholder="Origin Lat">
-                    <input id="origin-input-lng" type="hidden" placeholder="Origin lng">
-                    <input id="destination-input" type="text" placeholder="Destination" class="form-control mt-2">
-                    <input id="destination-input-lat" type="hidden" placeholder="Destination Lat">
-                    <input id="destination-input-lng" type="hidden" placeholder="Destination lng">
-                    <button id="search-button" class="btn btn-md btn-default btn-block mt-2 btn-justify">Find A Ride</button>
+                <div class="col-12" id="${tripId}">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-body">
+                            <div class="row py-2">
+                                <div class="col">
+                                    <div class="row">
+                                        <div class="col-1 pt-15">
+                                            <i class="bi bi-geo"></i>
+                                        </div>
+                                        <div class="col-11">
+                                            <input id="origin-input" type="text" placeholder="Origin"  class="form-control mt-2 origin">
+                                            <input id="origin-input-lat" type="hidden" placeholder="Origin Lat">
+                                            <input id="origin-input-lng" type="hidden" placeholder="Origin lng">
+                                        </div>
+                                    </div>
+        
+                                    <div class="row">
+                                        <div class="col-1 pt-15">
+                                            <i class="bi bi-geo-alt"></i>
+                                        </div>
+                                        <div class="col-11">
+                                            <input id="destination-input" type="text" placeholder="Destination" class="form-control mt-2 destination">
+                                            <input id="destination-input-lat" type="hidden" placeholder="Destination Lat">
+                                            <input id="destination-input-lng" type="hidden" placeholder="Destination lng">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-auto align-self-center">
+                                    <button class="btn btn-link text-link" data-bs-toggle="collapse" aria-expanded="false"
+                                        data-bs-target="#options"><i class="bi bi-gear"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footer accordion-collapse collapse py-0" id="options">
+                            <div class="py-3">
+                                <div class="row">
+                                    <div class="col text-left">
+                                        <p class="mb-1">Add person to pickup or baggage on the way to your Ride? </p>
+                                        <select name="" id="base" class="form-control">
+                                            <option value="30">1 seat = ₱ 30.00</option>
+                                            <option value="40">1 seat -> + 1 person or baggage = ₱ 40.00</option>
+                                            <option value="60">1 seat -> + 2 person or baggage = ₱ 60.00</option>
+                                            <option value="80">1 seat -> + 3 person or baggage = ₱ 80.00</option>
+                                            <option value="100">1 seat -> + 4 person or baggage = ₱ 100.00</option>
+                                            <option value="60">1 seat -> + 1 person + 1 baggage = ₱ 60.00</option>
+                                            <option value="80">1 seat -> + 1 person + 2 baggage = ₱ 80.00</option>
+                                            <option value="100">1 seat -> + 1 person + 3 baggage = ₱ 100.00</option>
+                                            <option value="80">1 seat -> + 2 person + 1 baggage = ₱ 80.00</option>
+                                            <option value="100">1 seat -> + 2 person + 2 baggage = ₱ 100.00</option>
+                                            <option value="40">2 seats = ₱ 40.00</option>
+                                            <option value="60">2 seats -> + 1 person or baggage = ₱ 60.00</option>
+                                            <option value="80">2 seats -> + 2 person or baggage = ₱ 80.00</option>
+                                            <option value="100">2 seats -> + 3 person or baggage = ₱ 100.00</option>
+                                            <option value="80">2 seats -> + 1 person + 1 baggage = ₱ 80.00</option>
+                                            <option value="100">2 seats -> + 1 person + 2 baggage = ₱ 100.00</option>
+                                            <option value="100">2 seats -> + 2 person + 1 baggage = ₱ 100.00</option>
+                                            <option value="60">3 seats = ₱ 60.00</option>
+                                            <option value="80">3 seats -> + 1 person or baggage = ₱ 80.00</option>
+                                            <option value="100">3 seats -> + 2 person or baggage = ₱ 100.00</option>
+                                            <option value="100">3 seats -> + 1 person + 1 baggage = ₱ 100.00</option>
+                                            <option value="80">4 seats = ₱ 80.00</option>
+                                            <option value="100">4 seats -> + 1 person or baggage = ₱ 100.00</option>
+                                            <option value="100">5 seats = ₱ 100.00</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col text-left mt-3">
+                                        <p class="mb-1">Additional Details</p>
+                                        <textarea name="" id="details" cols="30" rows="3" class="form-control"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                
+                <button id="search-button" class="btn btn-md btn-default btn-block btn-justify">Find A Ride</button>
             </div>
         </div>
         <!-- main page content ends -->
@@ -309,7 +363,16 @@
                         data.destination.longitude
                     ]));
                     
-                    if(data.driver_id ==  null){
+                    if(data.is_special == true){
+                        console.log(doc.data());
+                        // alert(data.user_id);
+                        window.location.href = 'special_trip.html?origin='+data.origin_name
+                                        +'&originLat='+data.origin.latitude
+                                        +'&originLng='+data.origin.longitude
+                                        +'&destination='+data.destination_name
+                                        +'&destinationLat='+data.destination.latitude
+                                        +'&destinationLng='+data.destination.longitude;
+                    }else if(data.driver_id ==  null && data.is_special == false){
                         window.location.href = 'waiting.html?origin='+data.origin_name
                                         +'&originLat='+data.origin.latitude
                                         +'&originLng='+data.origin.longitude
@@ -327,7 +390,6 @@
                 });
             });
         }
-
     </script>
     
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAqdwRPpTtDGc6lWZKlSO0EPgkAKRo-8o&libraries=places&callback=initMap"></script>
@@ -346,6 +408,8 @@
             const originInput = document.getElementById("origin-input");
             const destinationInput = document.getElementById("destination-input");
             const searchButton = document.getElementById("search-button");
+            const basePrice = document.getElementById("base");
+            const details = document.getElementById("details");
             
             // Initialize autocomplete for origin and destination inputs
             const autocompleteOptions = {
@@ -468,7 +532,9 @@
                                         +'&originLng='+document.getElementById("origin-input-lng").value
                                         +'&destination='+destination
                                         +'&destinationLat='+document.getElementById("destination-input-lat").value
-                                        +'&destinationLng='+document.getElementById("destination-input-lng").value;
+                                        +'&destinationLng='+document.getElementById("destination-input-lng").value
+                                        +'&basePrice='+document.getElementById("base").value
+                                        +'&details='+document.getElementById("details").value;
                 }, 3000);
             }
         }
@@ -483,6 +549,7 @@
     logout.addEventListener('click', async (e) => {
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('driverId');
+        sessionStorage.removeItem('suspended');
         setTimeout(function () {
             window.location.href = 'login.html';
         }, 100);
@@ -507,6 +574,9 @@
         if(userType=='admin'){
             var r = document.querySelector('.trips');
             r.style.setProperty('display', 'block');
+
+            var re = document.querySelector('.reports');
+            re.style.setProperty('display', 'block');
         }
     }
 </script>

@@ -1,0 +1,310 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="generator" content="">
+    <title>Message</title>
+    
+    <!-- manifest meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json" />
+    
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="assets/img/favicon180.png" sizes="180x180">
+    <link rel="icon" href="assets/img/favicon32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="assets/img/favicon16.png" sizes="16x16" type="image/png">
+    
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="assets/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
+    
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="assets/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
+
+    <!-- style css for this template -->
+    <link href="assets/css/style.css" rel="stylesheet" id="style">
+    
+</head>
+
+<body class="body-scroll" data-page="chatmessage">
+
+    <!-- loader section -->
+    <div class="container-fluid loader-wrap">
+        <div class="row h-100">
+            <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto text-center align-self-center">
+                <div class="loader-cube-wrap mx-auto">
+                    <div class="loader-cube1 loader-cube"></div>
+                    <div class="loader-cube2 loader-cube"></div>
+                    <div class="loader-cube4 loader-cube"></div>
+                    <div class="loader-cube3 loader-cube"></div>
+                </div>
+                <p>Great things ahead!<br><strong>Please wait...</strong></p>
+            </div>
+        </div>
+    </div>
+    <!-- loader section ends -->
+
+    <!-- Begin page -->
+    <main class="h-100 has-header">
+
+        <!-- Header -->
+        <header class="container-fluid header">
+            <div class="row">
+                <div class="col-auto">
+                    <button type="button" class="btn btn-link back-btn">
+                        <i class="bi bi-arrow-left"></i>
+                    </button>
+                </div>
+                <div class="col align-self-center">
+                    <div class="row">
+                        <!-- <div class="col-auto">
+                            <div class="avatar avatar-36 coverimg rounded-circle">
+                                <img src="assets/img/user3.jpg" alt="">
+                            </div>
+                        </div> -->
+                        <div class="col align-self-center px-0">
+                            <p class="mb-0 chat-name">Loading...</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <!-- Header ends -->
+
+        <!-- main page content -->
+        <div class="main-container container pt-0">
+
+            <!-- chat user list -->
+            <div class="container chat-list scroll-y">
+            </div>
+
+        </div>
+        <!-- main page content ends -->
+
+        <!-- chat message post -->
+        <div class="position-fixed bottom-0 start-0 chat-post">
+            <div class="row gx-3">
+                <div class="col">
+                    <div class="input-group">
+                        <input type="text" class="form-control" id="input-message" placeholder="Write your message">
+                        <button class="btn btn-outline-primary" id="btn-send" type="button"><i class="bi bi-cursor"></i></button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- chat message post page -->
+    </main>
+    <!-- Page ends-->
+
+
+
+    <!-- Required jquery and libraries -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/vendor/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+
+    <!-- cookie js -->
+    <script src="assets/js/jquery.cookie.js"></script>
+
+    <!-- Customized jquery file  -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/color-scheme.js"></script>
+
+    <!-- page level custom script -->
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/moment.js"></script>
+    
+    <!-- <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script> -->
+    
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getFirestore, setDoc, addDoc, doc, collection, updateDoc, deleteDoc, onSnapshot, query, getDocs, or, where, getDoc, limit, and, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
+            authDomain: "tricycle-ride.firebaseapp.com",
+            databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "tricycle-ride",
+            storageBucket: "tricycle-ride.appspot.com",
+            messagingSenderId: "802022631435",
+            appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        // Initialize Cloud Firestore
+        const db = getFirestore(app);
+
+        let thread = [];
+
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const passengerUserId = urlParams.get('passengerUserId')
+        const driverUserId = urlParams.get('driverUserId')
+        const userId = sessionStorage.getItem('userId')
+
+        console.log("USER ID: "+ sessionStorage.getItem('userId'));
+        console.log("PASSENGER ID: "+ passengerUserId);
+        console.log("DRIVER ID: "+ driverUserId);
+
+        if(userId != driverUserId){
+            getUserDetail(driverUserId);
+        }else{
+            getUserDetail(passengerUserId);
+        }
+
+        const messagesRef = collection(db, "messages");
+        const q = query(messagesRef, 
+            where("driver_id", "==", driverUserId),
+            where("passenger_id", "==", passengerUserId),
+            limit(1)
+        );
+
+        let counter = 0;
+
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                // sessionStorage.setItem('driverId', doc.data().id);
+                counter +=1;
+                getMessageThread(doc.id);
+                sessionStorage.setItem('messageId', doc.id);
+            });
+            setTimeout(function () {
+                createMessage(counter);
+            }, 2000);
+        });
+
+        const createMessage = async(counter) => {
+            
+            if(counter == 0){
+                const docRef = await addDoc(collection(db, "messages"), {
+                    driver_id: driverUserId,
+                    passenger_id: passengerUserId
+                });
+                console.log("MESSAGE ID: "+docRef.id);
+
+                updateDoc(doc(db, "messages", docRef.id), {
+                    id: docRef.id
+                });
+                
+                getMessageThread(docRef.id);
+                sessionStorage.setItem('messageId', docRef.id);
+            }        
+        }
+
+        function getMessageThread(messageId){
+            const messageRef = collection(db, "messages");
+            const q = query(messageRef, 
+                where("id", "==", messageId),
+                limit(1)
+            );
+
+            const userId = sessionStorage.getItem('userId')
+
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    thread = doc.data().thread;
+                });
+                if(thread){
+                    
+                    $('.chat-list').empty();
+                    thread.forEach(function(item) {
+                        let d = item.sent_at;
+                        var time = moment(d).format('hh:mm a - L');
+
+                        let position = '';
+
+                        if(item.sender_id == userId){
+                            position = 'right';
+                        }else{
+                            position = 'left';
+                        }
+
+                        $('.chat-list').append(`<div class="row no-margin ${position}-chat">
+                            <div class="col-12">
+                                <div class="chat-block">
+                                    <div class="row">
+                                        <div class="col">
+                                            ${item.message}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12">
+                                <p class="text-muted small time"><i class="bi bi-check"></i> ${time}</p>
+                            </div>
+                        </div>`);
+                    });
+                    
+                    var element = document.querySelector('.chat-list');
+                    $(window).scrollTop( element.scrollHeight );
+                }
+                
+            });
+        }
+
+        
+        const send = document.getElementById("btn-send");
+
+        send.addEventListener("click", function() {
+            let messageId = sessionStorage.getItem('messageId')
+            sendMessage(messageId);
+        });
+
+        function sendMessage(messageId){
+
+            const messageRef = collection(db, "messages");
+            const q = query(messageRef, 
+                where("id", "==", messageId),
+                limit(1)
+            );
+
+            const unsubscribe = onSnapshot(q, (querySnapshot, thread) => {
+                querySnapshot.forEach((doc) => {
+                    thread = doc.data().thread;
+                });
+            });
+
+            let inputMessage = document.getElementById("input-message").value;
+            if(!thread){
+                thread = []
+            }
+            if(inputMessage!=''){
+                const newThreadMessage = [
+                    {sent_at: Date.now(), sender_id: userId, message: inputMessage }
+                ];
+
+                const allMessage = [...thread, ...newThreadMessage];
+
+                updateDoc(doc(db, "messages", messageId), {
+                    thread: allMessage
+                });
+
+                document.getElementById("input-message").value = '';
+            }
+        }
+
+        function getUserDetail(userId){
+            const usersRef = collection(db, "users");
+            const q = query(usersRef, 
+                where("id", "==", userId),
+                limit(1)
+            );
+
+            const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                    let name = doc.data().name;
+                    document.querySelector('.chat-name').innerHTML = name;
+                });
+            });
+        }
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,376 @@
+<!doctype html>
+<html lang="en" class="h-100">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="generator" content="">
+    <title>Sign Up</title>
+    
+    <!-- manifest meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json" />
+    
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="assets/img/favicon180.png" sizes="180x180">
+    <link rel="icon" href="assets/img/favicon32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="assets/img/favicon16.png" sizes="16x16" type="image/png">
+    
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+    
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="assets/cdn.jsdelivr.net/npm/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
+    <!-- style css for this template -->
+    <link href="assets/css/sweetalert.min.css" rel="stylesheet" id="style">
+    <link href="assets/css/style.css" rel="stylesheet" id="style">
+    <style>
+        .card{
+            background-color: #fff0;
+        }
+    </style>
+    <script>
+        console.log('USERID:', sessionStorage.getItem('userId'));
+        
+        checkToken();
+        function checkToken(){
+            var userId = sessionStorage.getItem('userId');
+
+            if(userId!=null){
+                window.location.href = 'index.html';
+            }
+        }
+        
+    </script>
+</head>
+
+<body class="body-scroll d-flex flex-column h-100 dark-bg" data-page="signup">
+    
+    <!-- loader section -->
+    <div class="container-fluid loader-wrap">
+        <div class="row h-100">
+            <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto text-center align-self-center">
+                <div class="loader-cube-wrap mx-auto">
+                    <div class="loader-cube1 loader-cube"></div>
+                    <div class="loader-cube2 loader-cube"></div>
+                    <div class="loader-cube4 loader-cube"></div>
+                    <div class="loader-cube3 loader-cube"></div>
+                </div>
+                <p>Great things ahead!<br><strong>Please wait...</strong></p>
+            </div>
+        </div>
+    </div>
+    <!-- loader section ends -->
+    
+    <!-- Begin page content -->
+    <main class="container-fluid h-100">
+        <div class="row h-100">
+            <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto mt-auto pt-4 text-center mb-100px d-grid gap-2">
+                <h3 class="mb-1">Make your move easy</h3>
+                <p class="text-muted mb-4">Sign up with Tricycle Ride now</p>
+                <div class="card shadow-sm">
+                    <div class="card-body text-black" style="text-align: left; display: none;">
+                        Please use a different phone or email
+                    </div>
+                </div>
+                <h6 class="mb-1">Basic Information</h6>
+                <div class="form-group form-floating">
+                    <input type="text" class="form-control" value="" placeholder="First Name" id="fname" required>
+                    <label for="fname">First Name</label>
+                </div>
+                <div class="form-group form-floating">
+                    <input type="text" class="form-control" value="" placeholder="Last Name" id="lname" required>
+                    <label for="lname">Last Name</label>
+                </div>
+                <div class="form-group form-floating">
+                    <input type="tel" class="form-control" value="" placeholder="Phone" id="phone" required>
+                    <label for="phone">Phone</label>
+                </div>
+                <div class="form-group form-floating">
+                    <input type="email" class="form-control" value="" placeholder="Email" id="email" required>
+                    <label for="email">Email</label>
+                </div>
+                <div class="form-group form-floating">
+                    <textarea name="address" class="form-control" id="address" cols="30" rows="5"></textarea>
+                    <label for="address">Address</label>
+                </div>
+                <div class="form-group form-floating">
+                    <input type="text" class="form-control" value="" placeholder="License No." id="driver_license" required>
+                    <label for="driver_license">License No.</label>
+                </div>
+                <div class="form-group form-floating">
+                    <input type="text" class="form-control" value="" placeholder="DL Codes" id="dl_codes" required>
+                    <label for="dl_codes">DL Codes</label>
+                </div>
+
+                <hr>
+                <h6 class="mb-1">Tricycle Information</h6>
+                <div class="form-group form-floating">
+                    <input type="text" class="form-control" value="" placeholder="Make" id="make" required>
+                    <label for="make">Make</label>
+                </div>
+                <div class="form-group form-floating">
+                    <input type="text" class="form-control" value="" placeholder="Model" id="model" required>
+                    <label for="model">Model</label>
+                </div>
+                <div class="form-group form-floating">
+                    <input type="text" class="form-control" value="" placeholder="Color" id="color" required>
+                    <label for="color">Color</label>
+                </div>
+                <div class="form-group form-floating">
+                    <input type="text" class="form-control" value="" placeholder="License Plate No." id="license_plate" required>
+                    <label for="license_plate">License Plate No.</label>
+                </div>
+
+                <hr>
+                <div class="form-floating">
+                    <input type="password" class="form-control" value="" placeholder="Password" id="password" required>
+                    <label for="password">Password</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" value="" placeholder="Confirm Password" id="confirm_password" required>
+                    <label for="confirm_password">Confirm Password</label>
+                </div>
+                <button type="button" class="btn btn-md btn-default mt-3" id="submitRegistration">Register</button>
+                <a href="login.html" target="_self" class="text-white btn btn-md btn-link">Already have account?</a>
+            </div>
+        </div>
+    </main>
+    
+    
+    <!-- Required jquery and libraries -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/vendor/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+    
+    <!-- cookie js -->
+    <script src="assets/js/jquery.cookie.js"></script>
+    
+    <!-- Customized jquery file  -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/color-scheme.js"></script>
+    
+    <!-- PWA app service registration and works -->
+    <script src="assets/js/pwa-services.js"></script>
+    
+    <!-- page level custom script -->
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/sweetalert.min.js"></script>
+    
+    <script src="https://unpkg.com/imask"></script>
+    <script>
+        let phone = document.getElementById('phone')
+        var phoneMask = IMask(phone, {
+            mask: '+{63}(000)000-00-00',
+            lazy: false,  // make placeholder always visible
+            placeholderChar: '#'     // defaults to '_'
+        });
+    </script>
+    <script src="assets/js/custom.js"></script>
+</body>
+</html>
+
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getFirestore, setDoc, addDoc, doc, collection, updateDoc, deleteDoc, onSnapshot, query, getDocs, or, where, getDoc, limit } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+    
+    
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
+        authDomain: "tricycle-ride.firebaseapp.com",
+        databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "tricycle-ride",
+        storageBucket: "tricycle-ride.appspot.com",
+        messagingSenderId: "802022631435",
+        appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
+    };
+    
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    
+    submitRegistration.addEventListener('click', async (e) => {
+        
+        let fname = document.getElementById('fname').value;
+        let lname = document.getElementById('lname').value;
+        let phone = document.getElementById('phone').value;
+        let email = document.getElementById('email').value;
+        let address = document.getElementById('address').value;
+        let driver_license = document.getElementById('driver_license').value;
+        let dl_codes = document.getElementById('dl_codes').value;
+        let make = document.getElementById('make').value;
+        let model = document.getElementById('model').value;
+        let color = document.getElementById('color').value;
+        let license_plate = document.getElementById('license_plate').value;
+        let password = document.getElementById('password').value;
+        let confirm_password = document.getElementById('confirm_password').value;
+        
+        let name = fname+" "+lname;
+
+        if(
+            fname == '' ||
+            lname == '' ||
+            phone == '' ||
+            email == '' ||
+            address == '' ||
+            driver_license == '' ||
+            dl_codes == '' ||
+            make == '' ||
+            model == '' ||
+            color == '' ||
+            license_plate == '' ||
+            password == '' ||
+            confirm_password == ''
+        ){
+            displayError('All fields are required!');
+            Swal.fire({
+                icon: 'warning',
+                text: 'All fields are required!'
+            })
+        }else{
+            if(password != confirm_password){
+                displayError('Password do not match!');
+                Swal.fire({
+                    icon: 'warning',
+                    text: 'Password do not match!'
+                })
+            }else{
+                const usersRef = collection(db, "users");
+            
+                const q = query(usersRef, 
+                    or( where("phone", "==", formatPhone(phone)),
+                        where("email", "==", email)
+                    ),
+                    limit(1)
+                );
+
+                let counter = 0;
+                const unsubscribe = onSnapshot(q, (querySnapshot) => {
+                    querySnapshot.forEach((doc) => {
+                        counter+=1;
+                    });
+
+                    setTimeout(function () {
+                        register(name,
+                                fname,
+                                lname,
+                                phone,
+                                email,
+                                address,
+                                driver_license,
+                                dl_codes,
+                                make,
+                                model,
+                                color,
+                                license_plate,
+                                password, 
+                                counter);
+                    }, 2000);
+
+                });
+            }
+        }
+    });
+    
+    const register = async( name,
+                            fname,
+                            lname,
+                            phone,
+                            email,
+                            address,
+                            driver_license,
+                            dl_codes,
+                            make,
+                            model,
+                            color,
+                            license_plate,
+                            password, 
+                            counter) => {
+        if(counter == 0){
+            console.log('NAME:', name);
+            console.log('PHONE:', formatPhone(phone));
+            console.log('EMAIL:', email);
+            console.log('PASSWORD:', password);
+            
+            // insert
+            const docRef = await addDoc(collection(db, "users"), {
+                name: name,
+                phone: formatPhone(phone),
+                email: email,
+                password: password
+            });
+            
+            console.log('TOKEN: ', docRef.id);
+
+            sessionStorage.setItem('userId', docRef.id);
+            
+            updateDoc(doc(db, "users", docRef.id), {
+                id: docRef.id
+            });
+            let userId = docRef.id;
+            registerDriver( userId,
+                            fname,
+                            lname,
+                            address,
+                            driver_license,
+                            dl_codes,
+                            make,
+                            model,
+                            color,
+                            license_plate);
+        }else{
+            displayError('Phone or Email already exist! Please use a different Phone or Email.');
+            Swal.fire({
+                icon: 'warning',
+                text: 'Phone or Email already exist! Please use a different Phone or Email!'
+            })
+        }
+    }
+
+    const registerDriver = async (  userId,
+                                    fname,
+                                    lname,
+                                    address,
+                                    driver_license,
+                                    dl_codes,
+                                    make,
+                                    model,
+                                    color,
+                                    license_plate) => {
+        // insert
+        const docRef = await addDoc(collection(db, "drivers"), {
+            user_id: userId,
+            id: null,
+            fname: fname,
+            lname: lname,
+            address: address,
+            driver_license: driver_license,
+            dl_codes: dl_codes,
+            make: make,
+            model: model,
+            color: color,
+            license_plate: license_plate
+        });
+
+        sessionStorage.setItem('driverId', docRef.id);
+
+        updateDoc(doc(db, "drivers", docRef.id), {
+            id: docRef.id
+        });
+        
+        loader();
+            
+        setTimeout(function () {
+            window.location.href = 'login.html';
+        }, 3000);
+    }
+    
+    function loader(){
+        var r = document.querySelector('.loader-wrap');
+        r.style.setProperty('display', 'inline');
+        r.style.setProperty('opacity', '75%');
+    }
+</script>

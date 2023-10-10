@@ -211,6 +211,14 @@
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
+
+                        <li class="nav-item reports">
+                            <a class="nav-link" href="report_list.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-exclamation-circle"></i></div>
+                                <div class="col">Reports</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
                         
                         <li class="nav-item">
                             <a class="nav-link" href="#" id="logout" tabindex="-1" aria-disabled="true">
@@ -425,6 +433,7 @@
         
         function cancelTrip(){
             var tripId = sessionStorage.getItem('tripId');
+            console.log(tripId);
             if(tripId != null){
                 db.collection("trips").doc(tripId).update({
                     is_cancelled: true
@@ -490,6 +499,7 @@
     logout.addEventListener('click', async (e) => {
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('driverId');
+        sessionStorage.removeItem('suspended');
         setTimeout(function () {
             window.location.href = 'login.html';
         }, 100);
@@ -508,6 +518,9 @@
         if(userType=='admin'){
             var r = document.querySelector('.trips');
             r.style.setProperty('display', 'block');
+
+            var re = document.querySelector('.reports');
+            re.style.setProperty('display', 'block');
         }
     }
 

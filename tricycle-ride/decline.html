@@ -79,9 +79,6 @@
         #view:hover{
             background-color: #f0fcff;
         }
-        .details{
-            font-weight: 200;
-        }
     </style>
     <script>
         console.log('USERID:', sessionStorage.getItem('userId'));
@@ -360,24 +357,10 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer accordion-collapse collapse py-0 show" id="${tripId}-modal">
-                                <div id="${tripId}-map">
-                                    
-                                </div>
-                                <div class="py-3">
-                                    <div class="row mb-3">
-                                        <div class="col ">
-                                            <h3 class="price mb-1"> Loading price...</h3>
-                                            <p class="details"> Loading Details...</p>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <div class="col">
-                                            <a href="standby.html" class="btn btn-primary btn-sm w-100" id="btn-view">BACK</a>
-                                        </div>
-                                        <div class="col">
-                                            <button class="btn btn-default btn-sm w-100" id="btn-accept">ACCEPT</button>
-                                        </div>
+                            <div class="card-footer accordion-collapse collapse py-0 show">
+                                <div class="row py-3">
+                                    <div class="col">
+                                        <button class="btn btn-default btn-sm w-100" disabled>DECLINING TRIP...</button>
                                     </div>
                                 </div>
                             </div>
@@ -387,8 +370,6 @@
             </div>
         </div>
         <!-- main page content ends -->
-        
-        
     </main>
     <!-- Page ends-->
     
@@ -462,109 +443,7 @@
         // document.getElementById("destination-input-lng").value = tripDetails[4]
     </script>
     
-    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
-
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s&libraries=places&callback=initMap"></script>
-    <script>
-        // Initialize Firebase
-        const firebaseConfig = {
-            apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
-            authDomain: "tricycle-ride.firebaseapp.com",
-            databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
-            projectId: "tricycle-ride",
-            storageBucket: "tricycle-ride.appspot.com",
-            messagingSenderId: "802022631435",
-            appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
-        };
-        
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-        
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
-        const tripId = urlParams.get('tripId')
-        const originVal = urlParams.get('origin')
-        const originLatVal = urlParams.get('originLat')
-        const originLngVal = urlParams.get('originLng')
-        const destinationVal = urlParams.get('destination')
-        const destinationLatVal = urlParams.get('destinationLat')
-        const destinationLngVal = urlParams.get('destinationLng')
-
-        
-        var origin = originVal;
-        if(origin.length > 10) origin = origin.substring(0,25);
-
-        var destination = destinationVal;
-        if(destination.length > 10) destination = destination.substring(0,25);
-
-        document.querySelector('.origin').innerHTML ='<i class="bi bi-geo"></i> '+  origin
-        document.querySelector('.destination').innerHTML ='<i class="bi bi-geo-alt"></i> '+  destination
-
-        const docRef = db.collection("trips").doc(tripId);
-
-        // Use the .get() method to fetch the document
-        docRef.get()
-        .then((doc) => {
-            if (doc.exists) {
-                // Document data is available in doc.data()
-                const data = doc.data();
-                console.log("Document data:", data);
-                
-                document.querySelector('.price').innerHTML = "₱ "+data.price
-                document.querySelector('.details').innerHTML = data.details
-            } 
-            else {
-                console.log("No such document!");
-            }
-        })
-        .catch((error) => {
-            console.error("Error fetching document: ", error);
-        });
-
-        function initMap() {
-        
-            const originLatLng = new google.maps.LatLng(originLatVal, originLngVal);
-            const destinationLatLng = new google.maps.LatLng(destinationLatVal, destinationLngVal); 
-
-            displayDirections(originLatLng, destinationLatLng);
-
-            function displayDirections(originLatLng, destinationLatLng) {
-                console.log('in here');
-                const directionsService = new google.maps.DirectionsService();
-                const directionsRenderer = new google.maps.DirectionsRenderer();
-                
-                const mapOptions = {
-                    center: originLatLng,
-                    zoom: 15,
-                    disableDefaultUI: true,
-                };
-                const map = new google.maps.Map(document.getElementById("map"), mapOptions);
-                directionsRenderer.setMap(map);
-                
-                const request = {
-                    origin: originLatLng,
-                    destination: destinationLatLng,
-                    travelMode: google.maps.TravelMode.DRIVING,
-                };
-                
-                directionsService.route(request, function (response, status) {
-                    if (status === google.maps.DirectionsStatus.OK) {
-                        directionsRenderer.setDirections(response);
-                    } else {
-                        console.error("Error displaying directions:", status);
-                    }
-                });
-            }
-        }
-        
-        const accept = document.getElementById('btn-accept');
-        accept.addEventListener('click', function(){
-            console.log(tripId);
-            window.location.href = `accept.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatVal}&originLng=${originLngVal}&destinationLat=${destinationLatVal}&destinationLng=${destinationLngVal}`
-        });
-    </script>
-    
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAqdwRPpTtDGc6lWZKlSO0EPgkAKRo-8o&libraries=places&callback=initMap"></script>
     <script>
         let originCoordinate;
         let destinationCoordinate;
@@ -586,7 +465,51 @@
             };
             map.setCenter(defaultLatLng);
         }
+        
+        
     </script>
+    
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+    <script>
+        // Initialize Firebase
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
+            authDomain: "tricycle-ride.firebaseapp.com",
+            databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "tricycle-ride",
+            storageBucket: "tricycle-ride.appspot.com",
+            messagingSenderId: "802022631435",
+            appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
+        };
+        
+        const app = firebase.initializeApp(firebaseConfig);
+        const db = firebase.firestore();
+        
+        
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const tripId = urlParams.get('tripId')
+        
+        const docRef = db.collection("trips").doc(tripId);
+        console.log(tripId);
+        // Data you want to update
+        const newData = {
+            driver_id: null,
+        };
+
+        // Use the .update() method to update the document
+        docRef.update(newData)
+        .then(() => {
+            console.log("Document updated successfully!");
+            window.location.href = 'standby.html';
+        })
+        .catch((error) => {
+            console.error("Error updating document: ", error);
+        });
+        
+    </script>
+    
 </body>
 
 
@@ -603,7 +526,7 @@
     
     var r = document.querySelector('.user-name');
     r.innerHTML = sessionStorage.getItem('userName')
-    
+
     checkAdmin();
     function checkAdmin(){
         var userType = sessionStorage.getItem('userType');
@@ -616,5 +539,4 @@
             re.style.setProperty('display', 'block');
         }
     }
-
 </script>

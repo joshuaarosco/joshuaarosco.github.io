@@ -17,6 +17,7 @@ window.addEventListener("load", function(){
     let humidityFeeds = [];
     let airTempFeeds = [];
     let distanceFeeds = [];
+    let distance2Feeds = [];
     
     let feedDateTime = [];
     
@@ -33,6 +34,7 @@ window.addEventListener("load", function(){
         humidityFeeds.push(data.feeds[i].field3);
         airTempFeeds.push(data.feeds[i].field4);
         distanceFeeds.push(data.feeds[i].field5);
+        distance2Feeds.push(data.feeds[i].field6);
 
         var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"];
         var dateString = data.feeds[i].created_at;
@@ -73,10 +75,18 @@ window.addEventListener("load", function(){
       let oysterText = "🦪 Not Available";
 
       if(Math.round(data.feeds[9].field5) <= 30){
-        oysterText = "🦪 Oyster is ready to harvest";
+        oysterText = "🦪 Ready to harvest";
       }
       var distanceEL = document.getElementById("distance-value");
       distanceEL.textContent =  oysterText;
+    
+      let oysterText2 = "🦪 Not Available";
+
+      if(Math.round(data.feeds[9].field6) <= 30){
+        oysterText2 = "🦪 Ready to harvest";
+      }
+      var distanceEL2 = document.getElementById("distance2-value");
+      distanceEL2.textContent =  oysterText2;
       /*
       ==============================
       Statistics | Options
@@ -366,6 +376,63 @@ window.addEventListener("load", function(){
           }
         }
       }
+      // Distance2
+      
+      var d_1options8 = {
+        chart: {
+          id: 'sparkline1',
+          type: 'area',
+          height: 160,
+          sparkline: {
+            enabled: true
+          },
+        },
+        stroke: {
+          curve: 'smooth',
+          width: 2,
+        },
+        fill: {
+          opacity: 1,
+        },
+        series: [{
+          name: 'Distance',
+          data: distance2Feeds
+        }],
+        labels: feedDateTime,
+        yaxis: {
+          min: 0
+        },
+        colors: ['#ff3c00'],
+        tooltip: {
+          x: {
+            show: true,
+          }
+        },
+        grid: {
+          show: false,
+          xaxis: {
+            lines: {
+              show: false
+            }
+          },
+          padding: {
+            top: 5,
+            right: 0,
+            left: 0
+          }, 
+        },
+        fill: {
+          type:"gradient",
+          gradient: {
+            type: "vertical",
+            shadeIntensity: 1,
+            inverseColors: !1,
+            opacityFrom: .40,
+            opacityTo: .05,
+            stops: [100, 100]
+          }
+        }
+      }
       
       
       /*
@@ -399,6 +466,12 @@ window.addEventListener("load", function(){
       
       var d_1C_9 = new ApexCharts(document.querySelector("#distance"), d_1options7);
       d_1C_9.render()
+      //data.feeds
+
+      // Distance 2
+      
+      var d_1C_10 = new ApexCharts(document.querySelector("#distance2"), d_1options8);
+      d_1C_10.render()
       //data.feeds
     })
     .catch(error => console.log(error));

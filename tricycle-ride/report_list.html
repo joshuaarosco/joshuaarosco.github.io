@@ -39,14 +39,7 @@
                 window.location.href = 'login.html';
             }
         }
-
-        checkAccess();
-        function checkAccess(){
-            let userType = sessionStorage.getItem('userType');
-            if(userType!='admin'){
-                window.location.href = 'index.html'
-            }
-        }
+        
     </script>
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
@@ -69,59 +62,6 @@
         }
         #driver{
             display: none;
-        }
-
-        .border-left-1{
-            border-left: 1px solid #000000a1;
-            padding-left: 10px!important;
-            margin-left: 10px;
-            height: 30px;
-            margin-top: 7px!important;
-        }
-        .origin::before{
-            content: '';
-            position: absolute;
-            left: -16.5px;
-            bottom: 5px;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #FFF;
-            border: 1px solid #000;
-            box-sizing: border-box;
-        }
-        .destination::before{
-            content: '';
-            position: absolute;
-            left: -16px;
-            bottom: 5px;
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: #FFF;
-            border: 5px solid #000;
-            box-sizing: border-box;
-        }
-        .border-left-1 > .origin{
-            margin-top: -5px;
-            position: absolute;
-            font-weight: 200;
-        }
-        .border-left-1 > .destination{
-            margin-top: 20px;
-            position: absolute;
-        }
-        .pr-10{
-            padding-right: 10px!important;
-        }
-        .pl-10{
-            padding-left: 10px!important;
-        }
-        #view{
-            cursor: pointer;
-        }
-        #view:hover{
-            background-color: #f0fcff;
         }
     </style>
 </head>
@@ -219,7 +159,7 @@
                     </button>
                 </div>
                 <div class="col text-center align-self-center">
-                    <h6 class="my-0">Active Trips</h6>
+                    <h6 class="my-0">Report List</h6>
                 </div>
                 <div class="col-auto align-self-center">
                     <a href="profile.html" class="position-relative d-block mr-3">
@@ -233,49 +173,18 @@
         <!-- Header ends -->
 
         <!-- main page content -->
-        <div class="main-container container requests-div" id="requests-div">
+        <div class="main-container container pt-0">
+            <!-- notification list -->
+            <div class="row">
+                <div class="col-12 px-0">
+                    <div class="list-group list-group-flush bg-none report-list">
+                    </div>
+                </div>
+            </div>
         </div>
-        <!-- main page content ends -->
-
 
     </main>
     <!-- Page ends-->
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <ul class="nav nav-pills nav-justified">
-                <li class="nav-item">
-                    <a class="nav-link active" href="index.html">
-                        <span>
-                            <i class="nav-icon bi bi-house"></i>
-                            <span class="nav-text">Home</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="location.html">
-                        <span>
-                            <!-- <i class="nav-icon bi bi-pin-map"></i> -->
-                            <div class="tricy-div">
-                                <img class="tricy-icon" src="assets/tricy.png" alt="">
-                            </div>
-                            <span class="nav-text">Ride</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="profile.html">
-                        <span>
-                            <i class="nav-icon bi bi-person"></i>
-                            <span class="nav-text">Profile</span>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </footer>
-    <!-- Footer ends-->
 
     <!-- Required jquery and libraries -->
     <script src="assets/js/jquery-3.3.1.min.js"></script>
@@ -301,12 +210,10 @@
     <!-- swiper js script -->
     <script src="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js"></script>
 
-    <!-- page level custom script -->
-    <!-- <script src="assets/js/app.js"></script> -->
-    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
-    <script>
-        // Initialize Firebase
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getFirestore, setDoc, addDoc, doc, collection, updateDoc, deleteDoc, onSnapshot, query, getDocs, or, where, getDoc, limit, and, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        
         const firebaseConfig = {
             apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
             authDomain: "tricycle-ride.firebaseapp.com",
@@ -317,101 +224,39 @@
             appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
         };
         
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
-
-        function listenToNewDataWithCondition(collectionName, callback) {
-            const collectionRef = db.collection(collectionName);
-
-            return collectionRef.where("is_cancelled", "==", false)
-                .where("is_complete", "==", false)
-                .onSnapshot((snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    if (change.type === 'added') {
-                        callback([change.doc.data().id, 'added', change.doc.data() ]);
-                    }if (change.type === 'removed') {
-                        callback([change.doc.data().id, 'removed', change.doc.data() ]);
-                    }
-                });
-            });
-        }
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        // Initialize Cloud Firestore
+        const db = getFirestore(app);
         
-        let tripsObj = {};
+        const q = query(collection(db, "reports"), where("punished", "==", false));
 
-        const unsubscribe = listenToNewDataWithCondition('trips', (newData) => {
-            // console.log('New document added:', newData);
-            if(newData[1] == 'added'){
-                tripsObj[newData[0]] = newData;
-                // tripAdded.push(newData[0], newData) ;
-                
-                // <div class="col-auto align-self-center pr-10">
-                //  <h3>99<sub>km</sub></h3>
-                // </div>        
-                
-                displayTrips(tripsObj);
+        const querySnapshot = await getDocs(q);
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            console.log(doc.id, " => ", doc.data());
+            
+            let userType;
+
+            if(doc.data().user_id == doc.data().passenger_id){
+                userType = 'Driver';
+            }else{
+                userType = 'Passenger';
             }
-
-            if(newData[1] == 'removed'){
-                Reflect.deleteProperty(tripsObj, newData[0]);
-                displayTrips(tripsObj);
-            }
-
-        });
-
-        function displayTrips(trips){
-            var rd = document.querySelector('.requests-div');
-            rd.style.setProperty('display', 'block');
-
-            let parent = document.getElementById("requests-div")
-            parent.innerHTML = '';
-
-            let i = 0;
-            console.log('TRIPS:',trips)
-            for (const trip_id in trips) {
-                console.log('TRIP:',trips[trip_id][2]);
-
-                var originLatLng = trips[trip_id][2].origin;
-                var destinationLatLng = trips[trip_id][2].destination;
-                
-                var origin = trips[trip_id][2].origin_name;
-                if(origin.length > 10) origin = origin.substring(0,25);
-
-                var destination = trips[trip_id][2].destination_name;
-                if(destination.length > 10) destination = destination.substring(0,25);
-
-                var tripId = trips[trip_id][0];
-
-                
-                var originLatVal = trips[trip_id][2].origin.latitude;
-                var originLngVal = trips[trip_id][2].origin.longitude;
-                var destinationLatVal = trips[trip_id][2].destination.latitude;
-                var destinationLngVal = trips[trip_id][2].destination.longitude;
-
-                rd.innerHTML += `
-                <div class="col-12" id="${tripId}">
-                    <div class="card shadow-sm mb-3">
-                        <div class="card-body">
-                            <div class="row gx-2">
-                                <div class="col border-left-1">
-                                    <h6 class="origin"><i class="bi bi-geo"></i> ${origin}...</h6>
-                                    <h6 class="destination mb-1"><i class="bi bi-geo-alt"></i> ${destination}...</h6>
-                                </div>
-                                <div class="col-auto align-self-center">
-                                    <a class="btn btn-link text-primary" href="view-trip.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatVal}&originLng=${originLngVal}&destinationLat=${destinationLatVal}&destinationLng=${destinationLngVal}">
-                                        <i class="bi bi-chevron-right"></i>
-                                    </a>
-                                </div>
-                            </div>
+            
+            $(".report-list").append(
+                `<a class="list-group-item bg-default-light" href="punish.html?reportId=${doc.id}">
+                    <div class="row">
+                        <div class="col align-self-center">
+                            <p class="mb-1">A <b>${userType}</b> has been reported with <b>"${doc.data().type}"</b>. </p>
+                            <p class="small text-muted">View more details...</p>
                         </div>
                     </div>
-                </div>`;
-                
-            }
-        }
+                </a>`
+            );
+        });
     </script>
 </body>
-
-
 </html>
 <script>
 
@@ -429,7 +274,7 @@
     r.innerHTML = sessionStorage.getItem('userName')
 
     console.log('DRIVERID:', sessionStorage.getItem('driverId'));
-        
+
     checkAdmin();
     function checkAdmin(){
         var userType = sessionStorage.getItem('userType');

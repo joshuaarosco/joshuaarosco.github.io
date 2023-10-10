@@ -101,6 +101,14 @@
                 window.location.href = 'index.html';
             }
         }
+
+        checkSuspension();
+        function checkSuspension(){
+            let suspended = sessionStorage.getItem('suspended');
+            if(suspended){
+                window.location.href = 'index.html';
+            }
+        }
     </script>
     <script>
         console.log('TRIPID:', sessionStorage.getItem('tripId'));
@@ -119,55 +127,6 @@
     <link href="assets/css/style.css" rel="stylesheet" id="style">
     <link href="assets/css/custom.css" rel="stylesheet" id="style">
     <style>
-        .tricy-icon{
-            width: 80px;
-        }
-        .tricy-div{
-            position: relative;
-            top: -30px;
-            height: 100px;
-            width: 100px;
-            /* background-color: black; */
-            box-shadow: 0px -2px 5px rgba(0,0,0,0.1);
-            background-color: white;
-            border-radius: 50%;
-            padding: 10px;
-            padding-top: 20px;
-        }
-        .map-container{
-            min-width: 100%;
-            padding: 0px;
-        }
-        .map-inputs{
-            position: absolute;
-            top: 0;
-            width: 100%;
-            padding: 20px;
-            text-align: center;
-        }
-        .loader{
-            display: block;
-            position: relative;
-            height: 35px;
-            width: 100%;
-            background: linear-gradient(#fff 3px, transparent 0) no-repeat;
-            background-position: 0 16px;
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-        .loader:before{
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 2px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #FFF;
-            border: 6px solid #000;
-            box-sizing: border-box;
-            animation: ballbns 1.5s linear infinite;
-        }
         .waiting-div{
             position: absolute;
             top: 50%;
@@ -179,54 +138,8 @@
             background-color: #000000a1;
             border-radius: 5px;
         }
-        .waiting-div > #waiting-loader{
-            top: 50%;
-            width: 220px;
-            height: 50px;
-            position: absolute;
-            margin-left: 50px;
-            margin-top: 80px;
-            text-align: center;
-        }
-        #waiting-for-driver{
-            color: #FFF;
-            margin-left: 50px;
-            margin-right: 50px;
-            margin-top: 100px;
-            font-weight: 400;
-            font-size: 20px;
-        }
-        #going-to{
-            font-weight: bolder;
-        }
-        
-        @keyframes ballbns{
-            0%{
-                left: 0;
-                transform: translateX(-100%);
-            }
-            100%{
-                left: 100%;
-                transform: translateX(0%);
-            }
-        }
-        #cancel-button{
-            background-color: #000;
-        }
-        .requests-div{
-            display: none;
-        }
-        .gcash{
-            width: 100px;
-            margin-top: 0px;
-        }
-        .payment-method{
-            padding: 10px;
-            padding-left: 0px
-            /* margin-top: 0px; */
-        }
-        .pt-0{
-            padding-top: 0px!important;
+        .special-trip{
+            border-radius: 0.25rem;
         }
     </style>
 </head>
@@ -272,6 +185,14 @@
                             <a class="nav-link" href="trips.html" tabindex="-1" aria-disabled="true">
                                 <div class="avatar avatar-40 rounded icon"><i class="bi bi-geo-alt"></i></div>
                                 <div class="col">Trips</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+
+                        <li class="nav-item reports">
+                            <a class="nav-link" href="report_list.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-exclamation-circle"></i></div>
+                                <div class="col">Reports</div>
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
@@ -486,12 +407,16 @@
                         const data = documentSnapshot.data();
                         sessionStorage.setItem('tripId', data.id);
                         
-                        window.location.href = 'travel.html?origin='+data.origin_name
+                        if(data.driver_location == null){
+                            
+                        }else{
+                            window.location.href = 'travel.html?origin='+data.origin_name
                                         +'&originLat='+data.origin.latitude
                                         +'&originLng='+data.origin.longitude
                                         +'&destination='+data.destination_name
                                         +'&destinationLat='+data.destination.latitude
                                         +'&destinationLng='+data.destination.longitude;
+                        }
                     } else {
                         console.log('Document does not exist!');
                     }
@@ -520,21 +445,25 @@
         }
 
         function listenToNewDataWithCondition(collectionName, callback) {
-        const collectionRef = db.collection(collectionName);
-
-        return collectionRef.where("is_cancelled", "==", false)
-            .where("is_complete", "==", false)
-            .where("is_started", "==", false)
-            .where("driver_id", "==", null)
-            .onSnapshot((snapshot) => {
-            snapshot.docChanges().forEach((change) => {
-                if (change.type === 'added') {
-                    callback([change.doc.data().id, 'added', change.doc.data() ]);
-                }if (change.type === 'removed') {
-                    callback([change.doc.data().id, 'removed', change.doc.data() ]);
-                }
-            });
-            });
+            const collectionRef = db.collection(collectionName);
+            let userId = sessionStorage.getItem('userId');
+            return collectionRef
+                .where("id", "!=", "")
+                .where("is_cancelled", "==", false)
+                .where("is_complete", "==", false)
+                .where("is_started", "==", false)
+                .onSnapshot((snapshot) => {
+                    snapshot.docChanges().forEach((change) => {
+                        if (change.type === 'added') {
+                            callback([change.doc.data().id, 'added', change.doc.data() ]);
+                        }else if(change.type === 'modified'){
+                            location.reload(true);
+                        }else if (change.type === 'removed') {
+                            location.reload(true);
+                            callback([change.doc.data().id, 'removed', change.doc.data() ]);
+                        }
+                    });
+                });
         }
         
         let tripAdded = [];
@@ -545,18 +474,7 @@
             // console.log('New document added:', newData);
             if(newData[1] == 'added'){
                 tripsObj[newData[0]] = newData;
-                // tripAdded.push(newData[0], newData) ;
-                var r = document.querySelector('.waiting-div');
-                r.style.setProperty('background-color', '#00000000');
-
-                var r = document.querySelector('#waiting-for-driver');
-                r.style.setProperty('display', 'none');
-
-                var r = document.querySelector('#waiting-loader');
-                r.style.setProperty('display', 'none');
-
-                var rd = document.querySelector('.requests-div');
-                rd.style.setProperty('display', 'block');
+                // tripAdded.push(newData[0], newData);
                 
                 // <div class="col-auto align-self-center pr-10">
                 //  <h3>99<sub>km</sub></h3>
@@ -605,44 +523,125 @@
                     payment = `<span class="cash"> CASH </span>`;
                 }
 
-                rd.innerHTML += `
-                <div class="col-12" id="${tripId}">
-                    <div class="card shadow-sm mb-3">
-                        <div class="card-body">
-                            <div class="row gx-2">
-                                <div class="col border-left-1">
-                                    <h6 class="origin"><i class="bi bi-geo"></i> ${origin}...</h6>
-                                    <h6 class="destination mb-1"><i class="bi bi-geo-alt"></i> ${destination}...</h6>
+                let userId = sessionStorage.getItem('userId');
+
+                if(trips[trip_id][2].driver_id == userId && 
+                trips[trip_id][2].driver_location == null && 
+                trips[trip_id][2].is_special == true && 
+                trips[trip_id][2].is_accepted == false){
+
+                    var r = document.querySelector('.waiting-div');
+                    r.style.setProperty('background-color', '#00000000');
+
+                    var r = document.querySelector('#waiting-for-driver');
+                    r.style.setProperty('display', 'none');
+
+                    var r = document.querySelector('#waiting-loader');
+                    r.style.setProperty('display', 'none');
+
+                    var rd = document.querySelector('.requests-div');
+                    rd.style.setProperty('display', 'block');
+
+                    rd.innerHTML += `
+                    <div class="col-12" id="${tripId}">
+                        <div class="card shadow-sm mb-3">
+                            <div class="card-body special-trip">
+                                <div class="row gx-2">
+                                    <p class=""><i class="bi bi-exclamation-circle-fill text-danger"></i>&nbsp; RIDE REQUEST </p>
+                                    <div class="col border-left-1">
+                                        <h6 class="origin"><i class="bi bi-geo"></i> ${origin}...</h6>
+                                        <h6 class="destination mb-1"><i class="bi bi-geo-alt"></i> ${destination}...</h6>
+                                    </div>
+                                    <div class="col-auto align-self-center">
+                                        <button class="btn btn-link text-primary" data-bs-toggle="collapse" aria-expanded="false"
+                                            data-bs-target="#A${tripId}-modal">
+                                                <i class="bi bi-chevron-down"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="col-auto align-self-center">
-                                    <button class="btn btn-link text-primary" data-bs-toggle="collapse" aria-expanded="false"
-                                        data-bs-target="#A${tripId}-modal">
-                                            <i class="bi bi-chevron-down"></i>
-                                    </button>
+                            </div>
+                            <div class="card-footer accordion-collapse collapse py-0 special-trip" id="A${tripId}-modal">
+                                <div class="payment-method">
+                                    <small>PAYMENT METHOD</small>   : ${payment}
+                                </div>
+                                <div class="row py-3 pt-0">
+                                    <div class="col">
+                                        <a class="btn btn-primary btn-sm w-100 view-btn-${tripId}" id="btn-view"
+                                            href="view.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatLng.latitude}&originLng=${originLatLng.longitude}&destinationLat=${destinationLatLng.latitude}&destinationLng=${destinationLatLng.longitude}">
+                                                VIEW
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="row py-3 pt-0">
+                                    <div class="col">
+                                        <a class="btn btn-default btn-sm w-100" id="btn-accept"
+                                            href="accept.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatLng.latitude}&originLng=${originLatLng.longitude}&destinationLat=${destinationLatLng.latitude}&destinationLng=${destinationLatLng.longitude}">
+                                                ACCEPT
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a href="decline.html?tripId=${tripId}"class="btn btn-outline-danger btn-sm w-100">
+                                                DECLINE
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer accordion-collapse collapse py-0" id="A${tripId}-modal">
-                            <div class="payment-method">
-                                <small>PAYMENT METHOD</small>   : ${payment}
-                            </div>
-                            <div class="row py-3 pt-0">
-                                <div class="col">
-                                    <a class="btn btn-primary btn-sm w-100 view-btn-${tripId}" id="btn-view"
-                                        href="view.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatLng.latitude}&originLng=${originLatLng.longitude}&destinationLat=${destinationLatLng.latitude}&destinationLng=${destinationLatLng.longitude}">
-                                            VIEW
-                                    </a>
+                    </div>`;
+
+                }else if(trips[trip_id][2].driver_id == null && 
+                        trips[trip_id][2].is_special == false){  
+                    var r = document.querySelector('.waiting-div');
+                    r.style.setProperty('background-color', '#00000000');
+
+                    var r = document.querySelector('#waiting-for-driver');
+                    r.style.setProperty('display', 'none');
+
+                    var r = document.querySelector('#waiting-loader');
+                    r.style.setProperty('display', 'none');
+
+                    var rd = document.querySelector('.requests-div');
+                    rd.style.setProperty('display', 'block');
+                    
+                    rd.innerHTML += `
+                    <div class="col-12" id="${tripId}">
+                        <div class="card shadow-sm mb-3">
+                            <div class="card-body">
+                                <div class="row gx-2">
+                                    <div class="col border-left-1">
+                                        <h6 class="origin"><i class="bi bi-geo"></i> ${origin}...</h6>
+                                        <h6 class="destination mb-1"><i class="bi bi-geo-alt"></i> ${destination}...</h6>
+                                    </div>
+                                    <div class="col-auto align-self-center">
+                                        <button class="btn btn-link text-primary" data-bs-toggle="collapse" aria-expanded="false"
+                                            data-bs-target="#A${tripId}-modal">
+                                                <i class="bi bi-chevron-down"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <div class="col">
-                                    <a class="btn btn-default btn-sm w-100" id="btn-accept"
-                                        href="accept.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatLng.latitude}&originLng=${originLatLng.longitude}&destinationLat=${destinationLatLng.latitude}&destinationLng=${destinationLatLng.longitude}">
-                                            ACCEPT
-                                    </a>
+                            </div>
+                            <div class="card-footer accordion-collapse collapse py-0" id="A${tripId}-modal">
+                                <div class="payment-method">
+                                    <small>PAYMENT METHOD</small>   : ${payment}
+                                </div>
+                                <div class="row py-3 pt-0">
+                                    <div class="col">
+                                        <a class="btn btn-primary btn-sm w-100 view-btn-${tripId}" id="btn-view"
+                                            href="view.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatLng.latitude}&originLng=${originLatLng.longitude}&destinationLat=${destinationLatLng.latitude}&destinationLng=${destinationLatLng.longitude}">
+                                                VIEW
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <a class="btn btn-default btn-sm w-100" id="btn-accept"
+                                            href="accept.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatLng.latitude}&originLng=${originLatLng.longitude}&destinationLat=${destinationLatLng.latitude}&destinationLng=${destinationLatLng.longitude}">
+                                                ACCEPT
+                                        </a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
-                </div>`;
+                    </div>`;
+                }
             }
         }
         function hasClass(element, clsName) {
@@ -660,6 +659,7 @@
     logout.addEventListener('click', async (e) => {
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('driverId');
+        sessionStorage.removeItem('suspended');
         setTimeout(function () {
             window.location.href = 'login.html';
         }, 100);
@@ -675,6 +675,9 @@
         if(userType=='admin'){
             var r = document.querySelector('.trips');
             r.style.setProperty('display', 'block');
+
+            var re = document.querySelector('.reports');
+            re.style.setProperty('display', 'block');
         }
     }
     
@@ -690,4 +693,5 @@
     //         document.getElementById('going-to').innerHTML = tripDetails.origin;
     //     }
     // }
+
 </script>

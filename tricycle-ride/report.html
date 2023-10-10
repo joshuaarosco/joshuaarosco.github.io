@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="generator" content="">
-    <title>Edit Profile</title>
+    <title>Submit Report</title>
 
     <!-- manifest meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -22,9 +22,6 @@
 
     <!-- bootstrap icons -->
     <link rel="stylesheet" href="assets/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
-
-    <!-- style css for this template -->
-    <link href="assets/css/sweetalert.min.css" rel="stylesheet" id="style">
     <link href="assets/css/style.css" rel="stylesheet" id="style">
     <style>
         .card{
@@ -76,14 +73,10 @@
                     </button>
                 </div>
                 <div class="col text-center align-self-center">
-                    <h6 class="my-0">Edit Profile</h6>
+                    <h6 class="my-0">Submit Report</h6>
                 </div>
                 <div class="col-auto align-self-center">
-                    <a href="profile.html" class="position-relative d-block mr-3">
-                        <figure class="avatar avatar-36 rounded-circle">
-                            <img src="assets/img/user1.jpg" alt="">
-                        </figure>
-                    </a>
+                    
                 </div>
             </div>
         </header>
@@ -95,7 +88,7 @@
             <!-- profile information -->
             <div class="row mb-2">
                 <div class="col">
-                    <h6 class="my-1">Personal Information</h6>
+                    <h6 class="my-1">Report Details</h6>
                 </div>
             </div>
             <div class="row">
@@ -110,33 +103,25 @@
             <div class="row h-100 mb-2">
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="form-group form-floating mb-3">
-                        <input type="text" class="form-control" value="" placeholder="First Name" id="fname">
-                        <label for="fname">First Name</label>
+                        <select name="" class="form-control" id="report-type">
+                            <option value="Rude">Rude</option>
+                            <option value="Drunk">Drunk</option>
+                            <option value="Bribe">Bribe</option>
+                        </select>
+                        <label for="report-type">Type</label>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="form-group form-floating mb-3">
-                        <input type="text" class="form-control" value="" placeholder="Last Name" id="lname">
-                        <label for="lname">Last Name</label>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="form-group form-floating mb-3">
-                        <input type="tel" class="form-control" value="" placeholder="Phone" id="phone">
-                        <label for="phone">Phone</label>
-                    </div>
-                </div>
-                <div class="col-12 col-md-6 col-lg-4">
-                    <div class="form-group form-floating mb-3">
-                        <input type="email" class="form-control" value="" placeholder="Email" id="email">
-                        <label for="email">Email</label>
+                        <input type="text" class="form-control" value="" placeholder="" id="details">
+                        <label for="details">Additional Details (optional)</label>
                     </div>
                 </div>
             </div>
 
             <div class="row h-100 mb-4">
                 <div class="col-12 d-grid">
-                    <button id="update" class="btn btn-default">Update</button>
+                    <button id="report" class="btn btn-default">Report</button>
                 </div>
             </div>
 
@@ -161,18 +146,7 @@
 
     <!-- page level custom script -->
     <script src="assets/js/app.js"></script>
-    <script src="assets/js/sweetalert.min.js"></script>
     <script src="assets/js/custom.js"></script>
-
-    <script src="https://unpkg.com/imask"></script>
-    <script>
-        let phone = document.getElementById('phone')
-        var phoneMask = IMask(phone, {
-            mask: '+{63}(000)000-00-00',
-            lazy: false,  // make placeholder always visible
-            placeholderChar: '#'     // defaults to '_'
-        });
-    </script>
     
 </body>
 <script type="module">
@@ -197,104 +171,40 @@
     // Initialize Cloud Firestore
     const db = getFirestore(app);
     
-    const usersRef = collection(db, "users");
-    var userId = sessionStorage.getItem('userId');
-    if(userId != null){
-        const q = query(usersRef, 
-            where("id", "==", userId),
-            limit(1)
-        );
-        
-        const unsubscribe = onSnapshot(q, (querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                sessionStorage.setItem('userId', doc.data().id);
-                sessionStorage.setItem('userName', doc.data().name);
+    report.addEventListener('click', async (e) => {
+        console.log('Hello');
 
-                let name = doc.data().name;
-                const myName = name.split(" ");
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const passengerUserId = urlParams.get('passengerUserId')
+        const driverUserId = urlParams.get('driverUserId')
 
-                var f = document.getElementById("fname");
-                f.value = myName[0];
+        createReport(passengerUserId, driverUserId);
 
-                var l = document.getElementById("lname");
-                l.value = myName[1];
-
-                var p = document.getElementById("phone");
-                p.value = doc.data().phone
-
-                var e = document.getElementById("email");
-                e.value = doc.data().email
-            });
-        });
-    }
-
-    const update = document.getElementById("update");
-
-    update.addEventListener("click", function() {
-        let request = {
-            fname: document.getElementById("fname").value,
-            lname: document.getElementById("lname").value,
-            phone: document.getElementById("phone").value,
-            email: document.getElementById("email").value,
-        }
-        if(
-            request.fname == '' || 
-            request.lname == '' ||
-            request.phone == '' || 
-            request.email == '' ){
-            displayError('All fields are required!');
-        }else{
-            const usersRef = collection(db, "users");
-            
-            let userId = sessionStorage.getItem('userId');
-
-            const q = query(usersRef, 
-                or( where("phone", "==", formatPhone(request.phone)),
-                    where("email", "==", request.email)
-                ),
-                limit(1)
-            );
-
-            let counter = 0;
-            const unsubscribe = onSnapshot(q, (querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    if(doc.id != userId){
-                        counter+=1;
-                    }
-                });
-
-                setTimeout(function () {
-                    updateProfile(request, counter);
-                }, 2000);
-            });
-        }
     });
     
-    function updateProfile(request, counter){
-        console.log("COUNTER => "+counter);
-        if(counter == 0){
-            let userId = sessionStorage.getItem('userId');
+    const createReport = async(passengerUserId, driverUserId) => {
 
-            updateDoc(doc(db, "users", userId), {
-                name: request.fname+" "+request.lname,
-                phone: formatPhone(request.phone),
-                email: request.email,
-            });
+        let type = document.getElementById("report-type").value;
+        let details = document.getElementById("details").value;
+        let userId = sessionStorage.getItem('userId');
 
-            let driverId = sessionStorage.getItem('driverId');
-            if(driverId != null){
-                updateDoc(doc(db, "drivers", driverId), {
-                    fname: request.fname,
-                    lname: request.lname,
-                });
-            }
+        const docRef = await addDoc(collection(db, "reports"), {
+            driver_id: driverUserId,
+            passenger_id: passengerUserId,
+            user_id: userId,
+            type: type,
+            details: details,
+            punished: false
+        });
 
-            setTimeout(function () {
-                window.location.href = 'profile.html';
-            }, 1000);
-        }else{
-            displayError('Phone or Email already exist! Please use a different Phone or Email.');
-        }
+        updateDoc(doc(db, "reports", docRef.id), {
+            id: docRef.id
+        });
+
+        setTimeout(function () {
+            window.location.href = 'location.html';
+        }, 1000);
     }
     
 </script>

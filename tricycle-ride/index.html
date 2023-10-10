@@ -63,6 +63,9 @@
         #driver{
             display: none;
         }
+        .suspension-message{
+            display: none;
+        }
     </style>
 </head>
 
@@ -147,6 +150,14 @@
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
+
+                        <li class="nav-item reports">
+                            <a class="nav-link" href="report_list.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-exclamation-circle"></i></div>
+                                <div class="col">Reports</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
                         
                         <li class="nav-item">
                             <a class="nav-link" href="#" id="logout" tabindex="-1" aria-disabled="true">
@@ -195,14 +206,21 @@
         <!-- main page content -->
         <div class="main-container container">
             <h2 class="mx-4 mt-5">Welcome to<br>
-                <span class="text-primary">TricycleRide</span> App<br>
+                <span class="text-primary">Trike</span> App<br>
             </h2>
             
-            <div class="mx-4 mt-5" id="normal">
-                <a href="location.html" class="btn btn-md btn-default btn-block mt-2 btn-justify w-100">Looking for a ride?</a>
+            <div class="suspension-checker">
+                <div class="mx-4 mt-5" id="normal">
+                    <a href="location.html" class="btn btn-md btn-default btn-block mt-2 btn-justify w-100">Looking for a ride?</a>
+                </div>
+                <div class="mx-4 mt-5" id="driver">
+                    <a href="standby.html" class="btn btn-md btn-default btn-block mt-2 btn-justify w-100">Start Driving</a>
+                </div>
             </div>
-            <div class="mx-4 mt-5" id="driver">
-                <a href="standby.html" class="btn btn-md btn-default btn-block mt-2 btn-justify w-100">Start Driving</a>
+            <div class="suspension-message">
+                <div class="mx-4 mt-5" id="normal">
+                    <p class="suspended-until"></p>
+                </div>
             </div>
             <!-- Dark mode switch -->
             <!-- <div class="row">
@@ -285,19 +303,94 @@
 
     <!-- swiper js script -->
     <script src="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js"></script>
+    <script src="assets/js/moment.js"></script>
 
-    <!-- page level custom script -->
-    <script src="assets/js/app.js"></script>
+    <script type="module">
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getFirestore, setDoc, addDoc, doc, collection, updateDoc, deleteDoc, onSnapshot, query, getDocs, or, where, getDoc, limit, and, orderBy } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        
+        
+        // Your web app's Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
+            authDomain: "tricycle-ride.firebaseapp.com",
+            databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
+            projectId: "tricycle-ride",
+            storageBucket: "tricycle-ride.appspot.com",
+            messagingSenderId: "802022631435",
+            appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
+        };
+        
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        // Initialize Cloud Firestore
+        const db = getFirestore(app);
+
+        var userId = sessionStorage.getItem('userId');
+
+        const currentDate = new Date();
+
+        const q = await query(collection(db, "reports"), 
+            and(
+                where('punished_until', '>', currentDate)
+            ),
+            orderBy("punished_until", "desc"),
+            limit(1)
+        );
+
+        const querySnapshot = await getDocs(q);
+
+        let checker = 0;
+        querySnapshot.forEach((doc) => {
+
+            let reportUserId = doc.data().user_id;
+            let reportPassengerId = doc.data().passenger_id;
+            let reportDriverId = doc.data().driver_id;
+
+            var sc = document.querySelector('.suspension-checker');
+            var sm = document.querySelector('.suspension-message');
+            var su = document.querySelector('.suspended-until');
+
+            let punished_until = doc.data().punished_until.toDate();
+
+            let suspended_until = moment(punished_until).format('ll');
+            let type = doc.data().type;
+
+            if(reportUserId != userId){
+                if(reportPassengerId == userId){
+                    sc.style.setProperty('display', 'none');
+                    sm.style.setProperty('display', 'block');
+                    su.innerHTML=`You are suspended until <strong>${suspended_until}</strong>, due to a "<strong>${type}</strong>" 
+                    report you've received from one of your previous drivers. </br></br> 
+                    Let's make the <strong>Trike</strong> a healthy and happy place!`;
+
+                    sessionStorage.setItem('suspended', true);
+                }else if(reportDriverId == userId){
+                    sc.style.setProperty('display', 'none');
+                    sm.style.setProperty('display', 'block');
+                    su.innerHTML=`You are suspended until <strong>${suspended_until}</strong>, due to a "<strong>${type}</strong>" 
+                    report you've received from one of your previous passengers. </br></br>
+                    Let's make the <strong>Trike</strong> a healthy and happy place!`;
+                    
+                    sessionStorage.setItem('suspended', true);
+                }else{
+                    console.log('SAFE');
+                    sessionStorage.removeItem('suspended');
+                }
+            }
+        });
+    </script>
 </body>
 
 
 </html>
 <script>
 
-
     logout.addEventListener('click', async (e) => {
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('driverId');
+        sessionStorage.removeItem('suspended');
         setTimeout(function () {
             window.location.href = 'login.html';
         }, 100);
@@ -328,6 +421,9 @@
         if(userType=='admin'){
             var r = document.querySelector('.trips');
             r.style.setProperty('display', 'block');
+
+            var re = document.querySelector('.reports');
+            re.style.setProperty('display', 'block');
         }
     }
 </script>

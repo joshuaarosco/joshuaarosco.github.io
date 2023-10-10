@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="generator" content="">
-    <title>Edit Profile</title>
+    <title>Edit Driver Information</title>
 
     <!-- manifest meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -42,6 +42,7 @@
                 window.location.href = 'login.html';
             }
         }
+        console.log('DRIVERID:', sessionStorage.getItem('driverId'));
         
     </script>
 </head>
@@ -76,7 +77,7 @@
                     </button>
                 </div>
                 <div class="col text-center align-self-center">
-                    <h6 class="my-0">Edit Profile</h6>
+                    <h6 class="my-0">Edit Driver Profile</h6>
                 </div>
                 <div class="col-auto align-self-center">
                     <a href="profile.html" class="position-relative d-block mr-3">
@@ -92,12 +93,6 @@
         <!-- main page content -->
         <div class="main-container container">
 
-            <!-- profile information -->
-            <div class="row mb-2">
-                <div class="col">
-                    <h6 class="my-1">Personal Information</h6>
-                </div>
-            </div>
             <div class="row">
                 <div class="col-12">
                     <div class="card shadow-sm mb-3">
@@ -105,6 +100,12 @@
                             Please use a different phone or email
                         </div>
                     </div>
+                </div>
+            </div>
+            <!-- profile information -->
+            <div class="row mb-2">
+                <div class="col">
+                    <h6 class="my-1">Personal Information</h6>
                 </div>
             </div>
             <div class="row h-100 mb-2">
@@ -122,14 +123,53 @@
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="form-group form-floating mb-3">
-                        <input type="tel" class="form-control" value="" placeholder="Phone" id="phone">
-                        <label for="phone">Phone</label>
+                        <input type="text" class="form-control" value="" placeholder="Address" id="address">
+                        <label for="address">Address</label>
                     </div>
                 </div>
                 <div class="col-12 col-md-6 col-lg-4">
                     <div class="form-group form-floating mb-3">
-                        <input type="email" class="form-control" value="" placeholder="Email" id="email">
-                        <label for="email">Email</label>
+                        <input type="text" class="form-control" value="" placeholder="License No." id="driver_license">
+                        <label for="driver_license">License No.</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating mb-3">
+                        <input type="text" class="form-control" value="" placeholder="DL Codes" id="dl_codes">
+                        <label for="dl_codes">DL Codes</label>
+                    </div>
+                </div>
+            </div>
+
+            <hr>
+            <div class="row mb-2">
+                <div class="col">
+                    <h6 class="my-1">Tricycle Information</h6>
+                </div>
+            </div>
+            <div class="row h-100 mb-2">
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating mb-3">
+                        <input type="text" class="form-control" value="" placeholder="Make" id="make">
+                        <label for="make">Make</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating mb-3">
+                        <input type="text" class="form-control" value="" placeholder="Model" id="model">
+                        <label for="model">Model</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating mb-3">
+                        <input type="text" class="form-control" value="" placeholder="Color" id="color">
+                        <label for="color">Color</label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="form-group form-floating mb-3">
+                        <input type="text" class="form-control" value="" placeholder="License Plate No." id="license_plate">
+                        <label for="license_plate">License Plate No.</label>
                     </div>
                 </div>
             </div>
@@ -163,16 +203,6 @@
     <script src="assets/js/app.js"></script>
     <script src="assets/js/sweetalert.min.js"></script>
     <script src="assets/js/custom.js"></script>
-
-    <script src="https://unpkg.com/imask"></script>
-    <script>
-        let phone = document.getElementById('phone')
-        var phoneMask = IMask(phone, {
-            mask: '+{63}(000)000-00-00',
-            lazy: false,  // make placeholder always visible
-            placeholderChar: '#'     // defaults to '_'
-        });
-    </script>
     
 </body>
 <script type="module">
@@ -197,33 +227,46 @@
     // Initialize Cloud Firestore
     const db = getFirestore(app);
     
-    const usersRef = collection(db, "users");
-    var userId = sessionStorage.getItem('userId');
-    if(userId != null){
-        const q = query(usersRef, 
-            where("id", "==", userId),
+    const driverRef = collection(db, "drivers");
+    var driverId = sessionStorage.getItem('driverId');
+    if(driverId != null){
+        const q = query(driverRef, 
+            where("id", "==", driverId),
             limit(1)
         );
         
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                sessionStorage.setItem('userId', doc.data().id);
+                sessionStorage.setItem('driverId', doc.data().id);
                 sessionStorage.setItem('userName', doc.data().name);
 
-                let name = doc.data().name;
-                const myName = name.split(" ");
+                var fname = document.getElementById("fname");
+                fname.value = doc.data().fname
 
-                var f = document.getElementById("fname");
-                f.value = myName[0];
+                var lname = document.getElementById("lname");
+                lname.value = doc.data().lname
 
-                var l = document.getElementById("lname");
-                l.value = myName[1];
+                var address = document.getElementById("address");
+                address.value = doc.data().address
+                
+                var driver_license = document.getElementById("driver_license");
+                driver_license.value = doc.data().driver_license
+                
+                var dl_codes = document.getElementById("dl_codes");
+                dl_codes.value = doc.data().dl_codes
+                
+                var make = document.getElementById("make");
+                make.value = doc.data().make
+                
+                var model = document.getElementById("model");
+                model.value = doc.data().model
+                
+                var color = document.getElementById("color");
+                color.value = doc.data().color
+                
+                var license_plate = document.getElementById("license_plate");
+                license_plate.value = doc.data().license_plate
 
-                var p = document.getElementById("phone");
-                p.value = doc.data().phone
-
-                var e = document.getElementById("email");
-                e.value = doc.data().email
             });
         });
     }
@@ -234,67 +277,54 @@
         let request = {
             fname: document.getElementById("fname").value,
             lname: document.getElementById("lname").value,
-            phone: document.getElementById("phone").value,
-            email: document.getElementById("email").value,
+            address: document.getElementById("address").value,
+            driver_license: document.getElementById("driver_license").value,
+            dl_codes: document.getElementById("dl_codes").value,
+            make: document.getElementById("make").value,
+            model: document.getElementById("model").value,
+            color: document.getElementById("color").value,
+            license_plate: document.getElementById("license_plate").value,
         }
         if(
             request.fname == '' || 
-            request.lname == '' ||
-            request.phone == '' || 
-            request.email == '' ){
+            request.lname == '' || 
+            request.address == '' || 
+            request.driver_license == '' || 
+            request.dl_codes == '' || 
+            request.make == '' || 
+            request.model == '' || 
+            request.color == '' || 
+            request.license_plate == ''){
             displayError('All fields are required!');
         }else{
-            const usersRef = collection(db, "users");
-            
-            let userId = sessionStorage.getItem('userId');
-
-            const q = query(usersRef, 
-                or( where("phone", "==", formatPhone(request.phone)),
-                    where("email", "==", request.email)
-                ),
-                limit(1)
-            );
-
-            let counter = 0;
-            const unsubscribe = onSnapshot(q, (querySnapshot) => {
-                querySnapshot.forEach((doc) => {
-                    if(doc.id != userId){
-                        counter+=1;
-                    }
-                });
-
-                setTimeout(function () {
-                    updateProfile(request, counter);
-                }, 2000);
-            });
+            updateDriver(request);
         }
     });
     
-    function updateProfile(request, counter){
-        console.log("COUNTER => "+counter);
-        if(counter == 0){
-            let userId = sessionStorage.getItem('userId');
+    function updateDriver(request){
+        let userId = sessionStorage.getItem('userId');
 
-            updateDoc(doc(db, "users", userId), {
-                name: request.fname+" "+request.lname,
-                phone: formatPhone(request.phone),
-                email: request.email,
-            });
+        updateDoc(doc(db, "users", userId), {
+            name: request.fname+" "+request.lname,
+        });
 
-            let driverId = sessionStorage.getItem('driverId');
-            if(driverId != null){
-                updateDoc(doc(db, "drivers", driverId), {
-                    fname: request.fname,
-                    lname: request.lname,
-                });
-            }
+        let driverId = sessionStorage.getItem('driverId');
 
-            setTimeout(function () {
-                window.location.href = 'profile.html';
-            }, 1000);
-        }else{
-            displayError('Phone or Email already exist! Please use a different Phone or Email.');
-        }
+        updateDoc(doc(db, "drivers", driverId), {
+            fname: request.fname,
+            lname: request.lname,
+            address: request.address,
+            driver_license: request.driver_license,
+            dl_codes: request.dl_codes,
+            make: request.make,
+            model: request.model,
+            color: request.color,
+            license_plate: request.license_plate,
+        });
+
+        setTimeout(function () {
+            window.location.href = 'profile.html';
+        }, 1000);
     }
     
 </script>

@@ -74,24 +74,24 @@
                         Please use a different phone or email
                     </div>
                 </div>
-                <div class="form-group form-floating is-valid">
+                <div class="form-group form-floating">
                     <input type="text" class="form-control" value="" placeholder="Full Name" id="name" required>
                     <label for="name">Full Name</label>
                 </div>
-                <div class="form-group form-floating is-valid">
+                <div class="form-group form-floating">
                     <input type="tel" class="form-control" value="" placeholder="Phone" id="phone" required>
                     <label for="phone">Phone</label>
                 </div>
-                <div class="form-group form-floating is-valid">
+                <div class="form-group form-floating">
                     <input type="email" class="form-control" value="" placeholder="Email" id="email" required>
                     <label for="email">Email</label>
                 </div>
-                <div class="form-floating is-valid">
+                <div class="form-floating">
                     <input type="password" class="form-control" value="" placeholder="Password" id="password" required>
                     <label for="password">Password</label>
                 </div>
-                <button type="button" class="btn btn-lg btn-default mt-3" id="submitRegistration">Signup now</button>
-                <a href="login.html" target="_self" class="text-white btn btn-lg btn-link">Already have account?</a>
+                <button type="button" class="btn btn-md btn-default mt-3" id="submitRegistration">Signup now</button>
+                <a href="login.html" target="_self" class="text-white btn btn-md btn-link">Already have account?</a>
             </div>
         </div>
     </main>
@@ -169,12 +169,15 @@
             limit(1)
             );
             
+            let counter = 0;
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
-                let counter = 0;
                 querySnapshot.forEach((doc) => {
                     counter+=1;
                 });
-                register(name, phone, email, password, counter)
+
+                setTimeout(function () {
+                    register(name, phone, email, password, counter);
+                }, 2000);
             });
         }
     });

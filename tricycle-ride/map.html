@@ -43,95 +43,16 @@
     <link href="assets/css/style.css" rel="stylesheet" id="style">
     <link href="assets/css/custom.css" rel="stylesheet" id="style">
     <style>
-        .tricy-icon{
-            width: 80px;
-        }
-        .tricy-div{
-            position: relative;
-            top: -30px;
-            height: 100px;
-            width: 100px;
-            /* background-color: black; */
-            box-shadow: 0px -2px 5px rgba(0,0,0,0.1);
-            background-color: white;
-            border-radius: 50%;
-            padding: 10px;
-            padding-top: 20px;
-        }
         #go-button{
             width: 100%;
         }
-        .map-container{
-            min-width: 100%;
-            padding: 0px;
-        }
-        .map-inputs{
-            position: absolute;
-            top: 0;
+        #choose-button{
             width: 100%;
-            padding: 20px;
-            text-align: center;
-        }
-        .loader{
-            display: block;
-            position: relative;
-            height: 35px;
-            width: 100%;
-            background: linear-gradient(#fff 3px, transparent 0) no-repeat;
-            background-position: 0 16px;
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-        .loader:before{
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 2px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #FFF;
-            border: 6px solid #000;
-            box-sizing: border-box;
-            animation: ballbns 1.5s linear infinite;
+            background-color: rgba(255, 255, 255, 0.486);
+            color: rgb(0, 0, 0);
         }
         .waiting-div{
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            margin-top: -160px;
-            margin-left: -160px;
-            width: 320px;
-            height: 320px;
-            background-color: #000000a1;
             display: none;
-        }
-        .waiting-div > #waiting-loader{
-            top: 50%;
-            width: 220px;
-            height: 50px;
-            position: absolute;
-            margin-left: 50px;
-            text-align: center;
-        }
-        #waiting-for-driver{
-            color: #FFF;
-            margin-left: 50px;
-            margin-right: 50px;
-            margin-top: 110px;
-            font-weight: 400;
-            font-size: 20px;
-        }
-
-        @keyframes ballbns{
-            0%{
-                left: 0;
-                transform: translateX(-100%);
-            }
-            100%{
-                left: 100%;
-                transform: translateX(0%);
-            }
         }
         .payment-option{
             margin-bottom: 20px;
@@ -149,9 +70,6 @@
             text-align: left;
             margin-bottom: 0px;
             font-weight: 300;
-        }
-        .text-left{
-            text-align: left;
         }
         .gcash{
             width: 100px;
@@ -221,6 +139,14 @@
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
+
+                        <li class="nav-item reports">
+                            <a class="nav-link" href="report_list.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-exclamation-circle"></i></div>
+                                <div class="col">Reports</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
                         
                         <li class="nav-item">
                             <a class="nav-link" href="#" id="logout" tabindex="-1" aria-disabled="true">
@@ -280,6 +206,7 @@
                     <input id="destination-input" type="text" placeholder="Destination" class="form-control mt-2" readonly>
                     <input id="destination-input-lat" type="hidden" placeholder="Destination Lat">
                     <input id="destination-input-lng" type="hidden" placeholder="Destination lng">
+                    <input id="price" type="hidden">
                     <div class="payment-method">
                         <h3 class="price">₱ 0.00</h3>
                         <hr>
@@ -306,6 +233,7 @@
                         </div>
                     </div>
                     <button id="go-button" class="btn btn-md btn-default btn-block mt-2 btn-justify">Let's Go!</button>
+                    <button id="choose-button" class="btn btn-md btn-secondary btn-block mt-2 btn-justify">Choose a Driver</button>
                 </div>
             </div>
 
@@ -462,17 +390,23 @@
                         var meters = results.distance.value;
                         console.log('distance: ', meters);
                         const r = document.querySelector(".price");
+
+                        const queryString = window.location.search;
+                        const urlParams = new URLSearchParams(queryString);
+                        const basePrice = urlParams.get('basePrice')
+
                         if(meters <= 3000){
                             let price = 0;
-                            price = 30.00
+                            price = parseFloat(basePrice)
                             r.innerHTML = '₱ '+price.toFixed(2);
+                            document.getElementById("price").value = price
                         }else{
                             let price = 0;
                             meters -= 3000;
-                            price = 30+((meters / 1000)*10);
+                            price = parseFloat(basePrice)+((meters / 1000)*10);
                             r.innerHTML = '₱ '+price.toFixed(2);
+                            document.getElementById("price").value = price
                         }
-
                     }
                 );
             }
@@ -492,6 +426,19 @@
                 if (ele[i].checked){
                     let paymentMethod = ele[i].value;
                     createTrip(originVal, destinationVal, originLatVal, originLngVal, destinationLatVal, destinationLngVal, paymentMethod);
+                }
+            }
+        });
+
+        const chooseButton = document.getElementById("choose-button");
+
+        chooseButton.addEventListener("click", function() {
+            var ele = document.getElementsByName('payment-method');
+
+            for (i = 0; i < ele.length; i++) {
+                if (ele[i].checked){
+                    let paymentMethod = ele[i].value;
+                    createSpecialTrip(originVal, destinationVal, originLatVal, originLngVal, destinationLatVal, destinationLngVal, paymentMethod);
                 }
             }
         });
@@ -516,7 +463,13 @@
         const app = firebase.initializeApp(firebaseConfig);
         const db = firebase.firestore();
         
+        
         function createTrip(origin, destination, originLat, originLng, destinationLat, destinationLng, paymentMethod){
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const details = urlParams.get('details');
+            const price = document.getElementById("price").value;
+            
             db.collection("trips").add({
                 user_id: sessionStorage.getItem('userId'),
                 driver_id: null,
@@ -529,6 +482,10 @@
                 destination: new firebase.firestore.GeoPoint(destinationLat, destinationLng),
                 destination_name: destination,
                 driver_location: null,
+                is_special: false,
+                is_accepted: false,
+                details: details,
+                price: parseFloat(price),
             }) .then((docRef) => {
                 sessionStorage.setItem('tripId', docRef.id);
                 sessionStorage.setItem('tripDetails', JSON.stringify([
@@ -545,6 +502,55 @@
                 });
 
                 window.location.href = 'waiting.html?origin='+document.getElementById("origin-input").value
+                                        +'&originLat='+document.getElementById("origin-input-lat").value
+                                        +'&originLng='+document.getElementById("origin-input-lng").value
+                                        +'&destination='+document.getElementById("destination-input").value
+                                        +'&destinationLat='+document.getElementById("destination-input-lat").value
+                                        +'&destinationLng='+document.getElementById("destination-input-lng").value;
+            })
+            .catch((error) => {
+                console.error("Error adding document: ", error);
+            });
+        }
+
+        function createSpecialTrip(origin, destination, originLat, originLng, destinationLat, destinationLng, paymentMethod){
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const details = urlParams.get('details')
+            const price = document.getElementById("price").value;
+            
+            db.collection("trips").add({
+                user_id: sessionStorage.getItem('userId'),
+                driver_id: null,
+                is_started: false,
+                is_complete: false,
+                is_cancelled: false,
+                payment_method: paymentMethod,
+                origin_name: origin,
+                origin: new firebase.firestore.GeoPoint(originLat, originLng),
+                destination: new firebase.firestore.GeoPoint(destinationLat, destinationLng),
+                destination_name: destination,
+                driver_location: null,
+                is_special: true,
+                is_accepted: false,
+                details: details,
+                price: parseFloat(price),
+            }) .then((docRef) => {
+                sessionStorage.setItem('tripId', docRef.id);
+                sessionStorage.setItem('tripDetails', JSON.stringify([
+                    document.getElementById("origin-input").value,
+                    document.getElementById("origin-input-lat").value,
+                    document.getElementById("origin-input-lng").value,
+                    document.getElementById("destination-input").value,
+                    document.getElementById("destination-input-lat").value,
+                    document.getElementById("destination-input-lng").value
+                ]));
+                
+                db.collection("trips").doc(docRef.id).update({
+                    id: docRef.id
+                });
+
+                window.location.href = 'special_trip.html?origin='+document.getElementById("origin-input").value
                                         +'&originLat='+document.getElementById("origin-input-lat").value
                                         +'&originLng='+document.getElementById("origin-input-lng").value
                                         +'&destination='+document.getElementById("destination-input").value
@@ -591,6 +597,7 @@
         logout.addEventListener('click', async (e) => {
             sessionStorage.removeItem('userId');
             sessionStorage.removeItem('driverId');
+            sessionStorage.removeItem('suspended');
             setTimeout(function () {
                 window.location.href = 'login.html';
             }, 100);
@@ -626,6 +633,9 @@
         if(userType=='admin'){
             var r = document.querySelector('.trips');
             r.style.setProperty('display', 'block');
+
+            var re = document.querySelector('.reports');
+            re.style.setProperty('display', 'block');
         }
     }
 </script>

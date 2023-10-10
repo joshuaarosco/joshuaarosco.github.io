@@ -22,10 +22,15 @@
     <link href="oyster-assets/src/plugins/src/apex/apexcharts.css" rel="stylesheet" type="text/css">
     <link href="oyster-assets/src/assets/css/light/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
     <link href="oyster-assets/src/assets/css/dark/dashboard/dash_1.css" rel="stylesheet" type="text/css" />
+    <link href="oyster-assets/src/assets/css/light/scrollspyNav.css" rel="stylesheet" type="text/css" />
+    <link href="oyster-assets/src/assets/css/light/components/tabs.css" rel="stylesheet" type="text/css" />
     <!-- END PAGE LEVEL PLUGINS/CUSTOM STYLES -->
     <style>
         #distance-value {
             color: #ff7900;
+        }
+        #distance2-value {
+            color: #ff3c00;
         }
         #tds-value {
             color: #e7515a;
@@ -67,22 +72,70 @@
                         </div>
                     </div>
                     <div class="row layout-top-spacing">
+                        
                         <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="row widget-statistic">
-
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
-                                    <div class="widget widget-one_hybrid widget-engagement">
-                                        <div class="widget-heading">
-                                            <div class="w-title">
-                                                <div class="">
-                                                    <p class="w-value" id="distance-value">00</p>
-                                                    <h5 class="">Oyster Detector</h5>
+                                    <div id="tabsSimple" class="col-xl-12 col-12">
+                                        <div class="statbox widget box box-shadow">
+                                            <div class="widget-content widget-content-area p-0">
+        
+                                                <div class="simple-tab">
+                                                    
+                                                    <ul class="nav nav-tabs" id="myTab" role="tablist">
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link active" id="home-tab" data-bs-toggle="tab" data-bs-target="#home-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Sensor #1</button>
+                                                        </li>
+                                                        <li class="nav-item" role="presentation">
+                                                            <button class="nav-link" id="profile-tab" data-bs-toggle="tab" data-bs-target="#profile-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Sensor #2</button>
+                                                        </li>
+                                                    </ul>
+        
+                                                    <div class="tab-content" id="myTabContent">
+                                                        <div class="tab-pane fade show active" id="home-tab-pane" role="tabpanel" aria-labelledby="home-tab" tabindex="0">
+                                                            <div class="widget widget-one_hybrid widget-engagement">
+                                                                <div class="widget-heading">
+                                                                    <div class="w-title">
+                                                                        <div class="">
+                                                                            <p class="w-value" id="distance-value">00</p>
+                                                                            <h5 class="">Oyster Detector #1</h5>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="widget-content">    
+                                                                    <div class="w-chart">
+                                                                        <div id="distance"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="widget-footer">
+                                                                    <div class="p-3"><a href="oyster-detector-table.html?type=distance1">More Details ➜</a></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="tab-pane fade" id="profile-tab-pane" role="tabpanel" aria-labelledby="profile-tab" tabindex="0">
+                                                            <div class="widget widget-one_hybrid widget-engagement">
+                                                                <div class="widget-heading">
+                                                                    <div class="w-title">
+                                                                        <div class="">
+                                                                            <p class="w-value" id="distance2-value">00</p>
+                                                                            <h5 class="">Oyster Detector #2</h5>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="widget-content">    
+                                                                    <div class="w-chart">
+                                                                        <div id="distance2"></div>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="widget-footer">
+                                                                    <div class="p-3"><a href="oyster-detector-table.html?type=distance2">More Details ➜</a></div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+        
                                                 </div>
-                                            </div>
-                                        </div>
-                                        <div class="widget-content">    
-                                            <div class="w-chart">
-                                                <div id="distance"></div>
+        
                                             </div>
                                         </div>
                                     </div>
@@ -103,6 +156,9 @@
                                                 <div id="tds"></div>
                                             </div>
                                         </div>
+                                        <div class="widget-footer">
+                                            <div class="p-3"><a href="oyster-detector-table.html?type=tds">More Details ➜</a></div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -120,6 +176,9 @@
                                             <div class="w-chart">
                                                 <div id="waterTemp"></div>
                                             </div>
+                                        </div>
+                                        <div class="widget-footer">
+                                            <div class="p-3"><a href="oyster-detector-table.html?type=water">More Details ➜</a></div>
                                         </div>
                                     </div>
                                 </div>
@@ -139,6 +198,9 @@
                                                 <div id="humidity"></div>
                                             </div>
                                         </div>
+                                        <div class="widget-footer">
+                                            <div class="p-3"><a href="oyster-detector-table.html?type=humidity">More Details ➜</a></div>
+                                        </div>
                                     </div>
                                 </div>
 
@@ -156,6 +218,9 @@
                                             <div class="w-chart">
                                                 <div id="airTemp"></div>
                                             </div>
+                                        </div>
+                                        <div class="widget-footer">
+                                            <div class="p-3"><a href="oyster-detector-table.html?type=air">More Details ➜</a></div>
                                         </div>
                                     </div>
                                 </div>
@@ -193,6 +258,7 @@
             document.location.reload();
         });
     </script>
+    <script src="oyster-assets/src/assets/js/script.js"></script>
 </body>
 
 </html>

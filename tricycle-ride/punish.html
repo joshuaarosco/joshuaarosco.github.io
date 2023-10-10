@@ -9,7 +9,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="generator" content="">
-    <title>Profile</title>
+    <title>Report Details</title>
 
     <!-- manifest meta -->
     <meta name="apple-mobile-web-app-capable" content="yes">
@@ -43,11 +43,6 @@
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
     <link href="assets/css/custom.css" rel="stylesheet" id="style">
-    <style>
-        #driver, #tricycle{
-            display: none;
-        }
-    </style>
 </head>
 
 <body class="body-scroll" data-page="profile">
@@ -78,7 +73,7 @@
                     <figure class="avatar avatar-120 rounded-circle mx-auto mb-3">
                         <img src="assets/img/user1.jpg" alt="">
                     </figure>
-                    <h6 class="mb-1 user-name">Ajinkya McMohan</h6>
+                    <h6 class="mb-1 user-name">Loading...</h6>
                     <!-- <p class="text-muted">London, UK</p> -->
                 </div>
             </div>
@@ -138,9 +133,19 @@
         <header class="container-fluid header">
             <div class="row">
                 <div class="col-auto">
-                    <button type="button" class="btn btn-link menu-btn">
-                        <i class="bi bi-list"></i>
+                    <button type="button" class="btn btn-link back-btn">
+                        <i class="bi bi-arrow-left"></i>
                     </button>
+                </div>
+                <div class="col text-center align-self-center">
+                    <h6 class="my-0">Report Details</h6>
+                </div>
+                <div class="col-auto align-self-center">
+                    <a href="#" class="position-relative d-block mr-3">
+                        <figure class="avatar avatar-36 rounded-circle">
+                            <!-- <img src="assets/img/user1.jpg" alt=""> -->
+                        </figure>
+                    </a>
                 </div>
             </div>
         </header>
@@ -148,37 +153,6 @@
 
         <!-- main page content -->
         <div class="main-container container pt-0">
-            <!-- profile picture -->
-            <div class="row">
-                <div class="col-12 text-center bg-primary text-white position-relative py-4">
-                    <div class="coverimg position-absolute top-0 start-0 h-100 w-100 opacity-4">
-                        <img src="assets/img/backgorund1.png" alt="">
-                    </div>
-                    <figure class="avatar avatar-160 rounded-circle mb-4 mx-auto">
-                        <img src="assets/img/user1.jpg" alt="">
-                    </figure>
-                    <div class="clearfix"></div>
-                    <h5 class="position-relative profile-name">User Name</h5>
-                    <!-- <p class="text-muted">London, UK</p> -->
-                </div>
-            </div>
-
-            <!-- followers and connections -->
-            <div class="row mb-4 text-center bg-whiter py-3">
-                <div class="col">
-                    <h5 class="mb-0" id="trips-passenger">254</h5>
-                    <p class="text-muted small">Trips<br/><span class="as-driver">as Passenger</span></p>
-                </div>
-                 <div class="col" id="as-driver">
-                    <h5 class="mb-0" id="trips-driver">000</h5>
-                    <p class="text-muted small">Trips<br/>as Driver</p>
-                </div>
-            </div>
-
-            <!-- <p class="text-muted text-center">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque sollicitudin dignissim nisi, eget
-                malesuada ligula ultricies sit amet. Suspendisse efficitur ex eu est placerat mattis.
-            </p> -->
 
             <!-- summary swiper carousel -->
 
@@ -187,33 +161,42 @@
                 <div class="col-12">
                     <div class="card shadow-sm mb-3">
                         <div class="card-header">
-                            <a href="edit-profile.html" class="btn btn-link pull-right p-0">
-                                <i class="bi bi-pencil-square fs-3"></i>
-                            </a>
-                            <h6 class="my-1">Profile Information</h6>
+                            <h6 class="my-1">Violator Information</h6>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h6 class="mb-1 info profile-phone">000000000000</h6>
-                                    <p class="text-muted small">Phone</p>
+                                    <h6 class="mb-1 info violator-name">Loading...</h6>
+                                    <p class="text-muted small">Name</p>
                                 </div>
                                 <div class="col-auto align-self-center">
-                                    <button class="btn btn-link p-0">
-                                        <i class="bi bi-telephone fs-3"></i>
-                                    </button>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col">
-                                    <h6 class="mb-1 info profile-email">mail@mail.com</h6>
+                                    <h6 class="mb-1 info violator-type">Loading...</h6>
+                                    <p class="text-muted small">User Type</p>
+                                </div>
+                                <div class="col-auto align-self-center">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="mb-1 info violator-phone">Loading...</h6>
+                                    <p class="text-muted small">Phone</p>
+                                </div>
+                                <div class="col-auto align-self-center">
+                                </div>
+                            </div>
+                            <hr>
+                            <div class="row">
+                                <div class="col">
+                                    <h6 class="mb-1 info violator-email">Loading...</h6>
                                     <p class="text-muted small">Email</p>
                                 </div>
                                 <div class="col-auto align-self-center">
-                                    <button class="btn btn-link p-0">
-                                        <i class="bi bi-at fs-3"></i>
-                                    </button>
                                 </div>
                             </div>
                         </div>
@@ -225,30 +208,20 @@
                 <div class="col-12">
                     <div class="card shadow-sm mb-3">
                         <div class="card-header">
-                            <a href="edit-driver.html" class="btn btn-link pull-right p-0">
-                                <i class="bi bi-pencil-square fs-3"></i>
-                            </a>
-                            <h6 class="my-1">Driver Information</h6>
+                            <h6 class="my-1">Report Details</h6>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h6 class="mb-1 info driver-address">000000000000</h6>
-                                    <p class="text-muted small">Address</p>
+                                    <h6 class="mb-1 info report-type">Loading...</h6>
+                                    <p class="text-muted small">Type</p>
                                 </div>
                             </div>
                             <hr>
                             <div class="row">
                                 <div class="col">
-                                    <h6 class="mb-1 info driver-license">00000000000</h6>
-                                    <p class="text-muted small">License No.</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col">
-                                    <h6 class="mb-1 info driver-dl-codes">X0</h6>
-                                    <p class="text-muted small">DL Codes</p>
+                                    <h6 class="mb-1 info report-details">Loading...</h6>
+                                    <p class="text-muted small">Details</p>
                                 </div>
                             </div>
                         </div>
@@ -256,38 +229,23 @@
                 </div>
             </div>
 
-            <div class="row" id="tricycle">
+            <div class="row" id="driver">
                 <div class="col-12">
                     <div class="card shadow-sm mb-3">
                         <div class="card-header">
-                            <h6 class="my-1">Tricycle Information</h6>
+                            <h6 class="my-1">Suspend for: </h6>
                         </div>
                         <div class="card-body">
                             <div class="row">
                                 <div class="col">
-                                    <h6 class="mb-1 info tricy-make">XXXXX</h6>
-                                    <p class="text-muted small">Make</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col">
-                                    <h6 class="mb-1 info tricy-model">XXXXX</h6>
-                                    <p class="text-muted small">Model</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col">
-                                    <h6 class="mb-1 info tricy-color">XXXXX</h6>
-                                    <p class="text-muted small">Color</p>
-                                </div>
-                            </div>
-                            <hr>
-                            <div class="row">
-                                <div class="col">
-                                    <h6 class="mb-1 info tricy-license">00000000000</h6>
-                                    <p class="text-muted small">License Plate No.</p>
+                                    <!-- <h6 class="mb-1 info report-type">Loading...</h6>
+                                    <p class="text-muted small">Suspend for</p> -->
+                                    <select name="" class="form-control" id="suspend-for">
+                                        <option value="3">3 days</option>
+                                        <option value="7">1 week</option>
+                                        <option value="14">2 weeks</option>
+                                        <option value="30">1 month</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -295,51 +253,15 @@
                 </div>
             </div>
             
-            <!-- <div class="row mb-4" id="register">
+            <div class="row mb-4" id="register">
                 <div class="col d-grid">
-                    <a href="driver-registration.html" class="btn btn-default shadow-sm">Register as a Driver</a>
+                    <a href="#" class="btn btn-primary shadow-sm" id="submit">Submit Punishment</a>
                 </div>
-            </div> -->
+            </div>
         </div>
         <!-- main page content ends -->
     </main>
     <!-- Page ends-->
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <ul class="nav nav-pills nav-justified">
-                <li class="nav-item">
-                    <a class="nav-link " href="index.html">
-                        <span>
-                            <i class="nav-icon bi bi-house"></i>
-                            <span class="nav-text">Home</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="location.html">
-                        <span>
-                            <!-- <i class="nav-icon bi bi-pin-map"></i> -->
-                            <div class="tricy-div">
-                                <img class="tricy-icon" src="assets/tricy.png" alt="">
-                            </div>
-                            <span class="nav-text">Ride</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="profile.html">
-                        <span>
-                            <i class="nav-icon bi bi-person"></i>
-                            <span class="nav-text">Profile</span>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </footer>
-    <!-- Footer ends-->
 
     <!-- Required jquery and libraries -->
     <script src="assets/js/jquery-3.3.1.min.js"></script>
@@ -394,120 +316,107 @@
         appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
     };
     
-    // Initialize Firebase
     const app = initializeApp(firebaseConfig);
-    // Initialize Cloud Firestore
     const db = getFirestore(app);
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const reportId = urlParams.get('reportId')
+
+    const reportRef = collection(db, "reports");
+    const q = query(reportRef, 
+        where("id", "==", reportId),
+        limit(1)
+    );
     
-    const usersRef = collection(db, "users");
-    var userId = sessionStorage.getItem('userId');
-    if(userId != null){
-        const q = query(usersRef, 
+    const unsubscribe = onSnapshot(q, (querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+
+            let userId = doc.data().user_id;
+            let passengerId = doc.data().passenger_id;
+            let driverId = doc.data().driver_id;
+
+            let violatorType = '';
+            let violatorId;
+            if(userId == passengerId){
+                violatorType = 'Driver';
+                violatorId = driverId;
+            }else{
+                violatorType = 'Passenger';
+                violatorId = passengerId;
+            }
+            
+            var p = document.querySelector('.violator-type');
+            p.innerHTML = `<b>${violatorType}</b>`;
+            
+            var r = document.querySelector('.report-type');
+            r.innerHTML = `<b>${doc.data().type}</b>`;
+            
+            var d = document.querySelector('.report-details');
+            d.innerHTML = `<b>${doc.data().details}</b>`;
+
+            getViolatorInformation(violatorId);
+        });
+    });
+
+    function getViolatorInformation(userId){
+        const userRef = collection(db, "users");
+        const q = query(userRef, 
             where("id", "==", userId),
             limit(1)
         );
-        
-        const collP = collection(db, "trips");
-        const qcountP = query(collP, where("user_id", "==", userId));
-        const snapshotP = await getCountFromServer(qcountP);
-        console.log('Trips as Passenger: ', snapshotP.data().count);
-
-        var tripsCountP = document.querySelector('#trips-passenger');
-        tripsCountP.innerHTML = snapshotP.data().count;
-        
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
             querySnapshot.forEach((doc) => {
-                sessionStorage.setItem('userId', doc.data().id);
-                sessionStorage.setItem('userName', doc.data().name);
-                
-                var r = document.querySelector('.profile-name');
-                r.innerHTML = doc.data().name;
 
-                var p = document.querySelector('.profile-phone');
-                p.innerHTML = doc.data().phone
+                var n = document.querySelector('.violator-name');
+                n.innerHTML = `<b>${doc.data().name}</b>`;
 
-                var e = document.querySelector('.profile-email');
-                e.innerHTML = doc.data().email
+                var p = document.querySelector('.violator-phone');
+                p.innerHTML = `<b>${doc.data().phone}</b>`;
+
+                var e = document.querySelector('.violator-email');
+                e.innerHTML = `<b>${doc.data().email}</b>`;
+
             });
         });
     }
-    
-    const driversRef = collection(db, "drivers");
-    var driverId = sessionStorage.getItem('driverId');
-    if(driverId != null){
-        const q = query(driversRef, 
-            where("id", "==", driverId),
+
+    submit.addEventListener('click', async (e) => {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+        const reportId = urlParams.get('reportId')
+
+        const reportRef = collection(db, "reports");
+        const q = query(reportRef, 
+            where("id", "==", reportId),
             limit(1)
         );
         
-        var r = document.querySelector('.as-driver');
-        r.style.setProperty('display', 'block');
-
-        var r = document.querySelector('#as-driver');
-        r.style.setProperty('display', 'block');
-
-        const collD = collection(db, "trips");
-        const qcountD = query(collD, where("driver_id", "==", userId));
-        const snapshotD = await getCountFromServer(qcountD);
-        console.log('Trips as Driver: ', snapshotD.data().count);
-
-        var tripsCountD = document.querySelector('#trips-driver');
-        tripsCountD.innerHTML = snapshotD.data().count;
+        let suspendFor = document.getElementById("suspend-for").value;
 
         const unsubscribe = onSnapshot(q, (querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-                sessionStorage.setItem('driverId', doc.data().id);
-                
-                var r = document.querySelector('.profile-name');
-                r.innerHTML = doc.data().fname+" "+doc.data().lname;
-
-                var da = document.querySelector('.driver-address');
-                da.innerHTML = doc.data().address
-
-                var dl = document.querySelector('.driver-license');
-                dl.innerHTML = doc.data().driver_license
-
-                var dlcodes = document.querySelector('.driver-dl-codes');
-                dlcodes.innerHTML = doc.data().dl_codes
-
-                var tmake = document.querySelector('.tricy-make');
-                tmake.innerHTML = doc.data().make
-
-                var tmodel = document.querySelector('.tricy-model');
-                tmodel.innerHTML = doc.data().model
-
-                var tcolor = document.querySelector('.tricy-color');
-                tcolor.innerHTML = doc.data().color
-
-                var tlicense = document.querySelector('.tricy-license');
-                tlicense.innerHTML = doc.data().license_plate
-                
-                // var regBtn = document.querySelector('#register');
-                // regBtn.remove();
+            let id;
+            querySnapshot.forEach((docRef) => {
+                // console.log(docRef.data());
+                id = docRef.data().id;
             });
+
+            var date = new Date();
+
+            date.setDate(date.getDate() + parseInt(suspendFor));
+
+            console.log(date);
+
+            updateDoc(doc(db, "reports", id), {
+                punished: true,
+                punished_until: date,
+            });
+
+            setTimeout(function () {
+                window.location.href = 'report_list.html';
+            }, 200);
         });
-    }else{
-        var r = document.querySelector('.as-driver');
-        r.style.setProperty('display', 'none');
-
-        var as = document.querySelector('#as-driver');
-        as.style.setProperty('display', 'none');
-    }
-
-    console.log('DRIVERID:', sessionStorage.getItem('driverId'));
-        
-    checkDriver();
-    function checkDriver(){
-        var driverId = sessionStorage.getItem('driverId');
-
-        if(driverId!=null){
-            var r = document.querySelector('#driver');
-            r.style.setProperty('display', 'block');
-
-            var r = document.querySelector('#tricycle');
-            r.style.setProperty('display', 'block');
-        }
-    }
+    });
     
     checkAdmin();
     function checkAdmin(){

@@ -26,63 +26,6 @@
     
     <!-- swiper carousel css -->
     <link rel="stylesheet" href="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.css">
-    <style>
-        .border-left-1{
-            border-left: 1px solid #000000a1;
-            padding-left: 10px!important;
-            margin-left: 10px;
-            height: 30px;
-            margin-top: 7px!important;
-        }
-        .origin::before{
-            content: '';
-            position: absolute;
-            left: -16.5px;
-            bottom: 5px;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #FFF;
-            border: 1px solid #000;
-            box-sizing: border-box;
-        }
-        .destination::before{
-            content: '';
-            position: absolute;
-            left: -16px;
-            bottom: 5px;
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: #FFF;
-            border: 5px solid #000;
-            box-sizing: border-box;
-        }
-        .border-left-1 > .origin{
-            margin-top: -5px;
-            position: absolute;
-            font-weight: 200;
-        }
-        .border-left-1 > .destination{
-            margin-top: 20px;
-            position: absolute;
-        }
-        .pr-10{
-            padding-right: 10px!important;
-        }
-        .pl-10{
-            padding-left: 10px!important;
-        }
-        #view{
-            cursor: pointer;
-        }
-        #view:hover{
-            background-color: #f0fcff;
-        }
-        .pull-right{
-            float: right;
-        }
-    </style>
     <script>
         console.log('USERID:', sessionStorage.getItem('userId'));
         
@@ -113,171 +56,13 @@
         //     var tripId = sessionStorage.getItem('tripId');
             
         //     if(tripId == null){
-        //         window.location.href = 'location.html';
+        //         window.location.href = 'index.html';
         //     }
         // }
-        
     </script>
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
     <link href="assets/css/custom.css" rel="stylesheet" id="style">
-    <style>
-        .tricy-icon{
-            width: 80px;
-        }
-        .tricy-div{
-            position: relative;
-            top: -30px;
-            height: 100px;
-            width: 100px;
-            /* background-color: black; */
-            box-shadow: 0px -2px 5px rgba(0,0,0,0.1);
-            background-color: white;
-            border-radius: 50%;
-            padding: 10px;
-            padding-top: 20px;
-        }
-        .map-container{
-            min-width: 100%;
-            padding: 0px;
-        }
-        .map-inputs{
-            position: absolute;
-            top: 0;
-            width: 100%;
-            padding: 20px;
-            text-align: center;
-        }
-        .loader{
-            display: block;
-            position: relative;
-            height: 35px;
-            width: 100%;
-            background: linear-gradient(#fff 3px, transparent 0) no-repeat;
-            background-position: 0 16px;
-            box-sizing: border-box;
-            overflow: hidden;
-        }
-        .loader:before{
-            content: '';
-            position: absolute;
-            left: 0;
-            bottom: 2px;
-            width: 28px;
-            height: 28px;
-            border-radius: 50%;
-            background: #FFF;
-            border: 6px solid #000;
-            box-sizing: border-box;
-            animation: ballbns 1.5s linear infinite;
-        }
-        .waiting-div{
-            position: absolute;
-            top: 45%;
-            left: 50%;
-            margin-top: -300px;
-            margin-left: -160px;
-            width: 320px;
-            background-color: none;
-            border-radius: 5px;
-        }
-        .waiting-div > #waiting-loader{
-            top: 50%;
-            width: 220px;
-            height: 50px;
-            position: absolute;
-            margin-left: 50px;
-            margin-top: 80px;
-            text-align: center;
-        }
-        #waiting-for-driver{
-            color: #FFF;
-            margin-left: 50px;
-            margin-right: 50px;
-            margin-top: 100px;
-            font-weight: 400;
-            font-size: 20px;
-        }
-        .info-div{
-            position: absolute;
-            height: 200px;
-            background: #fff;
-            width: 100%;
-            left: 0;
-            bottom: 0;
-            box-shadow: 0px -2px 5px rgba(0,0,0,0.1);
-            display: none;
-        }
-        #going-to{
-            font-weight: bolder;
-        }
-        
-        @keyframes ballbns{
-            0%{
-                left: 0;
-                transform: translateX(-100%);
-            }
-            100%{
-                left: 100%;
-                transform: translateX(0%);
-            }
-        }
-        .loading{
-            font-weight: 200;
-        }
-        .loading:after {
-            overflow: hidden;
-            display: inline-block;
-            vertical-align: bottom;
-            -webkit-animation: ellipsis steps(4, end) 900ms infinite;
-            animation: ellipsis steps(4, end) 900ms infinite;
-            content: "\2026";
-            /* ascii code for the ellipsis character */
-            width: 0px;
-        }
-
-        @keyframes ellipsis {
-            to {
-                width: 40px;
-            }
-            }
-
-            @-webkit-keyframes ellipsis {
-            to {
-                width: 40px;
-            }
-        }
-        #pickup-button{
-            display: none;
-        }
-        #arrive-button{
-            display: none;
-        }
-        #rate-button{
-            display: none;
-        }
-        .py-2{
-            padding-top: 0px!important;
-        }
-        .action-btn{
-            padding: 10px 25px;
-        }
-        .person-info{
-            padding: 10px;
-            border-bottom: 1px solid #ebebeb;
-        }
-        .person-name{
-            font-weight: 300;
-            font-size: 23px;
-            /* padding: 5px 0px; */
-        }
-        .fs-30{
-            font-size: 30px;
-        }
-        .otw{
-            display: none;
-        }
-    </style>
 </head>
 
 <body class="body-scroll" data-page="index">
@@ -335,6 +120,14 @@
                             <a class="nav-link" href="trips.html" tabindex="-1" aria-disabled="true">
                                 <div class="avatar avatar-40 rounded icon"><i class="bi bi-geo-alt"></i></div>
                                 <div class="col">Trips</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+
+                        <li class="nav-item reports">
+                            <a class="nav-link" href="report_list.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-exclamation-circle"></i></div>
+                                <div class="col">Reports</div>
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
@@ -400,8 +193,8 @@
                             <div class="card-body">
                                 <div class="row gx-2 py-2">
                                     <div class="col border-left-1">
-                                        <h6 class="origin"> ${origin}...</h6>
-                                        <h6 class="destination mb-1"> ${destination}...</h6>
+                                        <h6 class="origin"> Loading origin...</h6>
+                                        <h6 class="destination mb-1"> Loading destination...</h6>
                                     </div>
                                 </div>
                             </div>
@@ -421,9 +214,11 @@
                             </figure>
                         </div>
                         <div class="col">
-                            <a href="#"><i class="bi bi-chat-dots pull-right fs-30"></i></a>
-                            <span class="person-name">John Doe</span><br>
-                            <span class="person-type">Passenger</span>
+                            <a href="#" id="chat"><i class="bi bi-chat-dots pull-right fs-30"></i></a>
+                            <span class="person-name">Loading...</span>
+                            <a href="#" class="text-danger" id="report"><i class="bi bi-exclamation-circle fs-20"></i></a>
+                            <br>
+                            <span class="person-type">Loading...</span>
                         </div>
                     </div>
                 </div>
@@ -508,9 +303,10 @@
     <!-- swiper js script -->
     <script src="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js"></script>
     
-    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s&libraries=places&callback="></script>
+    
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
+    <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s&libraries=places&callback=initMap"></script>
     <script>
         
         const queryString = window.location.search;
@@ -581,7 +377,7 @@
             displayDirections(originLatLng, destinationLatLng, driverLatLng);
         });
         
-        // function initMap() {
+    function initMap() {
             
         // Google map
         const map = new google.maps.Map(document.getElementById("map"), {
@@ -622,6 +418,10 @@
                     displayDirections(originLatLng, destinationLatLng, driverLatLng);
                     
                     getDistanceAndTime(originLatLng, destinationLatLng);
+
+                    
+                    const r = document.querySelector(".price");
+                    r.innerHTML = '₱ '+data.price.toFixed(2);
                 } else {
                 console.log('Document does not exist!');
                 }
@@ -673,7 +473,7 @@
                 }
             });
         }
-    // }
+    }
         function getDistanceAndTime(origin, destination) {
             var service = new google.maps.DistanceMatrixService();
             service.getDistanceMatrix(
@@ -700,17 +500,17 @@
                     
                     var meters = results.distance.value;
                     console.log('distance: ', meters);
-                    const r = document.querySelector(".price");
-                    if(meters <= 3000){
-                        let price = 0;
-                        price = 30.00
-                        r.innerHTML = '₱ '+price.toFixed(2);
-                    }else{
-                        let price = 0;
-                        meters -= 3000;
-                        price = 30+((meters / 1000)*10);
-                        r.innerHTML = '₱ '+price.toFixed(2);
-                    }
+                    // const r = document.querySelector(".price");
+                    // if(meters <= 3000){
+                    //     let price = 0;
+                    //     price = 30.00
+                    //     r.innerHTML = '₱ '+price.toFixed(2);
+                    // }else{
+                    //     let price = 0;
+                    //     meters -= 3000;
+                    //     price = 30+((meters / 1000)*10);
+                    //     r.innerHTML = '₱ '+price.toFixed(2);
+                    // }
 
                 }
             );
@@ -723,6 +523,7 @@
 
 
     // window.initMap = initMap;
+        
     
     </script>
     
@@ -731,9 +532,24 @@
 
 </html>
 <script>
+
+    chat.addEventListener('click', async (e) => {
+        console.log(sessionStorage.getItem('userId'));
+        let passengerId = sessionStorage.getItem('passengerUserId');
+        let driverId = sessionStorage.getItem('driverUserId');
+        window.location.href = 'chat-message.html?passengerUserId='+passengerId+'&driverUserId='+driverId;
+    });
+
+    report.addEventListener('click', async (e) => {
+        let passengerId = sessionStorage.getItem('passengerUserId');
+        let driverId = sessionStorage.getItem('driverUserId');
+        window.location.href = 'report.html?passengerUserId='+passengerId+'&driverUserId='+driverId;
+    });
+    
     logout.addEventListener('click', async (e) => {
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('driverId');
+        sessionStorage.removeItem('suspended');
         setTimeout(function () {
             window.location.href = 'login.html';
         }, 100);
@@ -905,6 +721,17 @@
         }
 
     }, 1000);
+    
+    // checkIfDriver();
+    // function checkIfDriver(){
+    //     let userId = sessionStorage.getItem('userId');
+    //     let driverId = sessionStorage.getItem('driverUserId');
+    //     console.log(driverId);
+    //     if(userId != driverId){
+    //         var r = document.getElementById('report');
+    //         r.style.setProperty('display','inline');
+    //     }
+    // }
 
 
     const cancel = document.getElementById("cancel-button");
@@ -921,7 +748,7 @@
             })
             .then((docRef) => {
                 sessionStorage.removeItem('tripId');
-                window.location.href = 'location.html';
+                window.location.href = 'index.html';
             })
             .catch((error) => {
                 console.error("Error adding document: ", error);
@@ -939,7 +766,9 @@
         if(userType=='admin'){
             var r = document.querySelector('.trips');
             r.style.setProperty('display', 'block');
+
+            var re = document.querySelector('.reports');
+            re.style.setProperty('display', 'block');
         }
     }
-
 </script>

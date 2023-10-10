@@ -273,6 +273,14 @@
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
+
+                        <li class="nav-item reports">
+                            <a class="nav-link" href="report_list.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-exclamation-circle"></i></div>
+                                <div class="col">Reports</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
                         
                         <li class="nav-item">
                             <a class="nav-link" href="#" id="logout" tabindex="-1" aria-disabled="true">
@@ -344,8 +352,8 @@
                             <div class="card-body">
                                 <div class="row gx-2">
                                     <div class="col border-left-1">
-                                        <h6 class="origin"> ${origin}...</h6>
-                                        <h6 class="destination mb-1"> ${destination}...</h6>
+                                        <h6 class="origin"> Loading origin...</h6>
+                                        <h6 class="destination mb-1"> Loading destination...</h6>
                                     </div>
                                 </div>
                             </div>
@@ -510,6 +518,7 @@
                     db.collection("trips").doc(tripId).update({
                         driver_id: sessionStorage.getItem('userId'),
                         driver_location: new firebase.firestore.GeoPoint(userLatLng[0], userLatLng[1]),
+                        is_accepted: true,
                     }).then((docRef) => {
                         sessionStorage.setItem('driverTripId',tripId);
                         sessionStorage.setItem('driverLocLat',userLatLng[0]);
@@ -527,6 +536,7 @@
                     db.collection("trips").doc(tripId).update({
                         driver_id: sessionStorage.getItem('userId'),
                         driver_location: new firebase.firestore.GeoPoint(defaultLatLng[0], defaultLatLng[1]),
+                        is_accepted: true,
                     }).then((docRef) => {
                         sessionStorage.setItem('driverTripId',tripId);
                         sessionStorage.setItem('driverLocLat',defaultLatLng[0]);
@@ -553,6 +563,7 @@
     logout.addEventListener('click', async (e) => {
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('driverId');
+        sessionStorage.removeItem('suspended');
         setTimeout(function () {
             window.location.href = 'login.html';
         }, 100);
@@ -568,6 +579,9 @@
         if(userType=='admin'){
             var r = document.querySelector('.trips');
             r.style.setProperty('display', 'block');
+
+            var re = document.querySelector('.reports');
+            re.style.setProperty('display', 'block');
         }
     }
 </script>
