@@ -79,6 +79,9 @@
                 <div class="form-group form-floating">
                     <input type="password" class="form-control" id="password" placeholder="Password">
                     <label class="form-control-label" for="password">Password</label>
+                    <button type="button" class="btn btn-link text-gray tooltip-btn">
+                        <i class="bi bi-eye-slash" id="togglePassword"></i>
+                    </button>
                 </div>
                 <!-- <p class="mb-0"><a href="forgot-password.html" class="btn btn-link text-white">Forgot your password?</a></p> -->
                 <button type="button" class="btn btn-md btn-default btn-block mt-3" id="login">Login</button>
@@ -112,6 +115,18 @@
 
     <!-- page level custom script -->
     <script src="assets/js/app.js"></script>
+    <script>
+        const togglePassword = document.querySelector("#togglePassword");
+        const password = document.querySelector("#password");
+        togglePassword.addEventListener("click", function () {
+            // toggle the type attribute
+            const type = password.getAttribute("type") === "password" ? "text" : "password";
+            password.setAttribute("type", type);
+            
+            // toggle the icon
+            this.classList.toggle("bi-eye");
+        });
+    </script>
 </body>
 </html>
 
@@ -193,6 +208,8 @@
             setTimeout(function () {
                 window.location.href = 'index.html';
             }, 1000);
+        }else{
+            displayError('Invalid Username or Password');
         }
     }
 

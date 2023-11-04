@@ -22,7 +22,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
     
     <!-- bootstrap icons -->
-    <link rel="stylesheet" href="assets/cdn.jsdelivr.net/npm/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="assets/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
     <!-- style css for this template -->
     <link href="assets/css/sweetalert.min.css" rel="stylesheet" id="style">
     <link href="assets/css/style.css" rel="stylesheet" id="style">
@@ -42,7 +42,6 @@
                 window.location.href = 'index.html';
             }
         }
-        
     </script>
 </head>
 
@@ -125,13 +124,19 @@
                 </div>
 
                 <hr>
-                <div class="form-floating">
+                <div class="form-group form-floating">
                     <input type="password" class="form-control" value="" placeholder="Password" id="password" required>
-                    <label for="password">Password</label>
+                    <label class="form-control-label" for="password">Password</label>
+                    <button type="button" class="btn btn-link text-default tooltip-btn">
+                        <i class="bi bi-eye-slash" id="togglePassword"></i>
+                    </button>
                 </div>
                 <div class="form-floating">
                     <input type="password" class="form-control" value="" placeholder="Confirm Password" id="confirm_password" required>
                     <label for="confirm_password">Confirm Password</label>
+                    <button type="button" class="btn btn-link text-default tooltip-btn">
+                        <i class="bi bi-eye-slash" id="toggleConfirmPassword"></i>
+                    </button>
                 </div>
                 <button type="button" class="btn btn-md btn-default mt-3" id="submitRegistration">Register</button>
                 <a href="login.html" target="_self" class="text-white btn btn-md btn-link">Already have account?</a>
@@ -166,6 +171,29 @@
             mask: '+{63}(000)000-00-00',
             lazy: false,  // make placeholder always visible
             placeholderChar: '#'     // defaults to '_'
+        });
+        
+        
+        const togglePassword = document.querySelector("#togglePassword");
+        const password = document.querySelector("#password");
+        togglePassword.addEventListener("click", function () {
+            // toggle the type attribute
+            const type = password.getAttribute("type") === "password" ? "text" : "password";
+            password.setAttribute("type", type);
+            
+            // toggle the icon
+            this.classList.toggle("bi-eye");
+        });
+        
+        const toggleConfirmPassword = document.querySelector("#toggleConfirmPassword");
+        const confirmPassword = document.querySelector("#confirm_password");
+        toggleConfirmPassword.addEventListener("click", function () {
+            // toggle the type attribute
+            const type = confirmPassword.getAttribute("type") === "password" ? "text" : "password";
+            confirmPassword.setAttribute("type", type);
+            
+            // toggle the icon
+            this.classList.toggle("bi-eye");
         });
     </script>
     <script src="assets/js/custom.js"></script>
