@@ -206,7 +206,7 @@
         <!-- main page content -->
         <div class="main-container container">
             <h2 class="mx-4 mt-5">Welcome to<br>
-                <span class="text-primary">Trike</span> App<br>
+                <span class="text-primary">Trike</span>Ride<br>
             </h2>
             
             <div class="suspension-checker">
@@ -363,7 +363,7 @@
                     sm.style.setProperty('display', 'block');
                     su.innerHTML=`You are suspended until <strong>${suspended_until}</strong>, due to a "<strong>${type}</strong>" 
                     report you've received from one of your previous drivers. </br></br> 
-                    Let's make the <strong>Trike</strong> a healthy and happy place!`;
+                    Let's make the <strong>TrikeRide</strong> a healthy and happy place!`;
 
                     sessionStorage.setItem('suspended', true);
                 }else if(reportDriverId == userId){
@@ -371,7 +371,7 @@
                     sm.style.setProperty('display', 'block');
                     su.innerHTML=`You are suspended until <strong>${suspended_until}</strong>, due to a "<strong>${type}</strong>" 
                     report you've received from one of your previous passengers. </br></br>
-                    Let's make the <strong>Trike</strong> a healthy and happy place!`;
+                    Let's make the <strong>TrikeRide</strong> a healthy and happy place!`;
                     
                     sessionStorage.setItem('suspended', true);
                 }else{
