@@ -545,6 +545,15 @@
         let driverId = sessionStorage.getItem('driverUserId');
         window.location.href = 'report.html?passengerUserId='+passengerId+'&driverUserId='+driverId;
     });
+
+    var rateBtn = document.querySelector('#rate-button')
+
+    rateBtn.addEventListener('click', async (e) => {
+        console.log(sessionStorage.getItem('userId'));
+        let passengerId = sessionStorage.getItem('passengerUserId');
+        let driverId = sessionStorage.getItem('driverUserId');
+        window.location.href = 'rate.html?passengerUserId='+passengerId+'&driverUserId='+driverId;
+    });
     
     logout.addEventListener('click', async (e) => {
         sessionStorage.removeItem('userId');

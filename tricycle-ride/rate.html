@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <meta name="generator" content="">
+    <title>Rate Driver</title>
+
+    <!-- manifest meta -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <!-- Favicons -->
+    <link rel="apple-touch-icon" href="assets/img/favicon180.png" sizes="180x180">
+    <link rel="icon" href="assets/img/favicon32.png" sizes="32x32" type="image/png">
+    <link rel="icon" href="assets/img/favicon16.png" sizes="16x16" type="image/png">
+
+    <!-- Google fonts-->
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&amp;display=swap" rel="stylesheet">
+
+    <!-- bootstrap icons -->
+    <link rel="stylesheet" href="assets/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
+    <link href="assets/css/style.css" rel="stylesheet" id="style">
+    <style>
+        .card{
+            background-color: #fff0;
+        }
+        .btn-rating {
+            background-color: #ffffff;
+            color: #000000;
+            border-radius: 50%;
+        }
+        .btn-warning{
+            border-radius: 50%;
+        }
+        .btnrating{
+            height: 50px!important;
+            width: 50px!important;
+        }
+    </style>
+    <script>
+        console.log('USERID:', sessionStorage.getItem('userId'));
+        
+        checkToken();
+        function checkToken(){
+            var userId = sessionStorage.getItem('userId');
+            
+            if(userId==null){
+                window.location.href = 'login.html';
+            }
+        }
+        
+    </script>
+</head>
+
+<body class="body-scroll" data-page="settings">
+
+    <!-- loader section -->
+    <div class="container-fluid loader-wrap">
+        <div class="row h-100">
+            <div class="col-10 col-md-6 col-lg-5 col-xl-3 mx-auto text-center align-self-center">
+                <div class="loader-cube-wrap mx-auto">
+                    <div class="loader-cube1 loader-cube"></div>
+                    <div class="loader-cube2 loader-cube"></div>
+                    <div class="loader-cube4 loader-cube"></div>
+                    <div class="loader-cube3 loader-cube"></div>
+                </div>
+                <p>Great things ahead!<br><strong>Please wait...</strong></p>
+            </div>
+        </div>
+    </div>
+    <!-- loader section ends -->
+
+    <!-- Begin page -->
+    <main class="h-100 has-header">
+
+        <!-- Header -->
+        <header class="container-fluid header">
+            <div class="row">
+                <div class="col-auto">
+                    <button type="button" class="btn btn-link back-btn">
+                        <i class="bi bi-arrow-left"></i>
+                    </button>
+                </div>
+                <div class="col text-center align-self-center">
+                </div>
+                <div class="col-auto align-self-center">
+                    
+                </div>
+            </div>
+        </header>
+        <!-- Header ends -->
+
+        <!-- main page content -->
+        <div class="main-container container">
+
+            <!-- profile information -->
+            <div class="row mb-2">
+                <div class="col-auto mx-auto text-center">
+                    
+                    <figure class="avatar avatar-120 rounded-circle mx-auto mb-3">
+                        <img src="assets/img/user1.jpg" alt="">
+                    </figure>
+                    <h4 class="driver-name text-center">---</h4>
+                    <p class="text-center">How was your experience?</p>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-12">
+                    <div class="card shadow-sm mb-3">
+                        <div class="card-body text-black" style="text-align: left; display: none;">
+                            Please use a different phone or email
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row h-100 mb-2">
+                <div class="col-12">
+                    <div class="form-group form-floating mb-3 text-center">
+                        <h2 class="bold rating-header" style="">
+                            <span class="selected-rating">0</span><small> / 5</small>
+                        </h2>
+                        <input type="hidden" id="selected_rating" name="selected_rating" value="" required="required">
+                        <button type="button" class="btnrating btn btn-rating" data-attr="1" id="rating-star-1">
+                            <i class="bi bi-star-fill" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btnrating btn btn-rating" data-attr="2" id="rating-star-2">
+                            <i class="bi bi-star-fill" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btnrating btn btn-rating" data-attr="3" id="rating-star-3">
+                            <i class="bi bi-star-fill" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btnrating btn btn-rating" data-attr="4" id="rating-star-4">
+                            <i class="bi bi-star-fill" aria-hidden="true"></i>
+                        </button>
+                        <button type="button" class="btnrating btn btn-rating" data-attr="5" id="rating-star-5">
+                            <i class="bi bi-star-fill" aria-hidden="true"></i>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="row h-100 mb-2">
+                <div class="col-12">
+                    <div class="form-group form-floating mb-3">
+                        <input type="text" class="form-control" value="" placeholder="" id="comment">
+                        <label for="comment">Comment (optional)</label>
+                    </div>
+                </div>
+            </div>
+
+            <div class="row h-100 mb-4">
+                <div class="col-12 d-grid">
+                    <button id="rate" class="btn btn-default">Submit Review</button>
+                </div>
+            </div>
+
+
+        </div>
+        <!-- main page content ends -->
+
+    </main>
+    <!-- Page ends-->
+
+    <!-- Required jquery and libraries -->
+    <script src="assets/js/jquery-3.3.1.min.js"></script>
+    <script src="assets/js/popper.min.js"></script>
+    <script src="assets/vendor/bootstrap-5/js/bootstrap.bundle.min.js"></script>
+
+    <!-- cookie js -->
+    <script src="assets/js/jquery.cookie.js"></script>
+
+    <!-- Customized jquery file  -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/color-scheme.js"></script>
+
+    <!-- page level custom script -->
+    <script src="assets/js/app.js"></script>
+    <script src="assets/js/custom.js"></script>
+    <script>
+	    
+        $(".btnrating").on('click',(function(e) {
+                
+            var previous_value = $("#selected_rating").val();
+            
+            var selected_value = $(this).attr("data-attr");
+            $("#selected_rating").val(selected_value);
+            
+            $(".selected-rating").empty();
+            $(".selected-rating").html(selected_value);
+            
+            for (i = 1; i <= selected_value; ++i) {
+            $("#rating-star-"+i).toggleClass('btn-warning');
+            $("#rating-star-"+i).toggleClass('btn-rating');
+            }
+            
+            for (ix = 1; ix <= previous_value; ++ix) {
+            $("#rating-star-"+ix).toggleClass('btn-warning');
+            $("#rating-star-"+ix).toggleClass('btn-rating');
+            }
+        
+        }));
+        
+            
+    </script>
+</body>
+<script type="module">
+    // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+    import { getFirestore, setDoc, addDoc, doc, collection, updateDoc, deleteDoc, onSnapshot, query, getDocs, or, where, getDoc, limit, and, collectionGroup,  } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+    
+    
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+        apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
+        authDomain: "tricycle-ride.firebaseapp.com",
+        databaseURL: "https://tricycle-ride-default-rtdb.asia-southeast1.firebasedatabase.app",
+        projectId: "tricycle-ride",
+        storageBucket: "tricycle-ride.appspot.com",
+        messagingSenderId: "802022631435",
+        appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
+    };
+    
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    // Initialize Cloud Firestore
+    const db = getFirestore(app);
+
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    const passengerUserId = urlParams.get('passengerUserId')
+    const driverUserId = urlParams.get('driverUserId')
+    
+    const driversRef = collection(db, "users");
+
+    if(driverUserId != null){
+        const q = query(driversRef, 
+            where("id", "==", driverUserId),
+            limit(1)
+        );
+
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                
+                var r = document.querySelector('.driver-name');
+                r.innerHTML = doc.data().name;
+
+            });
+        });
+    }
+    
+    rate.addEventListener('click', async (e) => {
+        const passengerUserId = urlParams.get('passengerUserId')
+        const driverUserId = urlParams.get('driverUserId')
+        
+        createRating(passengerUserId, driverUserId);
+    });
+    
+    
+    const createRating = async(passengerUserId, driverUserId) => {
+
+        let stars = document.getElementById("selected_rating").value;
+        let comments = document.getElementById("comment").value;
+
+        const docRef = await addDoc(collection(db, "ratings"), {
+            driver_id: driverUserId,
+            passenger_id: passengerUserId,
+            stars: stars,
+            comments: comments,
+        });
+
+        updateDoc(doc(db, "ratings", docRef.id), {
+            id: docRef.id
+        });
+
+        setTimeout(function () {
+            window.location.href = 'index.html';
+        }, 1000);
+    }
+</script>
+</html>
+
