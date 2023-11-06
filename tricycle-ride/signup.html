@@ -43,6 +43,8 @@
             background-color: #fff0;
         }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 
 <body class="body-scroll d-flex flex-column h-100 dark-bg" data-page="signup">
@@ -137,6 +139,7 @@
             // toggle the icon
             this.classList.toggle("bi-eye");
         });
+        
     </script>
 </body>
 </html>
@@ -162,13 +165,14 @@
     const app = initializeApp(firebaseConfig);
     // Initialize Cloud Firestore
     const db = getFirestore(app);
-    
+
     submitRegistration.addEventListener('click', async (e) => {
         
         let name = document.getElementById('name').value;
         let phone = document.getElementById('phone').value;
         let email = document.getElementById('email').value;
         let password = document.getElementById('password').value;
+        let verification_code = randomString(6, '#aA');
         
         if(name == '' || phone == '' || email == '' || password == ''){
             displayError('All fields are required!');
@@ -189,13 +193,13 @@
                 });
 
                 setTimeout(function () {
-                    register(name, phone, email, password, counter);
+                    register(name, phone, email, password, counter, verification_code);
                 }, 2000);
             });
         }
     });
     
-    const register = async(name, phone, email, password, counter) => {
+    const register = async(name, phone, email, password, counter, verification_code) => {
         if(counter == 0){
             console.log('NAME:', name);
             console.log('PHONE:', formatPhone(phone));
@@ -207,7 +211,9 @@
                 name: name,
                 phone: formatPhone(phone),
                 email: email,
-                password: password
+                password: password,
+                is_verify: false,
+                verification_code: verification_code
             });
             
             console.log('TOKEN: ', docRef.id);
@@ -222,12 +228,54 @@
             
             loader();
             
-            setTimeout(function () {
-                window.location.href = 'login.html';
-            }, 3000);
+            sendMail(verification_code);
+
         }else{
             displayError('Phone or email already exist! Please use a different phone or email.');
         }
+    }
+
+    function sendMail(code){
+        (function(){
+          emailjs.init("CT085vWQY-NEFEvmM"); // Account Public Key
+        })();
+        
+        let name = document.getElementById('name').value;
+        let email = document.getElementById('email').value;
+
+        var params = {
+          to: email,
+          name: name,
+          subject: "Email Verification - TrikeRide",
+          message: "Please click the link below to verify your account.",
+          url: "https://joshuaarosco.github.io/tricycle-ride/verify.html?verification_code="+code,
+        };
+
+        var serviceID = "service_xe86o88"; // Email Service ID
+        var templateID = "template_376m6bc"; // Email Template ID
+
+        emailjs.send(serviceID, templateID, params)
+        .then( res => {
+            Swal.fire({
+                title: "Email Verification",
+                text: "has been sent to your email.",
+                icon: "info"
+            });
+            
+            window.location.href = 'not-verified.html';
+        })
+        .catch();
+      }
+
+    function randomString(length, chars) {
+        var mask = '';
+        if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
+        if (chars.indexOf('A') > -1) mask += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        if (chars.indexOf('#') > -1) mask += '0123456789';
+        if (chars.indexOf('!') > -1) mask += '~`!@#$%^&*()_+-={}[]:";\'<>?,./|\\';
+        var result = '';
+        for (var i = length; i > 0; --i) result += mask[Math.floor(Math.random() * mask.length)];
+        return result;
     }
     
     function displayError(message){

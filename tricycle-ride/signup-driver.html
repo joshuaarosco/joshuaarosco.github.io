@@ -24,7 +24,7 @@
     <!-- bootstrap icons -->
     <link rel="stylesheet" href="assets/bootstrap-icons%401.5.0/font/bootstrap-icons.css">
     <!-- style css for this template -->
-    <link href="assets/css/sweetalert.min.css" rel="stylesheet" id="style">
+    <!-- <link href="assets/css/sweetalert.min.css" rel="stylesheet" id="style"> -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
     <style>
         .card{
@@ -43,6 +43,8 @@
             }
         }
     </script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
 </head>
 
 <body class="body-scroll d-flex flex-column h-100 dark-bg" data-page="signup">
@@ -162,7 +164,7 @@
     
     <!-- page level custom script -->
     <script src="assets/js/app.js"></script>
-    <script src="assets/js/sweetalert.min.js"></script>
+    <!-- <script src="assets/js/sweetalert.min.js"></script> -->
     
     <script src="https://unpkg.com/imask"></script>
     <script>
@@ -322,13 +324,17 @@
             console.log('PHONE:', formatPhone(phone));
             console.log('EMAIL:', email);
             console.log('PASSWORD:', password);
+
+            let verification_code = randomString(6, '#aA');
             
             // insert
             const docRef = await addDoc(collection(db, "users"), {
                 name: name,
                 phone: formatPhone(phone),
                 email: email,
-                password: password
+                password: password,
+                is_verify: false,
+                verification_code: verification_code
             });
             
             console.log('TOKEN: ', docRef.id);
@@ -348,7 +354,8 @@
                             make,
                             model,
                             color,
-                            license_plate);
+                            license_plate, 
+                            verification_code);
         }else{
             displayError('Phone or Email already exist! Please use a different Phone or Email.');
             Swal.fire({
@@ -367,7 +374,8 @@
                                     make,
                                     model,
                                     color,
-                                    license_plate) => {
+                                    license_plate,
+                                    verification_code) => {
         // insert
         const docRef = await addDoc(collection(db, "drivers"), {
             user_id: userId,
@@ -390,10 +398,51 @@
         });
         
         loader();
+
+        sendMail(verification_code);
+    }
+
+    function sendMail(code){
+        (function(){
+          emailjs.init("CT085vWQY-NEFEvmM"); // Account Public Key
+        })();
+        
+        let name = document.getElementById('fname').value+" "+document.getElementById('lname').value;
+        let email = document.getElementById('email').value;
+
+        var params = {
+          to: email,
+          name: name,
+          subject: "Email Verification - TrikeRide",
+          message: "Please click the link below to verify your account.",
+          url: "https://joshuaarosco.github.io/tricycle-ride/verify.html?verification_code="+code,
+        };
+
+        var serviceID = "service_xe86o88"; // Email Service ID
+        var templateID = "template_376m6bc"; // Email Template ID
+
+        emailjs.send(serviceID, templateID, params)
+        .then( res => {
+            Swal.fire({
+                title: "Email Verification",
+                text: "has been sent to your email.",
+                icon: "info"
+            });
             
-        setTimeout(function () {
-            window.location.href = 'login.html';
-        }, 3000);
+            window.location.href = 'not-verified.html';
+        })
+        .catch();
+      }
+
+    function randomString(length, chars) {
+        var mask = '';
+        if (chars.indexOf('a') > -1) mask += 'abcdefghijklmnopqrstuvwxyz';
+        if (chars.indexOf('A') > -1) mask += 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+        if (chars.indexOf('#') > -1) mask += '0123456789';
+        if (chars.indexOf('!') > -1) mask += '~`!@#$%^&*()_+-={}[]:";\'<>?,./|\\';
+        var result = '';
+        for (var i = length; i > 0; --i) result += mask[Math.floor(Math.random() * mask.length)];
+        return result;
     }
     
     function loader(){

@@ -264,6 +264,7 @@
     logout.addEventListener('click', async (e) => {
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('driverId');
+        sessionStorage.removeItem('isVerify');
         sessionStorage.removeItem('suspended');
         setTimeout(function () {
             window.location.href = 'login.html';

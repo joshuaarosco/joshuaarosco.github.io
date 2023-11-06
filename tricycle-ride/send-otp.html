@@ -1,0 +1,43 @@
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+  </head>
+  <body>
+    <h1>Send Email</h1>
+    Sender Name
+    <input type="text" id="sendername"> <br>
+    To (Email)
+    <input type="text" id="to"> <br>
+    Subject
+    <input type="text" id="subject"> <br>
+    Reply To (Email)
+    <input type="text" id="replyto"> <br>
+    Message <br>
+    <textarea id="message" cols="40" rows="8"></textarea> <br>
+    <button onclick = "sendMail();">Send</button>
+
+    <script>
+      function sendMail(){
+        (function(){
+          emailjs.init("CT085vWQY-NEFEvmM"); // Account Public Key
+        })();
+
+        var params = {
+          to: "joshuaarosco.hs@gmail.com",
+          name: "John Doe",
+          subject: "TrikeRide:OTP",
+          message: "<a href='google.com'>Test Link</a>",
+        };
+
+        var serviceID = "service_xe86o88"; // Email Service ID
+        var templateID = "template_376m6bc"; // Email Template ID
+
+        emailjs.send(serviceID, templateID, params)
+        .then( res => {
+            alert("Email sent successfully!!")
+        })
+        .catch();
+      }
+    </script>
+  </body>
+</html>

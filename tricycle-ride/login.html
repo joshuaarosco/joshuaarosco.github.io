@@ -30,12 +30,14 @@
     <script>
         console.log('USERID:', sessionStorage.getItem('userId'));
         console.log('DRIVERID:', sessionStorage.getItem('driverId'));
+        console.log('ISVERIFY:', sessionStorage.getItem('isVerify'));
         
         checkToken();
         function checkToken(){
             var userId = sessionStorage.getItem('userId');
-
-            if(userId!=null){
+            var isVerify = sessionStorage.getItem('isVerify');
+            
+            if(userId!=null && isVerify == true){
                 window.location.href = 'index.html';
             }
         }
@@ -174,17 +176,23 @@
             
             const unsubscribe = onSnapshot(q, (querySnapshot) => {
                 let counter = 0;
+                let isVerifyCounter = 0;
                 querySnapshot.forEach((doc) => {
-                    counter+=1;
+                    counter += 1;
+                    
+                    if(doc.data().is_verify == true){
+                        isVerifyCounter += 1;
+                    }
                     //setAuthCookie(doc.data().id)
                     //setCookie('name', doc.data().name, 1);
                     sessionStorage.setItem('userId', doc.data().id);
+                    sessionStorage.setItem('isVerify', doc.data().is_verify);
                     sessionStorage.setItem('userName', doc.data().name);
                     sessionStorage.setItem('userType', doc.data().type);
 
                     checkIfDriver(doc.data().id);
                 });
-                auth(counter);
+                auth(counter, isVerifyCounter);
             });
         }
 
@@ -203,10 +211,16 @@
         }
     });
     
-    function auth(counter){
+    function auth(counter, isVerifyCounter){
+        console.log("counter:"+counter);
         if(counter > 0){
             setTimeout(function () {
-                window.location.href = 'index.html';
+                console.log("isVerify:"+isVerifyCounter);
+                if(isVerifyCounter > 0){
+                    window.location.href = 'index.html';
+                }else{
+                    window.location.href = 'not-verified.html';
+                }
             }, 1000);
         }else{
             displayError('Invalid Username or Password');

@@ -166,11 +166,11 @@
             <!-- followers and connections -->
             <div class="row mb-4 text-center bg-whiter py-3">
                 <div class="col">
-                    <h5 class="mb-0" id="trips-passenger">254</h5>
+                    <h5 class="mb-0" id="trips-passenger">0</h5>
                     <p class="text-muted small">Trips<br/><span class="as-driver">as Passenger</span></p>
                 </div>
                  <div class="col" id="as-driver">
-                    <h5 class="mb-0" id="trips-driver">000</h5>
+                    <h5 class="mb-0" id="trips-driver">0</h5>
                     <p class="text-muted small">Trips<br/>as Driver</p>
                 </div>
             </div>
@@ -366,6 +366,7 @@
         logout.addEventListener('click', async (e) => {
             sessionStorage.removeItem('userId');
             sessionStorage.removeItem('driverId');
+            sessionStorage.removeItem('isVerify');
             sessionStorage.removeItem('suspended');
             setTimeout(function () {
                 window.location.href = 'login.html';
