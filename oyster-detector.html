@@ -76,6 +76,30 @@
                         <div class="col-xl-8 col-lg-12 col-md-12 col-sm-12 col-12">
                             <div class="row widget-statistic">
                                 <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
+                                    <div class="widget widget-one_hybrid widget-followers">
+                                        <div class="widget-heading">
+                                            <div class="w-title">
+                                                <div class="">
+                                                    <p class="w-value text-success" id="sacks">00</p>
+                                                    <h5 class="">Sacks Harvested</h5>
+                                                </div>
+                                            </div>
+                                            <div class="w-title">
+                                                <div class="">
+                                                    <p class="w-value text-success" id="date">00-00-0000</p>
+                                                    <h5 class="">Date of Harvest</h5>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="widget-footer">
+                                            <div class="p-3">
+                                                <a href="oyster-detector-add-report.html" class="btn btn-primary btn-sm">+ Add Report</a>
+                                                <a href="oyster-detector-report-details.html" class="pull-right mt-2">More Details ➜</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-xl-4 col-lg-4 col-md-4 col-sm-4 col-12 layout-spacing">
                                     <div id="tabsSimple" class="col-xl-12 col-12">
                                         <div class="statbox widget box box-shadow">
                                             <div class="widget-content widget-content-area p-0">
@@ -259,6 +283,39 @@
         });
     </script>
     <script src="oyster-assets/src/assets/js/script.js"></script>
+    <script type="module">
+
+        // Import the functions you need from the SDKs you need
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getFirestore, setDoc, addDoc, doc, collection, updateDoc, deleteDoc, onSnapshot, query, getDocs, or, where, getDoc, limit, and, orderBy } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyCldQgev1oOf-57N6QjJbC_ZHha7BvJ4m8",
+            authDomain: "oyster-detector.firebaseapp.com",
+            projectId: "oyster-detector",
+            storageBucket: "oyster-detector.appspot.com",
+            messagingSenderId: "258346309933",
+            appId: "1:258346309933:web:8770ad0cfe9b878a439ba4",
+            measurementId: "G-SQRTWJGTZT"
+        };
+    
+        const app = initializeApp(firebaseConfig);
+        const db = getFirestore(app);
+
+        const harvestRef = collection(db, "harvest");
+
+        const q = query(harvestRef, 
+            orderBy("date", "desc"),
+            limit(1)
+        );
+        const unsubscribe = onSnapshot(q, (querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+                var data = doc.data();
+                document.getElementById('sacks').innerHTML = data.sacks;
+                document.getElementById('date').innerHTML = data.date.toDate().toDateString();
+            });
+        });
+    </script>
 </body>
 
 </html>
