@@ -280,7 +280,15 @@
                         <li class="nav-item reports">
                             <a class="nav-link" href="report_list.html" tabindex="-1" aria-disabled="true">
                                 <div class="avatar avatar-40 rounded icon"><i class="bi bi-exclamation-circle"></i></div>
-                                <div class="col">Reports</div>
+                                <div class="col">Reported Accounts</div>
+                                <div class="arrow"><i class="bi bi-arrow-right"></i></div>
+                            </a>
+                        </li>
+
+                        <li class="nav-item reports-ratings">
+                            <a class="nav-link" href="report_ratings.html" tabindex="-1" aria-disabled="true">
+                                <div class="avatar avatar-40 rounded icon"><i class="bi bi-file-text"></i></div>
+                                <div class="col">Reports & Ratings</div>
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
@@ -615,6 +623,9 @@
 
             var re = document.querySelector('.reports');
             re.style.setProperty('display', 'block');
+
+            var rr = document.querySelector('.reports-ratings');
+            rr.style.setProperty('display', 'block');
         }
     }
 

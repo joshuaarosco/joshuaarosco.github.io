@@ -26,6 +26,7 @@
 
     <!-- swiper carousel css -->
     <link rel="stylesheet" href="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.css">
+    <link href="https://www.jqueryscript.net/demo/jQuery-Plugin-For-Sortable-Bootstrap-Tables-Bootstrap-Sortable/Contents/bootstrap-sortable.css" rel="stylesheet" type="text/css">
     
     <script>
         console.log('USERID:', sessionStorage.getItem('userId'));
@@ -39,14 +40,7 @@
                 window.location.href = 'login.html';
             }
         }
-
-        checkAccess();
-        function checkAccess(){
-            let userType = sessionStorage.getItem('userType');
-            if(userType!='admin'){
-                window.location.href = 'index.html'
-            }
-        }
+        
     </script>
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
@@ -70,58 +64,26 @@
         #driver{
             display: none;
         }
-
-        .border-left-1{
-            border-left: 1px solid #000000a1;
-            padding-left: 10px!important;
-            margin-left: 10px;
-            height: 30px;
-            margin-top: 7px!important;
+        .table-bordered{
+            border-color: #222;
         }
-        .origin::before{
-            content: '';
-            position: absolute;
-            left: -16.5px;
-            bottom: 5px;
-            width: 10px;
-            height: 10px;
-            border-radius: 50%;
-            background: #FFF;
-            border: 1px solid #000;
-            box-sizing: border-box;
+        .table-header{
+            background: #222;
+            color: #ffffff;
         }
-        .destination::before{
-            content: '';
-            position: absolute;
-            left: -16px;
-            bottom: 5px;
-            width: 5px;
-            height: 5px;
-            border-radius: 50%;
-            background: #FFF;
-            border: 5px solid #000;
-            box-sizing: border-box;
+        thead, tbody, tfoot, tr, td, th {
+            font-weight: 300;
         }
-        .border-left-1 > .origin{
-            margin-top: -5px;
-            position: absolute;
-            font-weight: 200;
+        .overflow-x{
+            overflow-x: scroll;
+            padding-top: 10px;
+            background-color: whitesmoke;
         }
-        .border-left-1 > .destination{
-            margin-top: 20px;
-            position: absolute;
+        table.sortable>thead th:hover:not([data-defaultsort=disabled]) {
+            background: #222;
         }
-        .pr-10{
-            padding-right: 10px!important;
-        }
-        .pl-10{
-            padding-left: 10px!important;
-        }
-        #view{
-            cursor: pointer;
-        }
-        #view:hover{
-            background-color: #f0fcff;
+        .mr-15{
+            margin-right: 15px;
         }
     </style>
 </head>
@@ -227,7 +189,7 @@
                     </button>
                 </div>
                 <div class="col text-center align-self-center">
-                    <h6 class="my-0">Active Trips</h6>
+                    <h6 class="my-0">System Reports</h6>
                 </div>
                 <div class="col-auto align-self-center">
                     <a href="profile.html" class="position-relative d-block mr-3">
@@ -241,49 +203,51 @@
         <!-- Header ends -->
 
         <!-- main page content -->
-        <div class="main-container container requests-div" id="requests-div">
+        <div class="main-container container pt-0">
+            <!-- notification list -->
+            <div class="row">
+                <div class="col-12 overflow-x">
+                    <div class="form-group">
+                        <label for="from"></label>
+                        <div class="row">
+                            <div class="col-6">
+                                <label for="from">&nbsp;From</label>
+                                <input type="date" class="form-control input-sm" id="from">
+                            </div>
+                            <div class="col-6">
+                                <label for="to">&nbsp;To</label>
+                                <input type="date" class="form-control input-sm" id="to">
+                            </div>
+                            <div class="col-12 mt-2">
+                                <button class="btn btn-default btn-md w-100" id="btn-filter">Filter</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-12 overflow-x">
+                    <table id="testTable" class="table table-bordered table-striped sortable">
+                        <thead class="table-header">
+                          <tr>
+                            <th>#</th>
+                            <th data-defaultsort="disabled">Name</th>
+                            <th data-defaultsort="disabled">Description</th>
+                            <th><span class="mr-15">Ratings</span></th>
+                            <th><span class="mr-15">Trips</span></th>
+                            <th><span class="mr-15">Earnings</span></th>
+                          </tr>
+                        </thead>
+                        <tbody class="list">
+                        </tbody>
+                    </table>
+                </div>
+                <div class="col-12 overflow-x">
+                    <button type="button" onclick="tableToExcel('testTable', 'W3C Example Table')" class="btn btn-default btn-md w-100">Export to Excel</button>
+                </div>
+            </div>
         </div>
-        <!-- main page content ends -->
-
 
     </main>
     <!-- Page ends-->
-
-    <!-- Footer -->
-    <footer class="footer">
-        <div class="container">
-            <ul class="nav nav-pills nav-justified">
-                <li class="nav-item">
-                    <a class="nav-link active" href="index.html">
-                        <span>
-                            <i class="nav-icon bi bi-house"></i>
-                            <span class="nav-text">Home</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="location.html">
-                        <span>
-                            <!-- <i class="nav-icon bi bi-pin-map"></i> -->
-                            <div class="tricy-div">
-                                <img class="tricy-icon" src="assets/tricy.png" alt="">
-                            </div>
-                            <span class="nav-text">Ride</span>
-                        </span>
-                    </a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="profile.html">
-                        <span>
-                            <i class="nav-icon bi bi-person"></i>
-                            <span class="nav-text">Profile</span>
-                        </span>
-                    </a>
-                </li>
-            </ul>
-        </div>
-    </footer>
-    <!-- Footer ends-->
 
     <!-- Required jquery and libraries -->
     <script src="assets/js/jquery-3.3.1.min.js"></script>
@@ -308,13 +272,12 @@
 
     <!-- swiper js script -->
     <script src="assets/vendor/swiperjs-6.6.2/swiper-bundle.min.js"></script>
-
-    <!-- page level custom script -->
-    <!-- <script src="assets/js/app.js"></script> -->
-    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
-    <script>
-        // Initialize Firebase
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script> 
+    <script src="https://www.jqueryscript.net/demo/jQuery-Plugin-For-Sortable-Bootstrap-Tables-Bootstrap-Sortable/Scripts/bootstrap-sortable.js"></script> 
+    <script type="module">
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-app.js";
+        import { getFirestore, setDoc, addDoc, doc, collection, updateDoc, deleteDoc, onSnapshot, query, getDocs, or, where, getDoc, limit, and, serverTimestamp } from "https://www.gstatic.com/firebasejs/9.22.2/firebase-firestore.js";
+        
         const firebaseConfig = {
             apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
             authDomain: "tricycle-ride.firebaseapp.com",
@@ -325,101 +288,109 @@
             appId: "1:802022631435:web:f0be6cd84d6365c81cbf0e"
         };
         
-        const app = firebase.initializeApp(firebaseConfig);
-        const db = firebase.firestore();
+        // Initialize Firebase
+        const app = initializeApp(firebaseConfig);
+        // Initialize Cloud Firestore
+        const db = getFirestore(app);
+        const q = query(collection(db, "drivers"));
+        const querySnapshot = await getDocs(q);
 
-        function listenToNewDataWithCondition(collectionName, callback) {
-            const collectionRef = db.collection(collectionName);
-
-            return collectionRef.where("is_cancelled", "==", false)
-                .where("is_complete", "==", false)
-                .onSnapshot((snapshot) => {
-                snapshot.docChanges().forEach((change) => {
-                    if (change.type === 'added') {
-                        callback([change.doc.data().id, 'added', change.doc.data() ]);
-                    }if (change.type === 'removed') {
-                        callback([change.doc.data().id, 'removed', change.doc.data() ]);
-                    }
-                });
-            });
-        }
-        
-        let tripsObj = {};
-
-        const unsubscribe = listenToNewDataWithCondition('trips', (newData) => {
-            // console.log('New document added:', newData);
-            if(newData[1] == 'added'){
-                tripsObj[newData[0]] = newData;
-                // tripAdded.push(newData[0], newData) ;
-                
-                // <div class="col-auto align-self-center pr-10">
-                //  <h3>99<sub>km</sub></h3>
-                // </div>        
-                
-                displayTrips(tripsObj);
-            }
-
-            if(newData[1] == 'removed'){
-                Reflect.deleteProperty(tripsObj, newData[0]);
-                displayTrips(tripsObj);
-            }
-
+        const drivers = new Map();
+        querySnapshot.forEach((doc) => {
+            // doc.data() is never undefined for query doc snapshots
+            drivers.set(doc.data().user_id, doc.data());
         });
 
-        function displayTrips(trips){
-            var rd = document.querySelector('.requests-div');
-            rd.style.setProperty('display', 'block');
+        $("#btn-filter").on("click", function(){
+            
+            let from = $("#from").val();
+            let to = $("#to").val();
 
-            let parent = document.getElementById("requests-div")
-            parent.innerHTML = '';
+            from = from.split("-");
+            var fromDate = new Date( from[0], from[1] - 1, from[2]);
 
-            let i = 0;
-            console.log('TRIPS:',trips)
-            for (const trip_id in trips) {
-                console.log('TRIP:',trips[trip_id][2]);
+            to = to.split("-");
+            var toDate = new Date( to[0], to[1] - 1, to[2]);
 
-                var originLatLng = trips[trip_id][2].origin;
-                var destinationLatLng = trips[trip_id][2].destination;
+            generateTable(fromDate, toDate);
+
+            console.log("FROM : "+fromDate);
+            console.log("TO : "+toDate);
+        });
+
+        generateTable();
+
+        function generateTable(from = null, to = null){
+            $(".list").empty();
+            var index = 0;
+            drivers.forEach(async function(data, key) {
+                let trips = {};
+                let qTrips;
+                let qRatings;
+                if((from == null || from == '') && (to == null || to == '')){
+                    qTrips = query(collection(db, "trips"), where("is_complete", "==", true), where("driver_id", "==", key ));
+                    qRatings = query(collection(db, "ratings"), where("driver_id", "==", key ));
+                }else{
+                    qTrips = query(collection(db, "trips"), where("is_complete", "==", true), where("driver_id", "==", key ), where("date", ">", from ), where("date", "<", to ));
+                    qRatings = query(collection(db, "ratings"), where("driver_id", "==", key ), where("date", ">", from ), where("date", "<", to ));
+                }
+
+                const querySnapshotTrips = await getDocs(qTrips);
                 
-                var origin = trips[trip_id][2].origin_name;
-                if(origin.length > 10) origin = origin.substring(0,25);
+                var countTrips = 0;
+                var earnings = 0;
 
-                var destination = trips[trip_id][2].destination_name;
-                if(destination.length > 10) destination = destination.substring(0,25);
-
-                var tripId = trips[trip_id][0];
-
+                querySnapshotTrips.forEach((docTrips) => {
+                    countTrips += 1;
+                    earnings += docTrips.data().price;
+                });
                 
-                var originLatVal = trips[trip_id][2].origin.latitude;
-                var originLngVal = trips[trip_id][2].origin.longitude;
-                var destinationLatVal = trips[trip_id][2].destination.latitude;
-                var destinationLngVal = trips[trip_id][2].destination.longitude;
-
-                rd.innerHTML += `
-                <div class="col-12" id="${tripId}">
-                    <div class="card shadow-sm mb-3">
-                        <div class="card-body">
-                            <div class="row gx-2">
-                                <div class="col border-left-1">
-                                    <h6 class="origin"><i class="bi bi-geo"></i> ${origin}...</h6>
-                                    <h6 class="destination mb-1"><i class="bi bi-geo-alt"></i> ${destination}...</h6>
-                                </div>
-                                <div class="col-auto align-self-center">
-                                    <a class="btn btn-link text-primary" href="view-trip.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatVal}&originLng=${originLngVal}&destinationLat=${destinationLatVal}&destinationLng=${destinationLngVal}">
-                                        <i class="bi bi-chevron-right"></i>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>`;
                 
-            }
+                const querySnapshotRatings = await getDocs(qRatings);
+
+                var countRatings = 0;
+                var stars = 0;
+
+                querySnapshotRatings.forEach((docRatings) => {
+                    countRatings += 1;
+                    stars += parseInt(docRatings.data().stars);
+                });
+                
+                var rating = countRatings != 0 ?stars/countRatings:0;
+                index += 1;
+                $(".list").append(
+                    `<tr>
+                        <td data-value="${index}">${index}</td>
+                        <td><strong>${data.fname}</strong> ${data.lname}</td>
+                        <td><strong>${data.license_plate}</strong>|${data.make}-${data.model}</td>
+                        <td data-value="${rating.toFixed(2)}">${rating.toFixed(2)}</td>
+                        <td data-value="${countTrips}">${countTrips}</td>
+                        <td data-value="${earnings.toFixed(2)}">₱ ${earnings.toFixed(2)}</td>
+                    </tr>`
+                );
+            });
         }
     </script>
+
+    <script type="text/javascript">
+        var tableToExcel = (function () {
+            // Define your style class template.
+            var uri = 'data:application/vnd.ms-excel;base64,'
+                , template = '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>'
+                , base64 = function (s) {
+                    return window.btoa(unescape(encodeURIComponent(s)))
+                }
+                , format = function (s, c) {
+                    return s.replace(/{(\w+)}/g, function (m, p) { return c[p]; })
+                }
+            return function (table, name) {
+                if (!table.nodeType) table = document.getElementById(table)
+                var ctx = { worksheet: name || 'Worksheet', table: table.innerHTML }
+                window.location.href = uri + base64(format(template, ctx))
+            }
+        })()
+    </script>
 </body>
-
-
 </html>
 <script>
 
@@ -438,7 +409,7 @@
     r.innerHTML = sessionStorage.getItem('userName')
 
     console.log('DRIVERID:', sessionStorage.getItem('driverId'));
-        
+
     checkAdmin();
     function checkAdmin(){
         var userType = sessionStorage.getItem('userType');
