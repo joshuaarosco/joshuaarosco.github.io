@@ -74,7 +74,7 @@ window.addEventListener("load", function(){
 
       let oysterText = "🦪 Not Available";
 
-      if(Math.round(data.feeds[9].field5) <= 30){
+      if(Math.round(data.feeds[9].field5) <= 25){
         oysterText = "🦪 Ready to harvest";
       }
       var distanceEL = document.getElementById("distance-value");
@@ -82,7 +82,7 @@ window.addEventListener("load", function(){
     
       let oysterText2 = "🦪 Not Available";
 
-      if(Math.round(data.feeds[9].field6) <= 30){
+      if(Math.round(data.feeds[9].field6) <= 25){
         oysterText2 = "🦪 Ready to harvest";
       }
       var distanceEL2 = document.getElementById("distance2-value");

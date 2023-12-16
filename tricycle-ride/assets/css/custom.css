@@ -4,6 +4,9 @@
 .reports{
     display: none;
 }
+.reports-ratings{
+    display: none;
+}
 .btn-outline{
     background-color: transparent;
     border: #fff solid 1px;
