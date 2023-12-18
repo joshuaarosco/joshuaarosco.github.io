@@ -245,3 +245,22 @@
 .sidebar{
     background: #7297f8 url(../img/bg.jpg) repeat-x center center!important;
 }
+.trike-logo{
+    background: url("../img/trikeLogo.png");
+    background-repeat: no-repeat;
+    background-size: 70%;
+    background-position: center;
+    height: 100px;
+    width: 100px;
+    background-color: #ffe2ab;
+    border-radius: 50%;
+    margin: auto;
+}
+.bg-brown{
+    background-color: #fff7e4!important;
+}
+.bottom{
+    position: absolute;
+    bottom: 30px;
+    left: 95px;
+}

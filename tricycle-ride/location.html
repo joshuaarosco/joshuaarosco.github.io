@@ -134,6 +134,7 @@
                                 <div class="arrow"><i class="bi bi-arrow-right"></i></div>
                             </a>
                         </li>
+                        <div class="trike-logo bottom"></div>
                     </ul>
                 </div>
             </div>
@@ -180,7 +181,7 @@
             <div class="mt-5 map-inputs">
                 <div class="col-12" id="${tripId}">
                     <div class="card shadow-sm mb-3">
-                        <div class="card-body">
+                        <div class="card-body bg-brown">
                             <div class="row py-2">
                                 <div class="col">
                                     <div class="row">
@@ -188,7 +189,7 @@
                                             <i class="bi bi-geo"></i>
                                         </div>
                                         <div class="col-10">
-                                            <input id="origin-input" type="text" placeholder="Origin"  class="form-control mt-2 origin">
+                                            <input id="origin-input" type="text" placeholder="Origin"  class="form-control mt-2 origin bg-brown">
                                             <input id="origin-input-lat" type="hidden" placeholder="Origin Lat">
                                             <input id="origin-input-lng" type="hidden" placeholder="Origin lng">
                                         </div>
@@ -199,7 +200,7 @@
                                             <i class="bi bi-geo-alt"></i>
                                         </div>
                                         <div class="col-10">
-                                            <input id="destination-input" type="text" placeholder="Destination" class="form-control mt-2 destination">
+                                            <input id="destination-input" type="text" placeholder="Destination" class="form-control mt-2 destination bg-brown">
                                             <input id="destination-input-lat" type="hidden" placeholder="Destination Lat">
                                             <input id="destination-input-lng" type="hidden" placeholder="Destination lng">
                                         </div>
@@ -211,12 +212,12 @@
                                 </div>
                             </div>
                         </div>
-                        <div class="card-footer accordion-collapse collapse py-0" id="options">
+                        <div class="card-footer accordion-collapse collapse py-0 bg-brown" id="options">
                             <div class="py-3">
                                 <div class="row">
                                     <div class="col text-left">
                                         <p class="mb-1">Add person to pickup or baggage on the way to your Ride? </p>
-                                        <select name="" id="base" class="form-control">
+                                        <select name="" id="base" class="form-control bg-brown">
                                             <option value="30">1 seat = ₱ 30.00</option>
                                             <option value="40">1 seat -> + 1 person or baggage = ₱ 40.00</option>
                                             <option value="60">1 seat -> + 2 person or baggage = ₱ 60.00</option>
@@ -239,15 +240,15 @@
                                             <option value="100">3 seats -> + 2 person or baggage = ₱ 100.00</option>
                                             <option value="100">3 seats -> + 1 person + 1 baggage = ₱ 100.00</option>
                                             <option value="80">4 seats = ₱ 80.00</option>
-                                            <option value="100">4 seats -> + 1 person or baggage = ₱ 100.00</option>
-                                            <option value="100">5 seats = ₱ 100.00</option>
+                                            <!-- <option value="100">4 seats -> + 1 person or baggage = ₱ 100.00</option>
+                                            <option value="100">5 seats = ₱ 100.00</option> -->
                                         </select>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col text-left mt-3">
                                         <p class="mb-1">Additional Details</p>
-                                        <textarea name="" id="details" cols="30" rows="3" class="form-control"></textarea>
+                                        <textarea name="" id="details" cols="30" rows="3" class="form-control bg-brown"></textarea>
                                     </div>
                                 </div>
                             </div>
