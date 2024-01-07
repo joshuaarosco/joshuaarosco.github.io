@@ -182,9 +182,13 @@
                     <h5 class="mb-0" id="trips-passenger">0</h5>
                     <p class="text-muted small">Trips<br/><span class="as-driver">as Passenger</span></p>
                 </div>
-                 <div class="col" id="as-driver">
+                <div class="col" id="as-driver">
                     <h5 class="mb-0" id="trips-driver">0</h5>
                     <p class="text-muted small">Trips<br/>as Driver</p>
+                </div>
+                <div class="col" id="ratings-div">
+                    <h5 class="mb-0" id="ratings-driver">0.0</h5>
+                    <p class="text-muted small">Ratings</p>
                 </div>
             </div>
 
@@ -459,6 +463,9 @@
 
         var r = document.querySelector('#as-driver');
         r.style.setProperty('display', 'block');
+        
+        var r = document.querySelector('#ratings-div');
+        r.style.setProperty('display', 'block');
 
         const collD = collection(db, "trips");
         const qcountD = query(collD, where("driver_id", "==", userId));
@@ -500,12 +507,43 @@
                 // regBtn.remove();
             });
         });
+
+        let qRatings;
+        qRatings = query(collection(db, "ratings"), where("driver_id", "==", userId ));
+
+        const querySnapshotRatings = await getDocs(qRatings);
+
+        var countRatings = 0;
+        var stars = 0;
+
+        querySnapshotRatings.forEach((docRatings) => {
+            countRatings += 1;
+            stars += parseFloat(docRatings.data().stars);
+        });
+        
+        var rating = parseFloat(countRatings != 0 ?stars/countRatings:0).toFixed(1);
+        
+        var r = document.querySelector('#ratings-driver');
+        r.innerHTML = rating
+
+        console.log("RATINGS : " + rating);
+
     }else{
         var r = document.querySelector('.as-driver');
         r.style.setProperty('display', 'none');
 
         var as = document.querySelector('#as-driver');
         as.style.setProperty('display', 'none');
+    }
+
+    isOnline(false);
+    function isOnline(condition){
+        var driverId = sessionStorage.getItem('driverId');
+        console.log("driver id: "+driverId);
+
+        updateDoc(doc(db, "drivers", driverId), {
+            is_online: condition
+        });
     }
 
     console.log('DRIVERID:', sessionStorage.getItem('driverId'));

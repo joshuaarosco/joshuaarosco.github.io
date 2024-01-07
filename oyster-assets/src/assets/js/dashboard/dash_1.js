@@ -59,16 +59,36 @@ window.addEventListener("load", function(){
 
         feedDateTime.push(formattedDate+" "+formattedTime);
       }
-      
+
+      let tdsNot ="";
+      if(data.feeds[9].field1 > 300){
+        tdsNot = "- Water is polluted!"
+      }
       var tdsEL = document.getElementById("tds-value");
-      tdsEL.textContent = "🧊"+Math.round(data.feeds[9].field1);
+      tdsEL.textContent = "🧊"+Math.round(data.feeds[9].field1)+" "+tdsNot;
       
       var waterTempEL = document.getElementById("watertemp-value");
-      waterTempEL.textContent =  "🌡️"+Math.round(data.feeds[9].field2)+"°C";
+
+      let watTemp ="";
+      if(data.feeds[9].field2 < 25){
+        watTemp = "- Water Temperature is too cold!"
+      }else if(data.feeds[9].field2 > 30){
+        watTemp = "- Water Temperature is too hot!"
+      }
+      waterTempEL.textContent =  "🌡️"+Math.round(data.feeds[9].field2)+"°C "+watTemp;
       
+      
+      let humid ="";
+      if(data.feeds[9].field3 < 70 || data.feeds[9].field3 > 90){
+        humid = "- Humidity levels at the oyster farm are below the optimal range!"
+      }
       var humidityEL = document.getElementById("humidity-value");
-      humidityEL.textContent =  "💧"+Math.round(data.feeds[9].field3)+"%";
+      humidityEL.textContent =  "💧"+Math.round(data.feeds[9].field3)+"% "+humid;
       
+      let airT ="";
+      if(data.feeds[9].field4 < 10 || data.feeds[9].field4 > 30){
+        airT = "- Air Temperature at oyster farm is in critical level!"
+      }
       var airTempEL = document.getElementById("airtemp-value");
       airTempEL.textContent =  "🌡️"+Math.round(data.feeds[9].field4)+"°C";
 
@@ -85,6 +105,7 @@ window.addEventListener("load", function(){
       if(Math.round(data.feeds[9].field6) <= 25){
         oysterText2 = "🦪 Ready to harvest";
       }
+
       var distanceEL2 = document.getElementById("distance2-value");
       distanceEL2.textContent =  oysterText2;
       /*
@@ -102,7 +123,7 @@ window.addEventListener("load", function(){
           height: 160,
           sparkline: {
             enabled: true
-          },
+          }
         },
         stroke: {
           curve: 'smooth',
@@ -123,10 +144,11 @@ window.addEventListener("load", function(){
           }
         },
         grid: {
-          show: false,
+          show: true,
+          borderColor: '#060818',
           xaxis: {
             lines: {
-              show: false
+              show: true
             }
           },
           padding: {
@@ -178,10 +200,11 @@ window.addEventListener("load", function(){
           }
         },
         grid: {
-          show: false,
+          show: true,
+          borderColor: '#060818',
           xaxis: {
             lines: {
-              show: false
+              show: true
             }
           },
           padding: {
@@ -236,10 +259,11 @@ window.addEventListener("load", function(){
           }
         },
         grid: {
-          show: false,
+          show: true,
+          borderColor: '#060818',
           xaxis: {
             lines: {
-              show: false
+              show: true
             }
           },
           padding: {
@@ -294,10 +318,11 @@ window.addEventListener("load", function(){
           }
         },
         grid: {
-          show: false,
+          show: true,
+          borderColor: '#060818',
           xaxis: {
             lines: {
-              show: false
+              show: true
             }
           },
           padding: {
@@ -352,10 +377,11 @@ window.addEventListener("load", function(){
           }
         },
         grid: {
-          show: false,
+          show: true,
+          borderColor: '#060818',
           xaxis: {
             lines: {
-              show: false
+              show: true
             }
           },
           padding: {
@@ -409,10 +435,11 @@ window.addEventListener("load", function(){
           }
         },
         grid: {
-          show: false,
+          show: true,
+          borderColor: '#060818',
           xaxis: {
             lines: {
-              show: false
+              show: true
             }
           },
           padding: {

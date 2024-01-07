@@ -50,6 +50,22 @@
     <!-- style css for this template -->
     <link href="assets/css/style.css" rel="stylesheet" id="style">
     <link href="assets/css/custom.css" rel="stylesheet" id="style">
+    <style>
+        .muni-div{
+            margin: 0px;
+            margin-bottom: 1px;
+            padding: 15px;
+            padding-left: 10px;
+            padding-right: 10px;
+            background: white;
+            border-top-right-radius: 5px;
+            border-top-left-radius: 5px;
+            display: none;
+        }
+        .muni-text{
+            font-weight: 200;
+        }
+    </style>
 </head>
 
 <body class="body-scroll" data-page="index">
@@ -179,6 +195,12 @@
             </div>
             
             <div class="mt-5 map-inputs">
+                <div class="row muni-div bg-brown">
+                    <div class="col-1"><i class="bi bi-map"></i></div>
+                    <div class="col-11">
+                        <h3 class="text-left waiting-for-driver muni-text">  Around <strong><span id="muni-area">...</span></strong> Municipality Only</h3>
+                    </div>
+                </div>
                 <div class="col-12" id="${tripId}">
                     <div class="card shadow-sm mb-3">
                         <div class="card-body bg-brown">
@@ -256,7 +278,7 @@
                     </div>
                 </div>
                 
-                <button id="search-button" class="btn btn-md btn-default btn-block btn-justify">Find A Ride</button>
+                <button id="search-button" class="btn btn-md btn-default btn-block btn-justify" disabled>Find A Ride</button>
             </div>
         </div>
         <!-- main page content ends -->
@@ -478,6 +500,7 @@
             }
             
             searchButton.addEventListener("click", function() {
+                console.log("Find A Ride");
                 console.log('DESTINATION: ', destinationInput.value);
                 calculateAndDisplayRoute(directionsService, directionsDisplay);
             });
@@ -548,7 +571,31 @@
             }
         }
         
-        
+        $("#origin-input").on("change focus", function(){
+            var userMuni = sessionStorage.getItem('userMuni');
+            var val = $(this).val();
+            var valDestination = $("#destination-input").val();
+            originLoc = val.includes(userMuni);
+            desinationLoc = valDestination.includes(userMuni);
+            if(originLoc && desinationLoc){
+                $("#search-button").prop("disabled", false);
+            }else{
+                $("#search-button").prop("disabled", true);
+            }
+        });
+
+        $("#destination-input").on("change focus", function(){
+            var userMuni = sessionStorage.getItem('userMuni');
+            var val = $(this).val();
+            var valOrigin = $("#origin-input").val();
+            desinationLoc = val.includes(userMuni);
+            originLoc = valOrigin.includes(userMuni);
+            if(originLoc && desinationLoc){
+                $("#search-button").prop("disabled", false);
+            }else{
+                $("#search-button").prop("disabled", true);
+            }
+        });
     </script>
 </body>
 
@@ -575,6 +622,18 @@
         var r = document.querySelector('.loader-wrap');
         r.style.setProperty('display', 'none');
         r.style.setProperty('opacity', '0%');
+    }
+    
+    getMuni();
+    function getMuni(){
+        var userMuni = sessionStorage.getItem('userMuni');
+        if(userMuni != null){
+            var r = document.querySelector('.muni-div');
+            r.style.setProperty('display', 'flex');
+
+            var ma = document.querySelector('#muni-area');
+            ma.innerHTML = ""+userMuni;
+        }
     }
     
     checkAdmin();

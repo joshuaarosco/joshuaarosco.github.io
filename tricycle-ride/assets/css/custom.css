@@ -264,3 +264,9 @@
     bottom: 30px;
     left: 95px;
 }
+#ratings-div{
+    display: none;
+}
+#as-driver{
+    display: none;
+}

@@ -323,6 +323,7 @@
                     <button id="cancel-button" class="btn btn-md btn-default btn-block mt-4 btn-justify w-100">Cancel Trip</button>
                 </div>
             </div>
+            
         </div>
         <!-- main page content ends -->
         
@@ -398,6 +399,7 @@
         document.getElementById("destination-input").value = tripDetails[3]
         document.getElementById("destination-input-lat").value = tripDetails[3]
         document.getElementById("destination-input-lng").value = tripDetails[4]
+
     </script>
     
     <script async defer src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCAqdwRPpTtDGc6lWZKlSO0EPgkAKRo-8o&libraries=places&callback=initMap"></script>
@@ -571,7 +573,8 @@
                         let lname = data.lname.charAt(0).toUpperCase() + data.lname.slice(1);
 
                         var r = document.querySelector('.choose-driver-div');
-                        r.innerHTML +=
+                        if(data.is_online == true){
+                            r.innerHTML +=
                             `<div class="col-12">
                                 <div class="card shadow-sm mb-3 bg-brown">
                                     <div class="card-body">
@@ -601,9 +604,15 @@
                                     </div>
                                 </div>
                             </div>`;
+                        }
                         
                     });
-                    
+
+                    var r = document.querySelector('.choose-driver-div');
+                    r.innerHTML += `<button id="cancel-trip" class="btn btn-md btn-default btn-block mb-4 btn-justify w-100">Cancel Trip</button>`;
+                    $("#cancel-trip").on('click', function(){
+                        cancelTrip();
+                    });
                     $(".request-btn").on('click', function(){
                         let id = $(this).data('id');
                         let tripId = sessionStorage.getItem('tripId');
@@ -640,8 +649,10 @@
                         });
                     });
                 });
-        }
 
+                
+        }
+    
     </script>
     
 </body>

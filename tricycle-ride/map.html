@@ -404,16 +404,35 @@
                         const urlParams = new URLSearchParams(queryString);
                         const basePrice = urlParams.get('basePrice')
 
+                        var today = new Date();
+                        var time = today.getHours();
+                        var specialTrip = 0;
+
+                        if(time >= 4 && time <= 19){
+                            specialTrip = 0;
+                        }else{
+                            specialTrip = 30;
+                        }
+
                         if(meters <= 3000){
                             let price = 0;
-                            price = parseFloat(basePrice)
-                            r.innerHTML = '₱ '+price.toFixed(2);
+                            price = parseFloat(basePrice) + parseFloat(specialTrip);
+                            if(specialTrip > 0){
+                                r.innerHTML = '₱ '+price.toFixed(2)+"<br><small>(+ ₱30.00 for Night Trip)</small>";
+                            }else{
+                                r.innerHTML = '₱ '+price.toFixed(2);
+                            }
                             document.getElementById("price").value = price
                         }else{
                             let price = 0;
                             meters -= 3000;
-                            price = parseFloat(basePrice)+((meters / 1000)*10);
-                            r.innerHTML = '₱ '+price.toFixed(2);
+                            price = parseFloat(basePrice)+((meters / 1000)*10) + parseFloat(specialTrip);
+
+                            if(specialTrip > 0){
+                                r.innerHTML = '₱ '+price.toFixed(2)+"<br><small>(+ ₱30.00 for Night Trip)</small>";
+                            }else{
+                                r.innerHTML = '₱ '+price.toFixed(2);
+                            }
                             document.getElementById("price").value = price
                         }
                     }

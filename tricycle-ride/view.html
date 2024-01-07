@@ -520,7 +520,7 @@
                 const data = doc.data();
                 console.log("Document data:", data);
                 
-                document.querySelector('.price').innerHTML = "₱ "+data.price
+                document.querySelector('.price').innerHTML = "₱ "+data.price.toFixed(2)
                 document.querySelector('.details').innerHTML = data.details
             } 
             else {

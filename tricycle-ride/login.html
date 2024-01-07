@@ -198,6 +198,7 @@
                     sessionStorage.setItem('userId', doc.data().id);
                     sessionStorage.setItem('isVerify', doc.data().is_verify);
                     sessionStorage.setItem('userName', doc.data().name);
+                    sessionStorage.setItem('userMuni', doc.data().municipality);
                     sessionStorage.setItem('userType', doc.data().type);
 
                     checkIfDriver(doc.data().id);

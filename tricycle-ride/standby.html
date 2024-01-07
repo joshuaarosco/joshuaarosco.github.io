@@ -79,6 +79,10 @@
         #view:hover{
             background-color: #f0fcff;
         }
+        .btn-view-profile{
+            border: 1px solid #c5c5c5!important;
+            width: 100%!important;
+        }
     </style>
     <script>
         console.log('USERID:', sessionStorage.getItem('userId'));
@@ -145,7 +149,7 @@
 </head>
 
 <body class="body-scroll" data-page="index">
-    
+    <input type="hidden" name="driverId" id="driver-id">
     <!-- loader section -->
     
     <!-- Sidebar main menu -->
@@ -384,6 +388,7 @@
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.2.1/firebase-firestore.js"></script>
     <script>
+        
         // Initialize Firebase
         const firebaseConfig = {
             apiKey: "AIzaSyAHO3-2NHRJGAvnk9d-Jgdmc8lZ4oUDT-s",
@@ -510,7 +515,7 @@
             let i = 0;
             console.log('TRIPS:',trips)
             for (const trip_id in trips) {
-                console.log('TRIP:',trips[trip_id][2]);
+                // console.log('TRIP:',trips[trip_id][2]);
 
                 var originLatLng = trips[trip_id][2].origin;
                 var destinationLatLng = trips[trip_id][2].destination;
@@ -522,7 +527,7 @@
                 if(destination.length > 10) destination = destination.substring(0,25);
 
                 var tripId = trips[trip_id][0];
-                console.log(tripId);
+                // console.log(tripId);
 
                 var paymentMethod = trips[trip_id][2].payment_method;
                 var payment = ``;
@@ -534,10 +539,13 @@
 
                 let userId = sessionStorage.getItem('userId');
 
+                console.log(trips[trip_id][2]);
+
                 if(trips[trip_id][2].driver_id == userId && 
                 trips[trip_id][2].driver_location == null && 
                 trips[trip_id][2].is_special == true && 
                 trips[trip_id][2].is_accepted == false){
+                    var passengerId = trips[trip_id][2].user_id;
 
                     var r = document.querySelector('.waiting-div');
                     r.style.setProperty('background-color', '#00000000');
@@ -594,12 +602,18 @@
                                         </a>
                                     </div>
                                 </div>
+                                <div class="row pt-0">
+                                    <div class="col-12 align-self-center text-center">
+                                        <a href="passenger-profile.html?userId=${passengerId}" class="btn btn-link text-default mb-2 btn-view-profile btn-sm">View Profile</a>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>`;
 
                 }else if(trips[trip_id][2].driver_id == null && 
                         trips[trip_id][2].is_special == false){  
+                    var passengerId = trips[trip_id][2].user_id;
                     var r = document.querySelector('.waiting-div');
                     r.style.setProperty('background-color', '#00000000');
 
@@ -629,22 +643,27 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="card-footer accordion-collapse collapse py-0" id="A${tripId}-modal">
+                            <div class="card-footer accordion-collapse collapse py-10" id="A${tripId}-modal">
                                 <div class="payment-method">
                                     <small>PAYMENT METHOD</small>   : ${payment}
                                 </div>
-                                <div class="row py-3 pt-0">
+                                <div class="row py-3 pt-10">
                                     <div class="col">
                                         <a class="btn btn-primary btn-sm w-100 view-btn-${tripId}" id="btn-view"
                                             href="view.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatLng.latitude}&originLng=${originLatLng.longitude}&destinationLat=${destinationLatLng.latitude}&destinationLng=${destinationLatLng.longitude}">
                                                 VIEW
                                         </a>
                                     </div>
-                                    <div class="col">
+                                    <div class="col-8 align-self-center">
                                         <a class="btn btn-default btn-sm w-100" id="btn-accept"
                                             href="accept.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatLng.latitude}&originLng=${originLatLng.longitude}&destinationLat=${destinationLatLng.latitude}&destinationLng=${destinationLatLng.longitude}">
                                                 ACCEPT
                                         </a>
+                                    </div>
+                                </div>
+                                <div class="row pt-0">
+                                    <div class="col-12 align-self-center text-center">
+                                        <a href="passenger-profile.html?userId=${passengerId}" class="btn btn-link text-default mb-2 btn-view-profile btn-sm">View Profile</a>
                                     </div>
                                 </div>
                             </div>
@@ -656,7 +675,14 @@
         function hasClass(element, clsName) {
             return(' ' + element.className + ' ').indexOf(' ' + clsName + ' ') > -1;
         }
+        
+        isOnline(true);
+        function isOnline(condition){
+            var driverId = sessionStorage.getItem('driverId');
+            console.log("driver id: "+driverId);
 
+            db.collection("drivers").doc(driverId).update({is_online: condition});
+        }
     </script>
     
 </body>
@@ -666,6 +692,8 @@
 <script>
     
     logout.addEventListener('click', async (e) => {
+
+        isOnline(false);
         sessionStorage.removeItem('userId');
         sessionStorage.removeItem('driverId');
         sessionStorage.removeItem('isVerify');

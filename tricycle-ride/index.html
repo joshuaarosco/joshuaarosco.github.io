@@ -403,6 +403,16 @@
                 }
             }
         });
+
+        isOnline(false);
+        function isOnline(condition){
+            var driverId = sessionStorage.getItem('driverId');
+            console.log("driver id: "+driverId);
+
+            updateDoc(doc(db, "drivers", driverId), {
+                is_online: condition
+            });
+        }
     </script>
 </body>
 

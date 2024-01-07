@@ -101,6 +101,58 @@
                     <textarea name="address" class="form-control bg-brown" id="address" cols="30" rows="5"></textarea>
                     <label for="address">Address</label>
                 </div>
+                
+                <div class="form-group form-floating">
+                    <select class="form-control bg-brown" placeholder="Municipality"  id="municipality" required>
+                        <option value="">-- Select Municipality --</option>
+                        <option value="Agno">Agno, Pangasinan</option>
+                        <option value="Aguilar">Aguilar, Pangasinan</option>
+                        <option value="Alcala">Alcala, Pangasinan</option>
+                        <option value="Anda">Anda, Pangasinan</option>
+                        <option value="Asingan">Asingan</option>
+                        <option value="Balungao">Balungao</option>
+                        <option value="Bani">Bani, Pangasinan</option>
+                        <option value="Basista">Basista</option>
+                        <option value="Bautista">Bautista, Pangasinan</option>
+                        <option value="Bayambang">Bayambang</option>
+                        <option value="Binalonan">Binalonan</option>
+                        <option value="Binmaley">Binmaley</option>
+                        <option value="Bolinao">Bolinao</option>
+                        <option value="Bugallon">Bugallon</option>
+                        <option value="Burgos">Burgos, Pangasinan</option>
+                        <option value="Calasiao">Calasiao</option>
+                        <option value="Dasol">Dasol</option>
+                        <option value="Infanta">Infanta, Pangasinan</option>
+                        <option value="Labrador">Labrador, Pangasinan</option>
+                        <option value="Laoac">Laoac</option>
+                        <option value="Lingayen">Lingayen</option>
+                        <option value="Mabini">Mabini, Pangasinan</option>
+                        <option value="Malasiqui">Malasiqui</option>
+                        <option value="Manaoag">Manaoag</option>
+                        <option value="Mangaldan">Mangaldan</option>
+                        <option value="Mangatarem">Mangatarem</option>
+                        <option value="Mapandan">Mapandan</option>
+                        <option value="Natividad">Natividad, Pangasinan</option>
+                        <option value="Template">Template:Pangasinan</option>
+                        <option value="Pozorrubio">Pozorrubio</option>
+                        <option value="Rosales">Rosales, Pangasinan</option>
+                        <option value="San Fabian">San Fabian, Pangasinan</option>
+                        <option value="San Jacinto">San Jacinto, Pangasinan</option>
+                        <option value="San Manuel">San Manuel, Pangasinan</option>
+                        <option value="San Nicolas">San Nicolas, Pangasinan</option>
+                        <option value="San Quintin">San Quintin, Pangasinan</option>
+                        <option value="Santa Barbara">Santa Barbara, Pangasinan</option>
+                        <option value="Santa Maria">Santa Maria, Pangasinan</option>
+                        <option value="Santo Tomas">Santo Tomas, Pangasinan</option>
+                        <option value="Sison">Sison, Pangasinan</option>
+                        <option value="Sual">Sual</option>
+                        <option value="Tayug">Tayug</option>
+                        <option value="Umingan">Umingan</option>
+                        <option value="Urbiztondo">Urbiztondo</option>
+                        <option value="Villasis">Villasis</option>
+                    </select>
+                    <label for="municipality">Municipality</label>
+                </div>
                 <div class="form-group form-floating">
                     <input type="text" class="form-control bg-brown" value="" placeholder="License No." id="driver_license" required>
                     <label for="driver_license">License No.</label>
@@ -233,6 +285,7 @@
         let phone = document.getElementById('phone').value;
         let email = document.getElementById('email').value;
         let address = document.getElementById('address').value;
+        let municipality = document.getElementById('municipality').value;
         let driver_license = document.getElementById('driver_license').value;
         let dl_codes = document.getElementById('dl_codes').value;
         let make = document.getElementById('make').value;
@@ -250,6 +303,7 @@
             phone == '' ||
             email == '' ||
             address == '' ||
+            municipality == '' ||
             driver_license == '' ||
             dl_codes == '' ||
             make == '' ||
@@ -294,6 +348,7 @@
                                 phone,
                                 email,
                                 address,
+                                municipality,
                                 driver_license,
                                 dl_codes,
                                 make,
@@ -315,6 +370,7 @@
                             phone,
                             email,
                             address,
+                            municipality,
                             driver_license,
                             dl_codes,
                             make,
@@ -336,6 +392,7 @@
                 name: name,
                 phone: formatPhone(phone),
                 email: email,
+                municipality: municipality,
                 password: password,
                 is_verify: false,
                 verification_code: verification_code

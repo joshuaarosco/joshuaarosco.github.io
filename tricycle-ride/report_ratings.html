@@ -354,7 +354,7 @@
 
                 querySnapshotRatings.forEach((docRatings) => {
                     countRatings += 1;
-                    stars += parseInt(docRatings.data().stars);
+                    stars += parseFloat(docRatings.data().stars);
                 });
                 
                 var rating = countRatings != 0 ?stars/countRatings:0;
