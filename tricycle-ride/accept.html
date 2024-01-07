@@ -562,6 +562,17 @@
         } else {
             console.log("Error: Your browser doesn't support geolocation.");
         }
+
+        setTimeout(function() {
+            db.collection("trips").doc(tripId).update({
+                driver_id: sessionStorage.getItem('userId'),
+                is_accepted: true,
+            }).then((docRef) => {
+                sessionStorage.setItem('driverTripId',tripId);
+
+                window.location.href = `travel.html?tripId=${tripId}&origin=${origin}&destination=${destination}&originLat=${originLatVal}&originLng=${originLngVal}&destinationLat=${destinationLatVal}&destinationLng=${destinationLngVal}`
+            });
+        }, 3000);
         
     </script>
     

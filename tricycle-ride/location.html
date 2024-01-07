@@ -397,12 +397,12 @@
                     if(data.is_special == true){
                         console.log(doc.data());
                         // alert(data.user_id);
-                        window.location.href = 'special_trip.html?origin='+data.origin_name
-                                        +'&originLat='+data.origin.latitude
-                                        +'&originLng='+data.origin.longitude
-                                        +'&destination='+data.destination_name
-                                        +'&destinationLat='+data.destination.latitude
-                                        +'&destinationLng='+data.destination.longitude;
+                        // window.location.href = 'special_trip.html?origin='+data.origin_name
+                        //                 +'&originLat='+data.origin.latitude
+                        //                 +'&originLng='+data.origin.longitude
+                        //                 +'&destination='+data.destination_name
+                        //                 +'&destinationLat='+data.destination.latitude
+                        //                 +'&destinationLng='+data.destination.longitude;
                     }else if(data.driver_id ==  null && data.is_special == false){
                         window.location.href = 'waiting.html?origin='+data.origin_name
                                         +'&originLat='+data.origin.latitude
