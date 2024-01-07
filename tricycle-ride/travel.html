@@ -415,13 +415,11 @@
                 if (documentSnapshot.exists) {
                     const data = documentSnapshot.data();
                     // Handle the retrieved data
-                    let driverLatLng;
-                    if(data.driver_location != null){
-                        driverLatLng = {
-                            lat: data.driver_location.latitude,
-                            lng: data.driver_location.longitude
-                        };
-                    }
+                    
+                    const driverLatLng = {
+                        lat: data.driver_location.latitude,
+                        lng: data.driver_location.longitude
+                    };
 
                     sessionStorage.setItem('driverUserId', data.driver_id);
                     sessionStorage.setItem('passengerUserId', data.user_id);
@@ -762,14 +760,7 @@
     });
 
     function cancelTrip(){
-        var tripIdSession = sessionStorage.getItem('tripId');
-        var tripId;
-        if(tripIdSession!=null){
-            tripId = tripIdSession;
-        }else{
-            tripId = urlParams.get('tripId')?urlParams.get('tripId'):sessionStorage.getItem('tripId');
-        }
-        console.log(tripId);
+        var tripId = sessionStorage.getItem('tripId');
         if(tripId != null){
             db.collection("trips").doc(tripId).update({
                 is_cancelled: true
