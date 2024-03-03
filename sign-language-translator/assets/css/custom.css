@@ -1,0 +1,19 @@
+
+.nav-link{
+    width: 50%!important;
+}
+.mb-66{
+    margin-bottom: 66px!important;
+    border-bottom: 1px solid #f4f4f4!important;
+}
+.sl-anim{
+    height: 100%;
+}
+.chat-box-area{
+    position: absolute;
+    bottom: 115px;
+    left: 0px;
+    height: auto;
+    top: 50px;
+    text-align: center;
+}
