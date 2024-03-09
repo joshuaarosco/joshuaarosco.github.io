@@ -36,7 +36,24 @@
 	<link rel="preconnect" href="https://fonts.googleapis.com/">
 	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
 	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900;1000&amp;family=Roboto:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
-
+	<style>
+		html{
+    		background: #dedede;
+		}
+		.chat-box-area{
+			background: #dedede;
+			top: 100px;
+		}
+		.header{
+			background: #dedede;
+		}
+		.txt-message{
+			margin-top: 50px;
+			font-size: 20px;
+			color: black;
+			font-weight: 300;
+		}
+	</style>
 </head>   
 <body>
 <div class="page-wrapper">
@@ -49,8 +66,17 @@
 	</div>
     <!-- Preloader end-->
 	
+	<header class="header header-fixed border-0">
+		<div class="container">
+			<div class="header-content">
+				<div class="mid-content">
+					<p class="txt-message"></p>
+				</div>
+			</div>
+		</div>
+	</header>
 	<!-- Page Content Start -->
-	<div class="page-content space-top p-b60 message-content">
+	<div class="page-content space-top">
 		<div class="container chat-box-area"> 
 			<img src="assets/animation/idle.gif" alt="animation" class="sl-anim">
 		</div> 
@@ -76,9 +102,8 @@
                 <form>
                     <div class="form-group boxed">
                         <div class="input-wrapper message-area">
-							<div class="append-media"></div>
-                            <input type="text" class="form-control" placeholder="Type message...">
-                            <a href="javascript:void(0);" class="btn btn-chat btn-icon btn-primary p-0 btn-rounded dz-flex-box">
+                            <input type="text" class="form-control input-message" placeholder="Type message...">
+                            <a href="#" class="btn btn-chat btn-icon btn-primary p-0 btn-rounded dz-flex-box btn-translate">
                                <i class="icon feather icon-send"></i>
                             </a>
                         </div>
@@ -98,6 +123,45 @@
 <script src="assets/js/dz.carousel.js"></script><!-- Swiper -->
 <script src="assets/js/settings.js"></script>
 <script src="assets/js/custom.js"></script>
+<script>
+	let sentences = ['howareyoutoday','itwasnicemeetingyou','whatisyourname'];
+
+	function findValueInArray(value, arr){
+		let result = false;
+		
+		for(let i=0; i<arr.length; i++){
+			let name = arr[i];
+			if(name == value){
+			result = true;
+			break;
+			}
+		}
+		return result;
+	}
+ 
+	$(".btn-translate").on("click",function(){
+		var msg = $(".input-message").val();
+		var pmsg  = msg.toLowerCase().replace(/[\s~`!@#$%^&*(){}\[\];:"'<,.>?\/\\|_+=-]/g, '');
+		var image = document.querySelector('.sl-anim');
+
+		if(findValueInArray(pmsg, sentences)){
+			$(".txt-message").text(msg);
+			image.src = 'assets/animation/'+pmsg+'.gif';
+		}else{
+			image.src = 'assets/animation/idle.gif';
+		}
+
+		console.log(pmsg);
+
+		setTimeout(function(){
+			$(".txt-message").text('');
+			image.src = 'assets/animation/idle.gif';
+		}, 7000);
+		
+		$(".input-message").val('');
+	});
+
+</script>
 </body>
 
 </html>
