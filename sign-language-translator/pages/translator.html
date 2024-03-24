@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	
+	<!-- Title -->
+	<title>Text to Sign Language | Translator</title>
+	
+	<!-- Meta -->
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, minimal-ui, viewport-fit=cover">
+	<meta name="theme-color" content="#009688">
+	<meta name="author" content="DexignZone">
+	<meta name="robots" content="index, follow"> 
+	<meta name="keywords" content="android, ios, mobile, text to sign language app">
+	<meta name="description" content="Text to Sign Language App">
+	<meta property="og:title" content="Text to Sign Language">
+	<meta property="og:description" content="Text to Sign Language App.">
+	<meta property="og:image" content="social-image.png">
+	<meta name="format-detection" content="telephone=no">
+
+	<!-- Favicons Icon -->
+	<link rel="shortcut icon" type="image/x-icon" href="../assets/images/favicon.png">
+	
+    
+    <!-- Global CSS -->
+	<link href="../assets/vendor/bootstrap-select/dist/css/bootstrap-select.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="../assets/vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.css">
+	<link rel="stylesheet" href="../assets/vendor/swiper/swiper-bundle.min.css">
+    
+	<!-- Stylesheets -->
+    <link rel="stylesheet" type="text/css" href="../assets/css/style.css">
+    <link rel="stylesheet" type="text/css" href="../assets/css/custom.css">
+	
+    <!-- Google Fonts -->
+	<link rel="preconnect" href="https://fonts.googleapis.com/">
+	<link rel="preconnect" href="https://fonts.gstatic.com/" crossorigin>
+	<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@100;200;300;400;500;600;700;800;900;1000&amp;family=Roboto:wght@100;300;400;500;700;900&amp;display=swap" rel="stylesheet">
+	<style>
+		html{
+    		background: #dedede;
+		}
+		.chat-box-area{
+			background: #dedede;
+			top: 100px;
+		}
+		.header{
+			background: #dedede;
+		}
+		.txt-message{
+			margin-top: 50px;
+			font-size: 20px;
+			color: black;
+			font-weight: 300;
+		}
+	</style>
+</head>   
+<body>
+<div class="page-wrapper">
+    
+	<!-- Preloader -->
+	<div id="preloader">
+		<div class="loader">
+			<div class="load-circle"><div></div><div></div></div>
+		</div>
+	</div>
+    <!-- Preloader end-->
+	
+	<header class="header header-fixed border-0">
+		<div class="container">
+			<div class="header-content">
+				<div class="mid-content">
+					<p class="txt-message"></p>
+				</div>
+			</div>
+		</div>
+	</header>
+	<!-- Page Content Start -->
+	<div class="page-content space-top">
+		<div class="container chat-box-area"> 
+			<img src="../assets/animation/idle.gif" alt="animation" class="sl-anim">
+		</div> 
+	</div>
+	<!-- Menubar -->
+	<div class="menubar-area footer-fixed rounded-0">
+		<div class="toolbar-inner menubar-nav">
+			<a href="translator.html" class="nav-link active">
+				<i class="icon feather icon-type"></i>
+				<span>Translator</span>
+			</a>
+			<a href="profile.html" class="nav-link">
+				<i class="icon feather icon-user"></i>
+				<span>Account</span>
+			</a>
+		</div>
+	</div>
+	<!-- Menubar -->
+	<!-- Page Content End -->
+	<footer class="footer border-0 fixed bg-white mb-66">
+        <div class="container p-2">
+            <div class="chat-footer">
+                <form>
+                    <div class="form-group boxed">
+                        <div class="input-wrapper message-area">
+                            <input type="text" class="form-control input-message" placeholder="Type message...">
+                            <a href="#" class="btn btn-chat btn-icon btn-primary p-0 btn-rounded dz-flex-box btn-translate">
+                               <i class="icon feather icon-send"></i>
+                            </a>
+                        </div>
+                    </div>
+                </form>
+            </div>    
+        </div>
+    </footer>
+</div>  
+<!--**********************************
+    Scripts
+***********************************-->
+<script src="../assets/js/jquery.js"></script>
+<script src="../assets/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+<script src="../assets/vendor/swiper/swiper-bundle.min.js"></script><!-- Swiper -->
+<script src="../assets/vendor/bootstrap-touchspin/dist/jquery.bootstrap-touchspin.min.js"></script><!-- Swiper -->
+<script src="../assets/js/dz.carousel.js"></script><!-- Swiper -->
+<script src="../assets/js/settings.js"></script>
+<script src="../assets/js/custom.js"></script>
+<script>
+	let sentences = ['howareyoutoday','itwasnicemeetingyou','whatisyourname', 'seeyoulater', 'thankyou'];
+	let words = ['goodbye','hello','hi','help', 'please', 'sorry'];
+
+	function findValue(value, arr){
+		let result = false;
+		
+		for(let i=0; i<arr.length; i++){
+			let name = arr[i];
+			if(name == value){
+			result = true;
+			break;
+			}
+		}
+		return result;
+	}
+ 
+	$(".btn-translate").on("click",function(){
+		var msg = $(".input-message").val();
+		var pmsg  = msg.toLowerCase().replace(/[\s~`!@#$%^&*(){}\[\];:"'<,.>?\/\\|_+=-]/g, '');
+		var image = document.querySelector('.sl-anim');
+
+		if(findValue(pmsg, sentences)){
+			$(".txt-message").text(msg);
+			image.src = '../assets/animation/'+pmsg+'.gif';
+
+			console.log(pmsg);
+		}else{
+			var result = msg.toLowerCase().replace(/[^a-zA-Z ]/g, "").split(' ');
+			$.each(result, function(i) {
+				var wait = i * 2000 + 2000;
+				setTimeout(function() {
+					if (result[i] != '' && findValue(result[i], words)) {
+						image.src = '../assets/animation/'+result[i]+'.gif';
+					}
+				}, wait);
+			});
+			
+			$(".txt-message").text(msg);
+		}
+
+		setTimeout(function(){
+			$(".txt-message").text('');
+			image.src = '../assets/animation/idle.gif';
+		}, 15000);
+		
+		$(".input-message").val('');
+	});
+
+</script>
+</body>
+
+</html>
