@@ -17,3 +17,34 @@
     top: 50px;
     text-align: center;
 }
+.splash {
+    height:100%;
+    text-align: center;
+}
+.bhsfd-logo{
+    height: 60px;
+    width: auto;
+    margin-top: 35vh;
+}
+.logo-text{
+    color: #3fb0be;
+    font-weight: 300;
+    margin-top: 20px;
+}
+#myBar {
+    position: absolute;
+    bottom: 0px;
+    width: 10%;
+    height: 5px;
+    background-color: #3fb0be;
+    text-align: center; /* To center it horizontally (if you want) */
+    line-height: 30px; /* To center it vertically */
+    color: #3fb0be;
+}
+#per{
+    position: absolute;
+    bottom: 5px;
+    left: 5px;
+    align-content: center;
+    color: #3fb0be;
+}
