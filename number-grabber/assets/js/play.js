@@ -14,7 +14,7 @@ var leftPressed = false;
 var upPressed = false;
 var downPressed = false;
 var img = new Image();
-img.src = "assets/img/player.png";
+img.src = "assets/img/basket.png";
 
 // KEYBOARD
 document.addEventListener("keydown", keyDownHandler, false);
