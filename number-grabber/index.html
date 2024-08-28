@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Number Grabber</title>
+    <link rel="stylesheet" href="assets/css/bootstrap.min.css">
+    <link rel="stylesheet" href="assets/css/custom.css">
+</head>
+<body>
+    <audio autoplay loop id="menu-audio">
+        <source src="assets/audio/MenuScreen.mp3" type="audio/mp3">
+    </audio>
+    <div class="container text-center menu-bg">
+        <div class="center-item">
+            <button type="button" class="btn3d btn btn-success btn-lg game-btn">Play</button>
+            <button type="button" class="btn3d btn btn-default btn-lg game-btn">High Scores</button>
+            <button type="button" class="btn3d btn btn-default btn-lg game-btn">Settings</button>
+        </div>
+    </div>
+    <script>
+        var x = document.getElementById("menu-audio"); 
+        x.play();
+    </script>
+</body>
+</html>
