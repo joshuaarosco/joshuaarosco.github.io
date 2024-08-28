@@ -97,9 +97,10 @@
     width: 10em;
 }
 .game-btn{
-    width: 150px;
+    min-width: 175px;
 }
 .menu-bg{
-    background: url('../img/bg.jpeg');
+    background: url('../img/bg.jpg');
     background-size: cover;
+    background-position: center;
 }

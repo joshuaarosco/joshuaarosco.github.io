@@ -6,21 +6,108 @@
     <title>Number Grabber</title>
     <link rel="stylesheet" href="assets/css/bootstrap.min.css">
     <link rel="stylesheet" href="assets/css/custom.css">
+    <link rel="stylesheet" href="assets/css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
-<body>
-    <audio autoplay loop id="menu-audio">
+<body class="menu-bg">
+    <iframe style="display: none;" width="560" height="315" src="https://www.youtube.com/embed/jhx5W4zfJ24?rel=0&autoplay=1" 
+            title="YouTube video player" frameborder="0" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
+            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    <!-- <audio autoplay loop id="menu-audio">
         <source src="assets/audio/MenuScreen.mp3" type="audio/mp3">
-    </audio>
-    <div class="container text-center menu-bg">
-        <div class="center-item">
-            <button type="button" class="btn3d btn btn-success btn-lg game-btn">Play</button>
-            <button type="button" class="btn3d btn btn-default btn-lg game-btn">High Scores</button>
-            <button type="button" class="btn3d btn btn-default btn-lg game-btn">Settings</button>
+        <source src="assets/audio/MenuScreen.wav" type="audio/wav">
+    </audio> -->
+
+    <div class="container">
+        <div class="row">
+
+            <!-- Main Menu -->
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn3d btn btn-success btn-lg game-btn main-menu btn-play"><i class="fa fa-play"></i> Play</button>
+            </div>
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn3d btn btn-default btn-lg game-btn main-menu"><i class="fa fa-star"></i> High Scores</button>
+            </div>
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn3d btn btn-default btn-lg game-btn main-menu"><i class="fa fa-cog"></i> Settings</button>
+            </div>
+            <!-- End of Main Menu -->
+
+            <!-- Category Menu -->
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn3d btn btn-info btn-lg game-btn category-menu basic-btn">😄 Basic Numeracy</button>
+            </div>
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn3d btn btn-primary btn-lg game-btn category-menu inter-btn">😎 Intermediate Numeracy</button>
+            </div>
+            <!-- End of Category Menu -->
+
+            <!-- Basic Numeracy Menu -->
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn3d btn btn-default btn-lg game-btn basic-num-menu">Arithmetic Operation</button>
+            </div>
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn3d btn btn-default btn-lg game-btn basic-num-menu">Roman Numerals</button>
+            </div>
+            <!-- End of Basic Numeracy Menu -->
+
+            
+            <!-- Intermediate Numeracy Menu -->
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn3d btn btn-default btn-lg game-btn inter-num-menu">ASCII code convertion</button>
+            </div>
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn3d btn btn-default btn-lg game-btn inter-num-menu">Number system</button>
+            </div>
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn3d btn btn-default btn-lg game-btn inter-num-menu">IP classes fundamentals</button>
+            </div>
+            <!-- End of Intermediate Numeracy Menu -->
+            
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn3d btn btn-default btn-lg home-btn"> <i class="fa fa-home"></i> </button>
+            </div>
+
+            <div class="col-md-12 text-center">
+                <button type="button" class="btn3d btn btn-default btn-lg btn-sound"> <i class="fa fa-volume-up"></i> </button>
+            </div>
         </div>
     </div>
+    <script src="assets/js/jquery.min.js"></script>
     <script>
         var x = document.getElementById("menu-audio"); 
-        x.play();
+        // x.play();
+
+
+        $(".category-menu").hide();
+        $(".basic-num-menu").hide();
+        $(".inter-num-menu").hide();
+        $(".home-btn").hide();
+
+        $(".btn-play").on("click", function(){
+            $(".main-menu").hide();
+            $(".category-menu").show(500);
+            $(".home-btn").show(500);
+        });
+
+        $(".home-btn").on("click", function(){
+            $(".category-menu").hide();
+            $(".basic-num-menu").hide();
+            $(".inter-num-menu").hide();
+            $(".home-btn").hide();
+            $(".main-menu").show(500);
+        });
+
+        $(".basic-btn").on("click", function(){
+            $(".category-menu").hide();
+            $(".basic-num-menu").show(500);
+        });
+
+        $(".inter-btn").on("click", function(){
+            $(".category-menu").hide();
+            $(".inter-num-menu").show(500);
+        });
     </script>
 </body>
 </html>
