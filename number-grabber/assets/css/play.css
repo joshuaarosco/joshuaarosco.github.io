@@ -1,0 +1,14 @@
+* { 
+    padding: 0; 
+    margin: 0; 
+} 
+canvas { 
+    background: #013333 url(../img/background.png) no-repeat; 
+    display: block; 
+    margin: 0 auto; 
+} 
+#output {
+    text-align: center; 
+    margin-top: 30px; 
+    white-space: pre-wrap;
+}

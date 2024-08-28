@@ -10,14 +10,10 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
 </head>
 <body class="menu-bg">
-    <iframe style="display: none;" width="560" height="315" src="https://www.youtube.com/embed/jhx5W4zfJ24?rel=0&autoplay=1" 
-            title="YouTube video player" frameborder="0" 
-            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" 
-            referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
-    <!-- <audio autoplay loop id="menu-audio">
+    <audio autoplay loop id="menu-audio">
         <source src="assets/audio/MenuScreen.mp3" type="audio/mp3">
         <source src="assets/audio/MenuScreen.wav" type="audio/wav">
-    </audio> -->
+    </audio>
 
     <div class="container">
         <div class="row">
@@ -45,23 +41,23 @@
 
             <!-- Basic Numeracy Menu -->
             <div class="col-md-12 text-center">
-                <button type="button" class="btn3d btn btn-default btn-lg game-btn basic-num-menu">Arithmetic Operation</button>
+                <a type="button" class="btn3d btn btn-default btn-lg game-btn basic-num-menu">Arithmetic Operation</a>
             </div>
             <div class="col-md-12 text-center">
-                <button type="button" class="btn3d btn btn-default btn-lg game-btn basic-num-menu">Roman Numerals</button>
+                <a type="button" class="btn3d btn btn-default btn-lg game-btn basic-num-menu">Roman Numerals</a>
             </div>
             <!-- End of Basic Numeracy Menu -->
 
             
             <!-- Intermediate Numeracy Menu -->
             <div class="col-md-12 text-center">
-                <button type="button" class="btn3d btn btn-default btn-lg game-btn inter-num-menu">ASCII code convertion</button>
+                <a type="button" class="btn3d btn btn-default btn-lg game-btn inter-num-menu">ASCII code convertion</a>
             </div>
             <div class="col-md-12 text-center">
-                <button type="button" class="btn3d btn btn-default btn-lg game-btn inter-num-menu">Number system</button>
+                <a type="button" class="btn3d btn btn-default btn-lg game-btn inter-num-menu">Number system</a>
             </div>
             <div class="col-md-12 text-center">
-                <button type="button" class="btn3d btn btn-default btn-lg game-btn inter-num-menu">IP classes fundamentals</button>
+                <a type="button" class="btn3d btn btn-default btn-lg game-btn inter-num-menu">IP classes fundamentals</a>
             </div>
             <!-- End of Intermediate Numeracy Menu -->
             
@@ -69,16 +65,15 @@
                 <button type="button" class="btn3d btn btn-default btn-lg home-btn"> <i class="fa fa-home"></i> </button>
             </div>
 
-            <div class="col-md-12 text-center">
+            <!-- <div class="col-md-12 text-center">
                 <button type="button" class="btn3d btn btn-default btn-lg btn-sound"> <i class="fa fa-volume-up"></i> </button>
-            </div>
+            </div> -->
         </div>
     </div>
     <script src="assets/js/jquery.min.js"></script>
     <script>
-        // var x = document.getElementById("menu-audio"); 
-        // x.play();
-
+        var x = document.getElementById("menu-audio"); 
+        x.play();
 
         $(".category-menu").hide();
         $(".basic-num-menu").hide();
